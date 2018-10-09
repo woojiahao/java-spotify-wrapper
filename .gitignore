@@ -11,6 +11,9 @@ buildNumber.properties
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
 
-# IDEA Specific files
+# IDEA specific files
 .idea/
 *.iml
+
+# Project specific files
+src/main/kotlin/me/chill/sandbox
