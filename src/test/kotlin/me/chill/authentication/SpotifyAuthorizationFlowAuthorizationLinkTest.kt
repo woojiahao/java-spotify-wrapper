@@ -35,6 +35,16 @@ class SpotifyAuthorizationFlowAuthorizationLinkTest {
 		SpotifyAuthorizationFlow(helper)
 	}
 
+	@Test(expected = SpotifyAuthenticationException::class)
+	fun client_secret_must_be_set_else_throw_exception() {
+		val helper = SpotifyAuthenticationHelper.Builder()
+			.setClientId(clientId)
+			.setRedirectUrl(redirectUrl)
+			.build()
+
+		SpotifyAuthorizationFlow(helper)
+	}
+
 	@Test
 	fun bare_url_should_be_formatted_properly() {
 		testUrl(bareHelper.build())

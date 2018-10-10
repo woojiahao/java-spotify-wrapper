@@ -7,7 +7,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class SpotifyAuthorizationFlowAccessTokenTest {
+class SpotifyAuthorizationFlowParsingAuthorizationURLTest {
 	private val clientId = "cea6a21eeb874d1d91dbaaccce0996f3"
 	private val redirectUrl = "https://woojiahao.github.io"
 
