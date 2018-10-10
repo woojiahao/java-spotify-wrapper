@@ -67,7 +67,7 @@ dictate the state of the authorization.
 url, the conditions that cause these exceptions are below:
 
 |Error|Sent State|Recevied State|Code|Exception Reason|
-|---|---|---|---|---|
+|:---:|:---:|:---:|:---:|---|
 |`✓`|`-`|`-`|`-`|If there is an error detected, there was an issue with the authentication process or the user denied authorization|
 |`-`|`-`|`-`|`-`|There is no code given even when there were no errors to occur, this is a problem of the Spotify Web API, report it as a bug|
 |`-`|`✓`|`✓`|`-`|The state that was sent does not correspond with the state that was received|
