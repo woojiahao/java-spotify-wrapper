@@ -86,7 +86,7 @@ try {
 	System.out.println("User's access token is " + accessToken);
 } catch (SpotifyAuthenticationException e) {
 	if (e.componentFail != null 
-		&& e.componentFail == SpotifyAuthorizationFlow.Component.Error) {
+		 && e.componentFail == SpotifyAuthorizationFlow.Component.Error) {
 		System.out.println("You cannot use this service unless you authorize the login");
 	}
 	e.printStackTrace();

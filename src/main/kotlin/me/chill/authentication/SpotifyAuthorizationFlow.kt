@@ -1,7 +1,10 @@
 package me.chill.authentication
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import me.chill.exceptions.SpotifyAuthenticationException
-import okhttp3.HttpUrl
+import okhttp3.*
+import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
 import java.net.URLEncoder
@@ -9,15 +12,83 @@ import java.net.URLEncoder
 class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) {
 	private var clientId = ""
 	private var redirectUrl = ""
+	private var clientSecret = ""
 
-	enum class Component { State, Code, Error; }
+	enum class Component { State, Code, Error }
+
+	enum class AccessInfo { AccessToken, RefreshToken, ExpiryDuration }
 
 	init {
 		helper.clientId ?: throw SpotifyAuthenticationException("Client ID must be set")
 		helper.redirectUrl ?: throw SpotifyAuthenticationException("Redirect URL must be set")
+		helper.clientSecret ?: throw SpotifyAuthenticationException("Client Secret must be set")
 
 		clientId = helper.clientId
 		redirectUrl = helper.redirectUrl
+		clientSecret = helper.clientSecret
+	}
+
+	fun getAccessToken(authorizationCode: String) = getAccessInfo(authorizationCode)[AccessInfo.AccessToken]
+
+	fun getRefreshToken(authorizationCode: String) = getAccessInfo(authorizationCode)[AccessInfo.RefreshToken]
+
+	fun getExpiry(authorizationCode: String) = getAccessInfo(authorizationCode)[AccessInfo.ExpiryDuration]
+
+	fun getAccessInfo(authorizationCode: String): Map<AccessInfo, String> {
+		val accessTokenUrl = HttpUrl.Builder()
+			.scheme("https")
+			.host("accounts.spotify.com")
+			.addPathSegment("api")
+			.addPathSegment("token")
+			.build()
+			.url()
+
+		val requestBody = FormBody.Builder()
+			.add("grant_type", "authorization_code")
+			.add("code", authorizationCode)
+			.add("redirect_uri", redirectUrl)
+			.add("client_id", clientId)
+			.add("client_secret", clientSecret)
+			.build()
+
+		val headers = Headers.Builder()
+			.add("Content-Type", "application/x-www-form-urlencoded")
+			.build()
+
+		val request = Request.Builder()
+			.url(accessTokenUrl)
+			.headers(headers)
+			.post(requestBody)
+			.build()
+
+		val client = OkHttpClient()
+		var response: Response? = null
+		try {
+			response = client.newCall(request).execute()
+		} catch (e: IOException) {
+			e.printStackTrace()
+		}
+
+		response ?: throw SpotifyAuthenticationException("JSON response for token was null")
+
+		// TODO: Be more specific with the errors
+		// TODO: Properly handle the status fails
+		if (!response.isSuccessful) {
+			throw SpotifyAuthenticationException(
+				mapOf(
+					"Cause" to "Error when retrieving access token",
+					"Error Number" to response.code().toString()
+				)
+			)
+		}
+
+		val accessTokenJson = Gson().fromJson(response.body()?.string(), JsonObject::class.java)
+
+		return mapOf(
+			AccessInfo.AccessToken to accessTokenJson["access_token"].asString,
+			AccessInfo.RefreshToken to accessTokenJson["refresh_token"].asString,
+			AccessInfo.ExpiryDuration to accessTokenJson["expires_in"].asString
+		)
 	}
 
 	fun extractCode(url: String) = parseAuthorizationUrl(url)[Component.Code]

@@ -13,8 +13,8 @@ class SpotifyAuthenticationHelper private constructor(
 		private var clientId: String? = null
 		private var clientSecret: String? = null
 		private var redirectUrl: String? = null
-
 		private var state: String? = null
+
 		private var showDialog = false
 		private val scopes = mutableListOf<SpotifyScope>()
 
