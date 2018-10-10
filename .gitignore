@@ -17,3 +17,8 @@ buildNumber.properties
 
 # Project specific files
 src/main/kotlin/me/chill/sandbox
+
+# VS Code related stuff
+.classpath
+.project
+.settings/
