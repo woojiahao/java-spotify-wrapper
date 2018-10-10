@@ -37,6 +37,9 @@ Users have to authorize for your application to access parts of their Spotify ac
 
 They do so by using a authorization URL that the library can generate for you based on several parameters you can configure.
 
+**Note:** At the very least, the **Client ID** and **Redirect URL** *must* be set for the helper, otherwise, 
+a `SpotifyAuthenticationException` is thrown.
+
 ```java
 class Login {
 	void authenticateUser() {
@@ -44,13 +47,18 @@ class Login {
         SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
         								.setClientId("cea6a21eeb874d1d91dbaaccce0996f3")
         								.setRedirectUrl("https://woojiahao.github.io")
-        								.addScope(SpotifyScope.EmailRead)
         								.build();
         
         SpotifyAuthorizationFlow flow = new SpotifyAuthorizationFlow(helper);
         
         // Retrieve the URL to allow users to authorize your application
-        String url = flow.loginUrl;
+        URL url = flow.generateLoginUrl();
+        
+        // The url will be:
+        // https://accounts.spotify.com/authorize
+        //  ?client_id=cea6a21eeb874d1d91dbaaccce0996f3
+        // 	&redirect_uri=https%3A%2F%2Fwoojiahao.github.io
+        //  &response_type=code
         System.out.println(url);
 	}
 }
