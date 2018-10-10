@@ -41,27 +41,23 @@ They do so by using a authorization URL that the library can generate for you ba
 a `SpotifyAuthenticationException` is thrown.
 
 ```java
-class Login {
-	void authenticateUser() {
-		// First, create a helper that will hold on to the parameters to be used
-        SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
-        								.setClientId("cea6a21eeb874d1d91dbaaccce0996f3")
-        								.setRedirectUrl("https://woojiahao.github.io")
-        								.build();
-        
-        SpotifyAuthorizationFlow flow = new SpotifyAuthorizationFlow(helper);
-        
-        // Retrieve the URL to allow users to authorize your application
-        URL url = flow.generateLoginUrl();
-        
-        // The url will be:
-        // https://accounts.spotify.com/authorize
-        //  ?client_id=cea6a21eeb874d1d91dbaaccce0996f3
-        // 	&redirect_uri=https%3A%2F%2Fwoojiahao.github.io
-        //  &response_type=code
-        System.out.println(url);
-	}
-}
+// First, create a helper that will hold on to the parameters to be used
+SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
+								.setClientId("cea6a21eeb874d1d91dbaaccce0996f3")
+								.setRedirectUrl("https://woojiahao.github.io")
+								.build();
+
+SpotifyAuthorizationFlow flow = new SpotifyAuthorizationFlow(helper);
+
+// Retrieve the URL to allow users to authorize your application
+URL url = flow.generateLoginUrl();
+
+// The url will be:
+// https://accounts.spotify.com/authorize
+//  ?client_id=cea6a21eeb874d1d91dbaaccce0996f3
+// 	&redirect_uri=https%3A%2F%2Fwoojiahao.github.io
+//  &response_type=code
+System.out.println(url);
 ```
 
 #### Retrieving Access Token
@@ -70,18 +66,14 @@ When the user has authorized your application, they will be redirected to the re
 The library is able to parse this parameters and return you the meaningful set of information like the authorization token that can be exchanged for an access and refresh token.
 
 ```java
-class Login {
-	void getAccessToken() {
-		Map<AuthorizationComponent, String> state = flow.parseAuthorization("https://woojiahao.github.io/<parameters>");
-        
-        if (state.get(AuthorizationComponent.Status).equals("false")) {
-        	System.out.println("User did not authorize");
-        } else {	
-        	String authorizationToken = state.get(AuthorizationComponent.Token);	
-        	String accessToken = helper.retrieveAccessToken(authorizationToken);
-        	System.out.println("User's access token is " + accessToken);
-        }
-	}
+Map<AuthorizationComponent, String> state = flow.parseAuthorization("https://woojiahao.github.io/<parameters>");
+
+if (state.get(AuthorizationComponent.Status).equals("false")) {
+	System.out.println("User did not authorize");
+} else {	
+	String authorizationToken = state.get(AuthorizationComponent.Token);	
+	String accessToken = helper.retrieveAccessToken(authorizationToken);
+	System.out.println("User's access token is " + accessToken);
 }
 ```
 
@@ -89,11 +81,7 @@ class Login {
 The library also provides an automated means of refreshing access tokens.
 
 ```java
-class Login {
-	void refreshToken() {
-		flow.refreshToken();
-	}
-}
+flow.refreshToken();
 ```
 
 ### Implicit Grant
