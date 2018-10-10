@@ -6,94 +6,85 @@ Java wrapper for the [Spotify web API](https://developer.spotify.com/documentati
 1. [Anonymous Access](https://github.com/woojiahao/java-spotify-wrapper#anonymous-access)
 2. [User Authentication](https://github.com/woojiahao/java-spotify-wrapper#user-authentication)
   
-    1. [Getting User's Authorization]()
-    2. [Retrieving Access Token]()
-    3. [Refreshing Tokens]()
+    1. [Authorization Flow](https://github.com/woojiahao/java-spotify-wrapper#authorization-flow)
+    2. [Implicit Grant](https://github.com/woojiahao/java-spotify-wrapper#implicit-grant)
+    3. [Client Credentials Flow](https://github.com/woojiahao/java-spotify-wrapper#client-credentials-flow)
 
 3. [Code Structure](https://github.com/woojiahao/java-spotify-wrapper#code-structure)
 4. [Contributing](https://github.com/woojiahao/java-spotify-wrapper#contributing)
 5. [License](https://github.com/woojiahao/java-spotify-wrapper#license)
 
 ## Anonymous Access
+Some of Spotify's Web API is available to users even without an access token or performing any form of user authentication,
+the library supports the access of these resources.
 
 ## User Authentication
-Spotify's Web API performs user authentication in 3 
-[key stages](https://developer.spotify.com/documentation/general/guides/authorization-guide/). This library provides you 
-with means of performing each stage with steps in between being automated for you.
+The Spotify Web API offers 3 methods of user authentication that can be used by developers, these methods are all explained
+in detail in their official [authentication guide.](https://developer.spotify.com/documentation/general/guides/authorization-guide/)
 
-The authentication process focused on by the library is the [Authorization Code Flow.](https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow)
+The library offers means to authenticate users in all 3 ways. 
 
-An example of using the library to manage the entire user authentication process can be found [here.]()
+### Authorization Flow
+This form of authorization is used when you wish to have a persistent session for the user and want the user to be 
+able to continually access the API without having to authorize themselves everytime their access token is expired.
 
-### Getting User's Authorization
-During this step users will have to be brought to the authorization screen for them to either accept/decline the 
-permissions that you request from them via the [Spotify Scopes.](https://developer.spotify.com/documentation/general/guides/scopes/#)
+The process is the most complex out of the three, but the library is able to assist you in easily gaining accessing to and
+managing the user's access token and refresh token.
 
-After the user completes the authorization step, they will be redirected to a URL that contains the status of the 
-authorization.
+#### Getting User's Authorization
+Users have to authorize for your application to access parts of their Spotify account, as defined by your selected 
+[scopes.](https://developer.spotify.com/documentation/general/guides/scopes/)
+
+They do so by using a authorization URL that the library can generate for you based on several parameters you can configure.
 
 ```java
-// Creating a helper to manage the authentication process
-SpotifyUserLoginHelper helper = new SpotifyUserLoginHelper.Builder()
-							.setClientId("cea6a21eeb874d1d91dbaaccce0996f3")
-							.setRedirectUrl("https://woojiahao.github.io")
-							.addScope(SpotifyScope.EmailRead)
-							.build();
+// First, create a helper that will hold on to the parameters to be used
+SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
+									.setClientId("cea6a21eeb874d1d91dbaaccce0996f3")
+									.setRedirectUrl("https://woojiahao.github.io")
+									.addScope(SpotifyScope.EmailRead)
+									.build;
+
+// Then, pass this helper to the AuthorizationFlow tool
+AuthorizationFlow flow = new AuthorizationFlow(helper);
 
 // Retrieve the URL to allow users to authorize your application
-String url = helper.loginUrl;
+String url = flow.loginUrl;
 System.out.println(url);
 ```
 
-#### Client ID
-This is the client ID of your application, it is a must to include
+#### Retrieving Access Token
+When the user has authorized your application, they will be redirected to the redirect URL with some parameters that dictate the state of the authorization.
 
-#### Redirect URL
-This is a whitelisted redirect URL for your application. Ideally, it would be one where you can access this redirect and 
-handle the result from the user authorization.
-
-More about redirect urls can be found [here.](https://developer.spotify.com/documentation/general/guides/app-settings/)
-
-#### Scopes
-These are the permissions you will need for your application to perform its duties. The user has to allow these permissions
-otherwise, they will not be authorized and you will not be able to proceed.
-
-More about scopes can be found [here.](https://developer.spotify.com/documentation/general/guides/scopes/#)
-
-### Retrieving Access Token
-Once the user has authorized your application, you will then have to handle the state of the authorization either by retrieving
-the access token after a successful authorization or to handle when a user has not authorized your application.
-
-When this happens, they are brought to your redirect URL specified earlier and the URL will have several parameters passed 
-dictating the state of the authorization process. 
-
-The library provides methods to parse this URL and return you information about the state of authorization.
+The library is able to parse this parameters and return you the meaningful set of information like the authorization token that can be exchanged for an access and refresh token.
 
 ```java
-Map<AuthorizationComponent, String> state = helper.parseAuthorization("https://woojiahao.github.io/<parameters>");
+Map<AuthorizationComponent, String> state = flow.parseAuthorization("https://woojiahao.github.io/<parameters>");
 
 if (state.get(AuthorizationComponent.Status).equals("false")) {
 	System.out.println("User did not authorize");
-} else {
-	System.out.println("User has authorized");
-	
-	String authorizationToken = state.get(AuthorizationComponent.Token);
-	System.out.println("User's authorization token is " + authorizationToken);
-	
+} else {	
+	String authorizationToken = state.get(AuthorizationComponent.Token);	
 	String accessToken = helper.retrieveAccessToken(authorizationToken);
 	System.out.println("User's access token is " + accessToken);
 }
 ```
 
-### Refreshing Access Token
+#### Refreshing Access Token
 The library also provides an automated means of refreshing access tokens.
 
 ```java
 helper.refreshToken();
 ```
 
-## Code Structure
+### Implicit Grant
+This method of user authentication is recommended if the information you want to retrieve from the user's account is one-time and you won't need a persistent connection.
 
-## Contributing 
+## Code Structure
+> TODO: Create a directory list for the structure of the code
+
+## Contributing
+> TODO: Create a code of conduct + contributing guide
 
 ## License
+java-spotify-wrapper is licensed under the MIT license, more about that can be found [here.](https://opensource.org/licenses/MIT)
