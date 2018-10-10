@@ -22,3 +22,6 @@ src/main/kotlin/me/chill/sandbox
 .classpath
 .project
 .settings/
+
+# Temporary removals
+src/test/kotlin
