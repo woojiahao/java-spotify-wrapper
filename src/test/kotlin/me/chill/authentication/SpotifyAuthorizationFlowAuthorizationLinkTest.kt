@@ -1,14 +1,13 @@
 package me.chill.authentication
 
-import javafx.scene.effect.Light
-import junit.framework.Assert.assertEquals
 import me.chill.exceptions.SpotifyAuthenticationException
-import org.apache.http.client.utils.URIBuilder
+import okhttp3.HttpUrl
 import org.junit.Test
 import java.net.URLEncoder
 import kotlin.test.BeforeTest
+import kotlin.test.assertEquals
 
-class SpotifyAuthorizationFlowTest {
+class SpotifyAuthorizationFlowAuthorizationLinkTest {
 	private val clientId = "cea6a21eeb874d1d91dbaaccce0996f3"
 	private val redirectUrl = "https://woojiahao.github.io"
 	private lateinit var bareHelper: SpotifyAuthenticationHelper.Builder
@@ -73,17 +72,16 @@ class SpotifyAuthorizationFlowTest {
 	}
 
 	private fun testUrl(helper: SpotifyAuthenticationHelper, expectedArguments: Map<String, String> = emptyMap()) {
-		val uriBuilder = URIBuilder()
-			.setScheme("https")
-			.setHost("accounts.spotify.com")
-			.setPath("/authorize")
-			.setParameter("client_id", helper.clientId)
-			.setParameter("redirect_uri", helper.redirectUrl)
-			.setParameter("response_type", "code")
-		expectedArguments.forEach { key, value -> uriBuilder.setParameter(key, value) }
+		val builder = HttpUrl.Builder()
+			.scheme("https")
+			.host("accounts.spotify.com")
+			.addPathSegment("authorize")
+			.addQueryParameter("client_id", clientId)
+			.addQueryParameter("redirect_uri", redirectUrl)
+			.addQueryParameter("response_type", "code")
+		expectedArguments.forEach { key, value -> builder.addQueryParameter(key, value) }
 
 		val flow = SpotifyAuthorizationFlow(helper)
-		assertEquals(uriBuilder.build().toURL().toString(), flow.generateLoginUrl().toString())
-		println(flow.generateLoginUrl())
+		assertEquals(builder.build().url().toString(), flow.generateLoginUrl().toString())
 	}
 }

@@ -35,11 +35,10 @@ managing the user's access token and refresh token.
 Users have to authorize for your application to access parts of their Spotify account, as defined by your selected 
 [scopes.](https://developer.spotify.com/documentation/general/guides/scopes/)
 
-They do so by using a authorization URL that the library can generate for you based on several parameters you can configure.
+**Note:** At the very least, the **Client ID** and **Redirect URL** *must* be set for the helper, otherwise, a 
+`SpotifyAuthenticationException` is thrown.
 
-**Note:** At the very least, the **Client ID** and **Redirect URL** *must* be set for the helper, otherwise, 
-a `SpotifyAuthenticationException` is thrown.
-
+**Usage:**
 ```java
 // First, create a helper that will hold on to the parameters to be used
 SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
@@ -55,25 +54,38 @@ URL url = flow.generateLoginUrl();
 // The url will be:
 // https://accounts.spotify.com/authorize
 //  ?client_id=cea6a21eeb874d1d91dbaaccce0996f3
-// 	&redirect_uri=https%3A%2F%2Fwoojiahao.github.io
+//  &redirect_uri=https%3A%2F%2Fwoojiahao.github.io
 //  &response_type=code
 System.out.println(url);
 ```
 
 #### Retrieving Access Token
-When the user has authorized your application, they will be redirected to the redirect URL with some parameters that dictate the state of the authorization.
+When the user has authorized your application, they will be redirected to the redirect URL with some parameters that 
+dictate the state of the authorization.
 
-The library is able to parse this parameters and return you the meaningful set of information like the authorization token that can be exchanged for an access and refresh token.
+**Note:** `SpotifyAuthenticationException` will be thrown if there are problems detected when parsing the authentication
+url, the conditions that cause these exceptions are below:
+
+|Error|Sent State|Recevied State|Code|Exception Reason|
+|---|---|---|---|---|
+|`✓`|`-`|`-`|`-`|If there is an error detected, there was an issue with the authentication process or the user denied authorization|
+|`-`|`-`|`-`|`-`|There is no code given even when there were no errors to occur, this is a problem of the Spotify Web API, report it as a bug|
+|`-`|`✓`|`✓`|`-`|The state that was sent does not correspond with the state that was received|
+|`-`|`✓`|`-`|`-`|There was no state received even when a state was sent|
+
+**Usage:**
 
 ```java
-Map<AuthorizationComponent, String> state = flow.parseAuthorization("https://woojiahao.github.io/<parameters>");
 
-if (state.get(AuthorizationComponent.Status).equals("false")) {
-	System.out.println("User did not authorize");
-} else {	
-	String authorizationToken = state.get(AuthorizationComponent.Token);	
-	String accessToken = helper.retrieveAccessToken(authorizationToken);
+try {
+	Map<SpotifyAuthorizationFlow.Component, String> status = 
+		flow.parseAuthorizationUrl("https://woojiahao.github.io/<parameters>");
+
+	String authorizationToken = status.get(SpotifyAuthorizationFlow.Component.Code);
+	String accessToken = flow.retrieveAccessToken(authorizationToken);
 	System.out.println("User's access token is " + accessToken);
+} catch (SpotifyAuthenticationException e) {
+	e.printStackTrace();
 }
 ```
 
@@ -85,7 +97,8 @@ flow.refreshToken();
 ```
 
 ### Implicit Grant
-This method of user authentication is recommended if the information you want to retrieve from the user's account is one-time and you won't need a persistent connection.
+This method of user authentication is recommended if the information you want to retrieve from the user's account is 
+one-time and you won't need a persistent connection.
 
 ## Code Structure
 > TODO: Create a directory list for the structure of the code
