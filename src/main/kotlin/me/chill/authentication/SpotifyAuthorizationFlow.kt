@@ -10,9 +10,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 	private var clientId = ""
 	private var redirectUrl = ""
 
-	enum class Component {
-		State, Code, Error;
-	}
+	enum class Component { State, Code, Error; }
 
 	init {
 		helper.clientId ?: throw SpotifyAuthenticationException("Client ID must be set")
@@ -21,6 +19,8 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 		clientId = helper.clientId
 		redirectUrl = helper.redirectUrl
 	}
+
+	fun extractCode(url: String) = parseAuthorizationUrl(url)[Component.Code]
 
 	fun parseAuthorizationUrl(url: String): Map<Component, String?> {
 		val httpUrl = HttpUrl.parse(url) ?: return emptyMap()
@@ -31,6 +31,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 		helper.state?.let { sentState ->
 			state ?: throw SpotifyAuthenticationException(
+				Component.State,
 				mapOf(
 					"Cause" to "state was not received despite state being sent",
 					"Sent State" to sentState
@@ -39,6 +40,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 			if (sentState != state) {
 				throw SpotifyAuthenticationException(
+					Component.State,
 					mapOf(
 						"Cause" to "state received does not correspond with the sent state",
 						"Sent State" to sentState,
@@ -50,6 +52,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 		error?.let {
 			throw SpotifyAuthenticationException(
+				Component.Error,
 				mapOf(
 					"Cause" to "Error occurred with user authentication",
 					"Error Message" to it
@@ -58,8 +61,11 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 		}
 
 		error ?: code
-		?: throw SpotifyAuthenticationException("No authorization code is provided despite the authorization " +
-			"process being successful")
+		?: throw SpotifyAuthenticationException(
+			Component.Code,
+			mapOf("Cause" to "No authorization code is provided despite the authorization " +
+				"process being successful")
+		)
 
 		return mapOf(
 			Component.State to state,

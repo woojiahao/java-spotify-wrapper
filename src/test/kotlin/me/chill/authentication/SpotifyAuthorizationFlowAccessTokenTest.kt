@@ -76,4 +76,9 @@ class SpotifyAuthorizationFlowAccessTokenTest {
 		val parsed = customFlow.parseAuthorizationUrl("https://woojiahao.github.io/?state=apple&code=234df32cv23n4j")
 		assertEquals("apple", parsed[SpotifyAuthorizationFlow.Component.State])
 	}
+
+	@Test
+	fun code_should_be_extracted_whole_from_url() {
+		assertEquals("2u4y3vh23vg", flow.extractCode("https://woojiahao.github.io/?code=2u4y3vh23vg"))
+	}
 }
