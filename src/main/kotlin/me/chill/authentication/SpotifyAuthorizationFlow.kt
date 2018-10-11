@@ -48,6 +48,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 		return user
 	}
 
+	@Throws(SpotifyAuthenticationException::class)
 	fun getAccessInfo(authorizationCode: String): Map<AccessInfo, String> {
 		val accessTokenUrl = HttpUrl.Builder()
 			.scheme("https")
@@ -106,8 +107,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 		)
 	}
 
-	fun extractCode(url: String) = parseAuthorizationUrl(url)[Component.Code]
-
+	@Throws(SpotifyAuthenticationException::class)
 	fun parseAuthorizationUrl(url: String): Map<Component, String?> {
 		val httpUrl = HttpUrl.parse(url) ?: return emptyMap()
 
