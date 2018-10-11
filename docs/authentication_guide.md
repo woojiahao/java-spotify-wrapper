@@ -17,6 +17,8 @@ described here will only cover the steps the library offers handling for.
 * Tedious process
 
 ### Process
+[Example implementation of the authorization flow using the library](https://github.com/woojiahao/java-spotify-wrapper/blob/master/examples/AuthorizationFlowDemo.java)
+
 #### Getting User's Authorization
 Users have to authorize for your application to access parts of their Spotify account, as defined by your selected 
 [scopes.](https://developer.spotify.com/documentation/general/guides/scopes/)
@@ -112,5 +114,60 @@ if (exchangeInfo != null) {
 
     System.out.println("Access Token:" + user.getAccessToken());
     System.out.println("Refresh Token:" + user.getRefreshToken());
+}
+```
+
+## Client Credential Flow
+**Benefits:**
+
+* No need for authorization
+* Simple
+* Ideal for server-to-server communications
+
+**Drawbacks:**
+
+* No refresh token given
+
+### Process
+[Example implementation of the client credential flow using the library](https://github.com/woojiahao/java-spotify-wrapper/blob/master/examples/ClientCredentialFlowDemo.java)
+
+#### Getting Access Token
+Since this flow of authentication is simple, there is no authorization step and thus, all you need to do to begin using
+this form of authentication is to request for an access token.
+
+This can be done using the `.requestAuthentication()` method which returns a map that contains the access token and expiry
+duration of the token.
+
+**Note:** `SpotifyAuthenticationException` thrown when the response invalid or there was an error with the client id or 
+secret.
+
+**Usage:**
+
+```java
+SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
+    .setClientId(clientId)
+    .setClientSecret(clientSecret)
+    .build();
+
+SpotifyClientCredentialFlow flow = new SpotifyClientCredentialFlow(helper);
+
+Map<SpotifyClientCredentialFlow.AuthorizationComponent, String> authorizationMap = null;
+try {
+    authorizationMap = flow.requestAuthorization();
+} catch (SpotifyAuthenticationException e) {
+    e.printStackTrace();
+}
+```
+
+#### Creating a Spotify User
+Once you've retrieved a valid access token, you can then generate a `SpotifyUser` to begin interacting with the API.
+
+**Usage:**
+
+```java
+if (authorizationMap != null) {
+    SpotifyUser user = flow.generateSpotifyUser(authorizationMap);
+
+    System.out.println("Access: " + user.getAccessToken());
 }
 ```
