@@ -34,8 +34,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 		val refreshToken = accessInfoMap[AccessInfo.RefreshToken]
 		val expiryDuration = accessInfoMap[AccessInfo.ExpiryDuration]
 
-		val user = SpotifyUser(helper)
-		accessToken?.let { user.accessToken = it }
+		val user = SpotifyUser(helper, accessToken!!)
 		refreshToken?.let { user.refreshToken = it }
 		expiryDuration?.toIntOrNull()?.let { user.expiryDuration = it }
 
@@ -43,8 +42,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 	}
 
 	fun generateSpotifyUser(accessToken: String, refreshToken: String, expiryDuration: Int): SpotifyUser {
-		val user = SpotifyUser(helper)
-		user.accessToken = accessToken
+		val user = SpotifyUser(helper, accessToken)
 		user.refreshToken = refreshToken
 		user.expiryDuration = expiryDuration
 		return user

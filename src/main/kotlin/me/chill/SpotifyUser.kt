@@ -2,8 +2,7 @@ package me.chill
 
 import me.chill.authentication.SpotifyAuthenticationHelper
 
-class SpotifyUser(helper: SpotifyAuthenticationHelper) {
-	var accessToken: String? = null
+class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: String) {
 	var refreshToken: String? = null
 	var expiryDuration: Int? = null
 }
