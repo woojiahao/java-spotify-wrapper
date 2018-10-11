@@ -50,4 +50,4 @@ However, because of that, there is no refresh token provided.
 > TODO: Create a code of conduct + contributing guide
 
 ## License
-java-spotify-wrapper is licensed under the MIT license, more about that can be found [here.](https://opensource.org/licenses/MIT)
+Simple to use java-spotify-wrapper is licensed under the MIT license, more about that can be found [here.](https://opensource.org/licenses/MIT)
