@@ -11,13 +11,14 @@ import java.net.URL
 import java.net.URLEncoder
 
 class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) {
+
 	private var clientId = ""
 	private var redirectUrl = ""
 	private var clientSecret = ""
 
-	enum class Component { State, Code, Error }
+	enum class ParseComponent { State, Code, Error }
 
-	enum class AccessInfo { AccessToken, RefreshToken, ExpiryDuration }
+	enum class ExchangeComponent { AccessToken, RefreshToken, ExpiryDuration }
 
 	init {
 		helper.clientId ?: throw SpotifyAuthenticationException("Client ID must be set")
@@ -29,10 +30,10 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 		clientSecret = helper.clientSecret
 	}
 
-	fun generateSpotifyUser(accessInfoMap: Map<AccessInfo, String>): SpotifyUser {
-		val accessToken = accessInfoMap[AccessInfo.AccessToken]
-		val refreshToken = accessInfoMap[AccessInfo.RefreshToken]
-		val expiryDuration = accessInfoMap[AccessInfo.ExpiryDuration]
+	fun generateSpotifyUser(exchangeComponentMap: Map<ExchangeComponent, String>): SpotifyUser {
+		val accessToken = exchangeComponentMap[ExchangeComponent.AccessToken]
+		val refreshToken = exchangeComponentMap[ExchangeComponent.RefreshToken]
+		val expiryDuration = exchangeComponentMap[ExchangeComponent.ExpiryDuration]
 
 		val user = SpotifyUser(helper, accessToken!!)
 		refreshToken?.let { user.refreshToken = it }
@@ -41,15 +42,8 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 		return user
 	}
 
-	fun generateSpotifyUser(accessToken: String, refreshToken: String, expiryDuration: Int): SpotifyUser {
-		val user = SpotifyUser(helper, accessToken)
-		user.refreshToken = refreshToken
-		user.expiryDuration = expiryDuration
-		return user
-	}
-
 	@Throws(SpotifyAuthenticationException::class)
-	fun getAccessInfo(authorizationCode: String): Map<AccessInfo, String> {
+	fun exchangeAuthorizationCode(authorizationCode: String): Map<ExchangeComponent, String> {
 		val accessTokenUrl = HttpUrl.Builder()
 			.scheme("https")
 			.host("accounts.spotify.com")
@@ -101,14 +95,14 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 
 		return mapOf(
-			AccessInfo.AccessToken to accessTokenJson["access_token"].asString,
-			AccessInfo.RefreshToken to accessTokenJson["refresh_token"].asString,
-			AccessInfo.ExpiryDuration to accessTokenJson["expires_in"].asString
+			ExchangeComponent.AccessToken to accessTokenJson["access_token"].asString,
+			ExchangeComponent.RefreshToken to accessTokenJson["refresh_token"].asString,
+			ExchangeComponent.ExpiryDuration to accessTokenJson["expires_in"].asString
 		)
 	}
 
 	@Throws(SpotifyAuthenticationException::class)
-	fun parseAuthorizationUrl(url: String): Map<Component, String?> {
+	fun parseAuthorizationUrl(url: String): Map<ParseComponent, String?> {
 		val httpUrl = HttpUrl.parse(url) ?: return emptyMap()
 
 		val error = httpUrl.queryParameter("error")
@@ -117,7 +111,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 		helper.state?.let { sentState ->
 			state ?: throw SpotifyAuthenticationException(
-				Component.State,
+				ParseComponent.State,
 				mapOf(
 					"Cause" to "state was not received despite state being sent",
 					"Sent State" to sentState
@@ -126,7 +120,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 			if (sentState != state) {
 				throw SpotifyAuthenticationException(
-					Component.State,
+					ParseComponent.State,
 					mapOf(
 						"Cause" to "state received does not correspond with the sent state",
 						"Sent State" to sentState,
@@ -138,7 +132,7 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 		error?.let {
 			throw SpotifyAuthenticationException(
-				Component.Error,
+				ParseComponent.Error,
 				mapOf(
 					"Cause" to "Error occurred with user authentication",
 					"Error Message" to it
@@ -148,15 +142,15 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 		error ?: code
 		?: throw SpotifyAuthenticationException(
-			Component.Code,
+			ParseComponent.Code,
 			mapOf("Cause" to "No authorization code is provided despite the authorization " +
 				"process being successful")
 		)
 
 		return mapOf(
-			Component.State to state,
-			Component.Error to error,
-			Component.Code to code
+			ParseComponent.State to state,
+			ParseComponent.Error to error,
+			ParseComponent.Code to code
 		)
 	}
 

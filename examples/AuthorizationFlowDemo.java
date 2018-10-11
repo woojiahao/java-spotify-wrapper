@@ -47,7 +47,7 @@ public class AuthorizationFlowDemo {
 		Depending on how you handle the user's authorization step, you should receive a redirect URL that contains several
 		query parameters.
 		 */
-		String retrievedUrl = "https://woojiahao.github.io/?code=AQCrtYCcm4keCE7-oPBav8IO1lmRp6yRHvGAGYLBMVNpYr6pE4Zdk9vQNYzTYjG9CIf3onx3_Q2PKZEbGTIH75q1KtMApUXcUM6ZwJPZ4m9og2bRaQwZ28_MTjtN6MT9aU65pJwVGUyrgzL_uo0vfqU8grUuhLXkB3NkLCq10uzkSnU98xKaparFb-Y6L3dMie8v"
+		String retrievedUrl = "https://woojiahao.github.io/?code=AQCrtYCcm4keCE7-oPBav8IO1lmRp6yRHvGAGYLBMVNpYr6pE4Zdk9vQNYzTYjG9CIf3onx3_Q2PKZEbGTIH75q1KtMApUXcUM6ZwJPZ4m9og2bRaQwZ28_MTjtN6MT9aU65pJwVGUyrgzL_uo0vfqU8grUuhLXkB3NkLCq10uzkSnU98xKaparFb-Y6L3dMie8v";
 
 		/*
 		.parseAuthorizationUrl() returns a map of the components of the retrieved URL
@@ -57,7 +57,7 @@ public class AuthorizationFlowDemo {
 		This will also throw a checked exception for when there was an error that occurred with the retrieval of the URL,
 		some of the conditions checked for are error codes, state differences and missing codes.
 		 */
-		Map<SpotifyAuthorizationFlow.Component, String> authorizationParseMap = null;
+		Map<SpotifyAuthorizationFlow.ParseComponent, String> authorizationParseMap = null;
 		try {
 			authorizationParseMap = flow.parseAuthorizationUrl(retrievedUrl);
 		} catch (SpotifyAuthenticationException e) {
@@ -65,8 +65,8 @@ public class AuthorizationFlowDemo {
 			Exception object holds onto what part of the parsing failed, which might be useful when you wish to warn users
 			that they might not be able to use your application when they do not authorize.
 			 */
-			if (e.getComponentFail() != null) {
-				if (e.getComponentFail() == SpotifyAuthorizationFlow.Component.Error) {
+			if (e.getParseComponentFail() != null) {
+				if (e.getParseComponentFail() == SpotifyAuthorizationFlow.ParseComponent.Error) {
 					System.out.println("You cannot use the application without authorizing Spotify access");
 				}
 			}
@@ -78,16 +78,16 @@ public class AuthorizationFlowDemo {
 		if (authorizationParseMap != null) {
 
 			// The authorization code can be extracted using the Code constant
-			String authorizationCode = authorizationParseMap.get(SpotifyAuthorizationFlow.Component.Code);
+			String authorizationCode = authorizationParseMap.get(SpotifyAuthorizationFlow.ParseComponent.Code);
 
 			/*
-			.getAccessInfo() can be used to retrieve information about the attempt to exchange tokens.
+			.exchangeAuthorizationCode() can be used to retrieve information about the attempt to exchange tokens.
 
 			Throws an exception if the exchange attempt fails.
 			 */
-			Map<SpotifyAuthorizationFlow.AccessInfo, String> accessInfo = null;
+			Map<SpotifyAuthorizationFlow.ExchangeComponent, String> exchangeInfo = null;
 			try {
-				accessInfo = flow.getAccessInfo(authorizationCode);
+				exchangeInfo = flow.exchangeAuthorizationCode(authorizationCode);
 			} catch (SpotifyAuthenticationException e) {
 				e.printStackTrace();
 			}
@@ -96,12 +96,11 @@ public class AuthorizationFlowDemo {
 			Lastly, to begin accessing endpoints of the API using the library, generate a SpotifyUser object, giving it
 			the access info map created from exchanging tokens
 			 */
-			if (accessInfo != null) {
-				SpotifyUser user = flow.generateSpotifyUser(accessInfo);
+			if (exchangeInfo != null) {
+				SpotifyUser user = flow.generateSpotifyUser(exchangeInfo);
 
 				System.out.println("Access Token:" + user.getAccessToken());
 				System.out.println("Refresh Token:" + user.getRefreshToken());
-
 			}
 		}
 	}
