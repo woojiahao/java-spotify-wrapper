@@ -151,9 +151,9 @@ SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
 
 SpotifyClientCredentialFlow flow = new SpotifyClientCredentialFlow(helper);
 
-Map<SpotifyClientCredentialFlow.AuthorizationComponent, String> authorizationMap = null;
+Map<SpotifyClientCredentialFlow.AuthenticationComponent, String> authenticationMap = null;
 try {
-    authorizationMap = flow.requestAuthorization();
+    authenticationMap = flow.requestAuthentication();
 } catch (SpotifyAuthenticationException e) {
     e.printStackTrace();
 }
@@ -165,8 +165,8 @@ Once you've retrieved a valid access token, you can then generate a `SpotifyUser
 **Usage:**
 
 ```java
-if (authorizationMap != null) {
-    SpotifyUser user = flow.generateSpotifyUser(authorizationMap);
+if (authenticationMap != null) {
+    SpotifyUser user = flow.generateSpotifyUser(authenticationMap);
 
     System.out.println("Access: " + user.getAccessToken());
 }

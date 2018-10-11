@@ -11,7 +11,7 @@ class SpotifyClientCredentialFlow(private val helper: SpotifyAuthenticationHelpe
 	private var clientId: String
 	private var clientSecret: String
 
-	enum class AuthorizationComponent { AccessToken, ExpiryDuration }
+	enum class AuthenticationComponent { AccessToken, ExpiryDuration }
 
 	init {
 		helper.clientId ?: throw SpotifyAuthenticationException("Client ID must be set")
@@ -21,9 +21,9 @@ class SpotifyClientCredentialFlow(private val helper: SpotifyAuthenticationHelpe
 		clientSecret = helper.clientSecret
 	}
 
-	fun generateSpotifyUser(authorizationMap: Map<AuthorizationComponent, String>): SpotifyUser {
-		val accessToken = authorizationMap[AuthorizationComponent.AccessToken]
-		val expiryDuration = authorizationMap[AuthorizationComponent.ExpiryDuration]
+	fun generateSpotifyUser(authenticationMap: Map<AuthenticationComponent, String>): SpotifyUser {
+		val accessToken = authenticationMap[AuthenticationComponent.AccessToken]
+		val expiryDuration = authenticationMap[AuthenticationComponent.ExpiryDuration]
 
 		val user = SpotifyUser(helper, accessToken!!)
 		expiryDuration?.toIntOrNull()?.let { user.expiryDuration = it }
@@ -32,7 +32,7 @@ class SpotifyClientCredentialFlow(private val helper: SpotifyAuthenticationHelpe
 	}
 
 	@Throws(SpotifyAuthenticationException::class)
-	fun requestAuthorization(): Map<AuthorizationComponent, String> {
+	fun requestAuthentication(): Map<AuthenticationComponent, String> {
 		val base64EncodedAuthorization = String(Base64.getUrlEncoder().encode("$clientId:$clientSecret".toByteArray()))
 
 		val accessTokenUrl = HttpUrl.Builder()
@@ -76,8 +76,8 @@ class SpotifyClientCredentialFlow(private val helper: SpotifyAuthenticationHelpe
 		}
 
 		return mapOf(
-			AuthorizationComponent.AccessToken to accessTokenJson["access_token"].asString,
-			AuthorizationComponent.ExpiryDuration to accessTokenJson["expires_in"].asString
+			AuthenticationComponent.AccessToken to accessTokenJson["access_token"].asString,
+			AuthenticationComponent.ExpiryDuration to accessTokenJson["expires_in"].asString
 		)
 	}
 }

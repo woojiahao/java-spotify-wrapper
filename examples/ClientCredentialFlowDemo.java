@@ -32,11 +32,11 @@ public class ClientCredentialFlowDemo {
 		SpotifyClientCredentialFlow flow = new SpotifyClientCredentialFlow(helper);
 
 		/*
-		.requestAuthorization() returns a map with the access token and expiry duration of that token
+		.requestAuthentication() returns a map with the access token and expiry duration of that token
 		 */
-		Map<SpotifyClientCredentialFlow.AuthorizationComponent, String> authorizationMap = null;
+		Map<SpotifyClientCredentialFlow.AuthenticationComponent, String> authenticationMap = null;
 		try {
-			authorizationMap = flow.requestAuthorization();
+			authenticationMap = flow.requestAuthentication();
 		} catch (SpotifyAuthenticationException e) {
 			e.printStackTrace();
 		}
@@ -44,8 +44,8 @@ public class ClientCredentialFlowDemo {
 		/*
 		Generate a SpotifyUser instance to begin accessing the API
 		 */
-		if (authorizationMap != null) {
-			SpotifyUser user = flow.generateSpotifyUser(authorizationMap);
+		if (authenticationMap != null) {
+			SpotifyUser user = flow.generateSpotifyUser(authenticationMap);
 
 			System.out.println("Access: " + user.getAccessToken());
 		}
