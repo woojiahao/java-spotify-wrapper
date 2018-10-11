@@ -2,6 +2,7 @@ package me.chill.authentication
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import me.chill.SpotifyUser
 import me.chill.exceptions.SpotifyAuthenticationException
 import okhttp3.*
 import java.io.IOException
@@ -28,11 +29,26 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 		clientSecret = helper.clientSecret
 	}
 
-	fun getAccessToken(authorizationCode: String) = getAccessInfo(authorizationCode)[AccessInfo.AccessToken]
+	fun generateSpotifyUser(accessInfoMap: Map<AccessInfo, String>): SpotifyUser {
+		val accessToken = accessInfoMap[AccessInfo.AccessToken]
+		val refreshToken = accessInfoMap[AccessInfo.RefreshToken]
+		val expiryDuration = accessInfoMap[AccessInfo.ExpiryDuration]
 
-	fun getRefreshToken(authorizationCode: String) = getAccessInfo(authorizationCode)[AccessInfo.RefreshToken]
+		val user = SpotifyUser(helper)
+		accessToken?.let { user.accessToken = it }
+		refreshToken?.let { user.refreshToken = it }
+		expiryDuration?.toIntOrNull()?.let { user.expiryDuration = it }
 
-	fun getExpiry(authorizationCode: String) = getAccessInfo(authorizationCode)[AccessInfo.ExpiryDuration]
+		return user
+	}
+
+	fun generateSpotifyUser(accessToken: String, refreshToken: String, expiryDuration: Int): SpotifyUser {
+		val user = SpotifyUser(helper)
+		user.accessToken = accessToken
+		user.refreshToken = refreshToken
+		user.expiryDuration = expiryDuration
+		return user
+	}
 
 	fun getAccessInfo(authorizationCode: String): Map<AccessInfo, String> {
 		val accessTokenUrl = HttpUrl.Builder()
@@ -71,18 +87,19 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 		response ?: throw SpotifyAuthenticationException("JSON response for token was null")
 
-		// TODO: Be more specific with the errors
-		// TODO: Properly handle the status fails
+		val accessTokenJson = Gson().fromJson(response.body()?.string(), JsonObject::class.java)
+
 		if (!response.isSuccessful) {
 			throw SpotifyAuthenticationException(
 				mapOf(
 					"Cause" to "Error when retrieving access token",
-					"Error Number" to response.code().toString()
+					"Error Code" to response.code().toString(),
+					"Error" to accessTokenJson["error"].asString,
+					"Error Description" to accessTokenJson["error_description"].asString
 				)
 			)
 		}
 
-		val accessTokenJson = Gson().fromJson(response.body()?.string(), JsonObject::class.java)
 
 		return mapOf(
 			AccessInfo.AccessToken to accessTokenJson["access_token"].asString,

@@ -1,6 +1,5 @@
 package me.chill.authentication
 
-// TODO: Implement a encryption assistant to generate state keys
 class SpotifyAuthenticationHelper private constructor(
 	val clientId: String?,
 	val clientSecret: String?,
