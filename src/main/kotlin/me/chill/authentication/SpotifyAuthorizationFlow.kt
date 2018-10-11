@@ -3,7 +3,6 @@ package me.chill.authentication
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import me.chill.SpotifyUser
-import me.chill.exceptions.SpotifyAuthenticationException
 import okhttp3.*
 import java.io.IOException
 import java.net.MalformedURLException
@@ -60,15 +59,9 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 			.add("client_secret", clientSecret)
 			.build()
 
-		val headers = Headers.Builder()
-			.add("Content-Type", "application/x-www-form-urlencoded")
-			.build()
+		val headers = Headers.Builder().add("Content-Type", "application/x-www-form-urlencoded").build()
 
-		val request = Request.Builder()
-			.url(accessTokenUrl)
-			.headers(headers)
-			.post(requestBody)
-			.build()
+		val request = Request.Builder().url(accessTokenUrl).headers(headers).post(requestBody).build()
 
 		val client = OkHttpClient()
 		var response: Response? = null

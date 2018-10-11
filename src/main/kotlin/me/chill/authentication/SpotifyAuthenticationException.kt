@@ -1,6 +1,5 @@
-package me.chill.exceptions
+package me.chill.authentication
 
-import me.chill.authentication.SpotifyAuthorizationFlow
 import java.lang.Exception
 
 /**
