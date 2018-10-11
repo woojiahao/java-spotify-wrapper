@@ -8,6 +8,7 @@ import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
 import java.net.URLEncoder
+import java.util.*
 
 class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) {
 
@@ -43,6 +44,8 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 
 	@Throws(SpotifyAuthenticationException::class)
 	fun exchangeAuthorizationCode(authorizationCode: String): Map<ExchangeComponent, String> {
+		val base64EncodedAuthorization = String(Base64.getUrlEncoder().encode("$clientId:$clientSecret".toByteArray()))
+
 		val accessTokenUrl = HttpUrl.Builder()
 			.scheme("https")
 			.host("accounts.spotify.com")
@@ -59,7 +62,10 @@ class SpotifyAuthorizationFlow(private val helper: SpotifyAuthenticationHelper) 
 			.add("client_secret", clientSecret)
 			.build()
 
-		val headers = Headers.Builder().add("Content-Type", "application/x-www-form-urlencoded").build()
+		val headers = Headers.Builder()
+			.add("Content-Type", "application/x-www-form-urlencoded")
+			.add("Authorization", "Basic $base64EncodedAuthorization")
+			.build()
 
 		val request = Request.Builder().url(accessTokenUrl).headers(headers).post(requestBody).build()
 
