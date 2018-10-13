@@ -36,7 +36,7 @@ public class AuthorizationFlowDemo {
 
 
 		/*
-		.generateLoginUrl() returns a URL object that holds the URL for the user to authorize your application.
+		.generateAuthorizationUrl() returns a URL object that holds the URL for the user to authorize your application.
 
 		This is the first step of the authentication flow which is to gain the user's authorization.
 		 */

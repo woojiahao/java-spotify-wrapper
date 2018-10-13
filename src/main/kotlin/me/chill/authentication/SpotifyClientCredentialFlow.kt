@@ -2,32 +2,12 @@ package me.chill.authentication
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import me.chill.SpotifyUser
 import okhttp3.*
 import java.io.IOException
 import java.util.*
 
-class SpotifyClientCredentialFlow(private val helper: SpotifyAuthenticationHelper) {
-	private var clientId: String
-	private var clientSecret: String
-
-	init {
-		helper.clientId ?: throw SpotifyAuthenticationException("Client ID must be set")
-		helper.clientSecret ?: throw SpotifyAuthenticationException("Client secret must be set")
-
-		clientId = helper.clientId
-		clientSecret = helper.clientSecret
-	}
-
-	fun generateSpotifyUser(authenticationMap: Map<SpotifyAuthenticationComponent, String>): SpotifyUser {
-		val accessToken = authenticationMap[SpotifyAuthenticationComponent.AccessToken]
-		val expiryDuration = authenticationMap[SpotifyAuthenticationComponent.ExpiryDuration]
-
-		val user = SpotifyUser(helper, accessToken!!)
-		expiryDuration?.toIntOrNull()?.let { user.expiryDuration = it }
-
-		return user
-	}
+class SpotifyClientCredentialFlow(
+	private val helper: SpotifyAuthenticationHelper) : SpotifyAuthenticationMethod(helper, true) {
 
 	@Throws(SpotifyAuthenticationException::class)
 	fun requestAuthentication(): Map<SpotifyAuthenticationComponent, String> {
