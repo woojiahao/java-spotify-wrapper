@@ -11,8 +11,6 @@ class SpotifyClientCredentialFlow(private val helper: SpotifyAuthenticationHelpe
 	private var clientId: String
 	private var clientSecret: String
 
-	enum class AuthenticationComponent { AccessToken, ExpiryDuration }
-
 	init {
 		helper.clientId ?: throw SpotifyAuthenticationException("Client ID must be set")
 		helper.clientSecret ?: throw SpotifyAuthenticationException("Client secret must be set")
@@ -21,9 +19,9 @@ class SpotifyClientCredentialFlow(private val helper: SpotifyAuthenticationHelpe
 		clientSecret = helper.clientSecret
 	}
 
-	fun generateSpotifyUser(authenticationMap: Map<AuthenticationComponent, String>): SpotifyUser {
-		val accessToken = authenticationMap[AuthenticationComponent.AccessToken]
-		val expiryDuration = authenticationMap[AuthenticationComponent.ExpiryDuration]
+	fun generateSpotifyUser(authenticationMap: Map<SpotifyAuthenticationComponent, String>): SpotifyUser {
+		val accessToken = authenticationMap[SpotifyAuthenticationComponent.AccessToken]
+		val expiryDuration = authenticationMap[SpotifyAuthenticationComponent.ExpiryDuration]
 
 		val user = SpotifyUser(helper, accessToken!!)
 		expiryDuration?.toIntOrNull()?.let { user.expiryDuration = it }
@@ -32,7 +30,7 @@ class SpotifyClientCredentialFlow(private val helper: SpotifyAuthenticationHelpe
 	}
 
 	@Throws(SpotifyAuthenticationException::class)
-	fun requestAuthentication(): Map<AuthenticationComponent, String> {
+	fun requestAuthentication(): Map<SpotifyAuthenticationComponent, String> {
 		val base64EncodedAuthorization = String(Base64.getUrlEncoder().encode("$clientId:$clientSecret".toByteArray()))
 
 		val accessTokenUrl = HttpUrl.Builder()
@@ -76,8 +74,8 @@ class SpotifyClientCredentialFlow(private val helper: SpotifyAuthenticationHelpe
 		}
 
 		return mapOf(
-			AuthenticationComponent.AccessToken to accessTokenJson["access_token"].asString,
-			AuthenticationComponent.ExpiryDuration to accessTokenJson["expires_in"].asString
+			SpotifyAuthenticationComponent.AccessToken to accessTokenJson["access_token"].asString,
+			SpotifyAuthenticationComponent.ExpiryDuration to accessTokenJson["expires_in"].asString
 		)
 	}
 }
