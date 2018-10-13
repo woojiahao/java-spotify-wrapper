@@ -69,8 +69,8 @@ Map<SpotifyAuthorizationFlow.ParseComponent, String> authorizationParseMap = nul
 try {
     authorizationParseMap = flow.parseAuthorizationUrl(retrievedUrl);
 } catch (SpotifyAuthenticationException e) {
-    if (e.getParseComponentFail() != null) {
-        if (e.getParseComponentFail() == SpotifyAuthorizationFlow.ParseComponent.Error) {
+    if (e.getAuthorizationFlowComponentFail() != null) {
+        if (e.getAuthorizationFlowComponentFail() == SpotifyAuthorizationFlow.ParseComponent.Error) {
             System.out.println("You cannot use the application without authorizing Spotify access");
         }
     }

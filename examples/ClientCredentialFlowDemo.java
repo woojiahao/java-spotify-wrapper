@@ -1,4 +1,5 @@
 import me.chill.SpotifyUser;
+import me.chill.authentication.SpotifyAuthenticationComponent;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyClientCredentialFlow;
 import me.chill.authentication.SpotifyAuthenticationException;
@@ -8,7 +9,7 @@ import java.util.Map;
 public class ClientCredentialFlowDemo {
 	public static void main(String[] args) {
 		String clientId = "cea6a21eeb874d1d91dbaaccce0996f3";
-		String clientSecret = "466fce28225d441b852055b3fa71f399";
+		String clientSecret = "d4c86028bf4c4ac18938570c7fc9139f";
 
 		/*
 		Create a SpotifyAuthenticationHelper instance to hold onto the information that will be used during authentication.
@@ -34,7 +35,7 @@ public class ClientCredentialFlowDemo {
 		/*
 		.requestAuthentication() returns a map with the access token and expiry duration of that token
 		 */
-		Map<SpotifyClientCredentialFlow.AuthenticationComponent, String> authenticationMap = null;
+		Map<SpotifyAuthenticationComponent, String> authenticationMap = null;
 		try {
 			authenticationMap = flow.requestAuthentication();
 		} catch (SpotifyAuthenticationException e) {

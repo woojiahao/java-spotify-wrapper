@@ -1,14 +1,16 @@
 import me.chill.SpotifyUser;
+import me.chill.authentication.SpotifyAuthenticationComponent;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyAuthorizationFlow;
+import me.chill.authentication.SpotifyAuthenticationException;
 
 import java.util.Map;
 
 public class AuthorizationFlowDemo {
 	public static void main(String[] args) {
-		String clientId = "cea6a21eeb874d1d91dbaaccce0996f3";
 		String redirectUrl = "https://woojiahao.github.io";
-		String clientSecret = "599adc099986415db14142c7de6a023b";
+		String clientId = "cea6a21eeb874d1d91dbaaccce0996f3";
+		String clientSecret = "d4c86028bf4c4ac18938570c7fc9139f";
 
 		/*
 		Create a SpotifyAuthenticationHelper instance to hold onto the information that will be used during authentication.
@@ -40,14 +42,14 @@ public class AuthorizationFlowDemo {
 
 		This is the first step of the authentication flow which is to gain the user's authorization.
 		 */
-		String authorizationUrl = flow.generateLoginUrl().toString();
+		String authorizationUrl = flow.generateAuthorizationUrl().toString();
 		System.out.println(authorizationUrl);
 
 		/*
 		Depending on how you handle the user's authorization step, you should receive a redirect URL that contains several
 		query parameters.
 		 */
-		String retrievedUrl = "https://woojiahao.github.io/?code=AQCrtYCcm4keCE7-oPBav8IO1lmRp6yRHvGAGYLBMVNpYr6pE4Zdk9vQNYzTYjG9CIf3onx3_Q2PKZEbGTIH75q1KtMApUXcUM6ZwJPZ4m9og2bRaQwZ28_MTjtN6MT9aU65pJwVGUyrgzL_uo0vfqU8grUuhLXkB3NkLCq10uzkSnU98xKaparFb-Y6L3dMie8v";
+		String retrievedUrl = "https://woojiahao.github.io/?code=AQBgedOxtNuz-Au1TqPlatJTy_R-4u7qQrPUBGwsQrmHiDf_fLX1xjdhD7gJU4Qu8GwMCBSCfkCmAkUQ5YGUPJLPygQA9lDkacLE6DGYtLJfCxyR2tOFa9RV8wkWw1ZEXp64RLcW7Fp80fplNyVUfRuiUdZhF-ETiGOP2FlDGF4FRDTXlMWgGb6lnBh9PBuu-ZKt";
 
 		/*
 		.parseAuthorizationUrl() returns a map of the components of the retrieved URL
@@ -65,8 +67,8 @@ public class AuthorizationFlowDemo {
 			Exception object holds onto what part of the parsing failed, which might be useful when you wish to warn users
 			that they might not be able to use your application when they do not authorize.
 			 */
-			if (e.getParseComponentFail() != null) {
-				if (e.getParseComponentFail() == SpotifyAuthorizationFlow.ParseComponent.Error) {
+			if (e.getAuthorizationFlowComponentFail() != null) {
+				if (e.getAuthorizationFlowComponentFail() == SpotifyAuthorizationFlow.ParseComponent.Error) {
 					System.out.println("You cannot use the application without authorizing Spotify access");
 				}
 			}
@@ -85,7 +87,7 @@ public class AuthorizationFlowDemo {
 
 			Throws an exception if the exchange attempt fails.
 			 */
-			Map<SpotifyAuthorizationFlow.ExchangeComponent, String> exchangeInfo = null;
+			Map<SpotifyAuthenticationComponent, String> exchangeInfo = null;
 			try {
 				exchangeInfo = flow.exchangeAuthorizationCode(authorizationCode);
 			} catch (SpotifyAuthenticationException e) {
