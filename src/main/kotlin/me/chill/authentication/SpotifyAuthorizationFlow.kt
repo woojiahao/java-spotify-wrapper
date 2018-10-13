@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import okhttp3.*
 import java.io.IOException
+import java.net.MalformedURLException
 import java.util.*
 
 class SpotifyAuthorizationFlow(
@@ -71,32 +72,11 @@ class SpotifyAuthorizationFlow(
 
 	@Throws(SpotifyAuthenticationException::class)
 	fun parseAuthorizationUrl(url: String): Map<ParseComponent, String?> {
-		val httpUrl = HttpUrl.parse(url) ?: return emptyMap()
+		val httpUrl = HttpUrl.parse(url) ?: throw MalformedURLException("URL: $url is malformed")
 
 		val error = httpUrl.queryParameter("error")
 		val code = httpUrl.queryParameter("code")
 		val state = httpUrl.queryParameter("state")
-
-		helper.state?.let { sentState ->
-			state ?: throw SpotifyAuthenticationException(
-				ParseComponent.State,
-				mapOf(
-					"Cause" to "state was not received despite state being sent",
-					"Sent State" to sentState
-				)
-			)
-
-			if (sentState != state) {
-				throw SpotifyAuthenticationException(
-					ParseComponent.State,
-					mapOf(
-						"Cause" to "state received does not correspond with the sent state",
-						"Sent State" to sentState,
-						"Received State" to state
-					)
-				)
-			}
-		}
 
 		error?.let {
 			throw SpotifyAuthenticationException(
@@ -107,6 +87,8 @@ class SpotifyAuthorizationFlow(
 				)
 			)
 		}
+
+		checkMatchingState(state)
 
 		error ?: code
 		?: throw SpotifyAuthenticationException(
@@ -121,4 +103,6 @@ class SpotifyAuthorizationFlow(
 			ParseComponent.Code to code
 		)
 	}
+
+	fun generateAuthorizationUrl() = super.generateAuthorizationUrl("code")
 }

@@ -51,14 +51,37 @@ open class SpotifyAuthenticationMethod(
 		return httpUrl.toString().startsWith(helper.redirectUrl) && httpUrl.queryParameter("state") != null
 	}
 
-	fun generateAuthorizationUrl(): URL {
+	protected fun checkMatchingState(receivedState: String?) {
+		helper.state?.let { sentState ->
+			receivedState ?: throw SpotifyAuthenticationException(
+				SpotifyImplicitGrantFlow.ParseComponent.State,
+				mapOf(
+					"Cause" to "state was not received despite state being sent",
+					"Sent State" to sentState
+				)
+			)
+
+			if (sentState != receivedState) {
+				throw SpotifyAuthenticationException(
+					SpotifyImplicitGrantFlow.ParseComponent.State,
+					mapOf(
+						"Cause" to "state received does not correspond with the sent state",
+						"Sent State" to sentState,
+						"Received State" to receivedState
+					)
+				)
+			}
+		}
+	}
+
+	open fun generateAuthorizationUrl(responseType: String = ""): URL {
 		val builder = HttpUrl.Builder()
 			.scheme("https")
 			.host("accounts.spotify.com")
 			.addPathSegment("authorize")
 			.addQueryParameter("client_id", helper.clientId)
 			.addQueryParameter("redirect_uri", helper.redirectUrl)
-			.addQueryParameter("response_type", "code")
+			.addQueryParameter("response_type", responseType)
 
 		helper.state?.let { builder.addQueryParameter("state", it) }
 
