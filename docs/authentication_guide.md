@@ -26,7 +26,7 @@ Users have to authorize for your application to access parts of their Spotify ac
 All authentication processes will take in a `SpotifyAuthenticationHelper` instance, which holds on to any key information
 needed to begin authentication.
 
-You can retrieve the authorization url to redirect users to via the `.generateLoginUrl()` method.
+You can retrieve the authorization url to redirect users to via the `.generateAuthorizationUrl()` method.
 
 **Note:** At the very least, the **Client ID**, **Client Secret** and **Redirect URL** *must* be set for the helper, 
 otherwise, an unchecked `SpotifyAuthenticationException` is thrown and the program is terminated.
@@ -34,13 +34,14 @@ otherwise, an unchecked `SpotifyAuthenticationException` is thrown and the progr
 **Usage:**
 ```java
 SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
-                                .setClientId("cea6a21eeb874d1d91dbaaccce0996f3")
-                                .setClientSecret("599adc099986415db14142c7de6a023b")
-								.setRedirectUrl("https://woojiahao.github.io")
-								.build();
+    .setClientId(clientId)
+    .setClientSecret(clientSecret)
+    .setRedirectUrl(redirectUrl)
+    .setShowDialog(true)
+    .build();
 
 SpotifyAuthorizationFlow flow = new SpotifyAuthorizationFlow(helper);
-URL url = flow.generateLoginUrl();
+URL authorizationUrl = flow.generateAuthorizationUrl();
 System.out.println(url);
 ```
 
@@ -117,6 +118,77 @@ if (exchangeInfo != null) {
 }
 ```
 
+## Implicit Grant
+**Benefits:**
+
+* Simple
+* No need for client secret
+
+**Drawbacks:**
+
+* No refresh token given
+
+### Process
+[Example implementation of the implicit grant using the library](https://github.com/woojiahao/java-spotify-wrapper/blob/master/examples/ImplicitGrantFlowDemo.java)
+
+#### Getting User's Authorization
+Much like the [authorization flow](authentication_guide.md?id=authorization-flow), you have to get the user's authorization
+before being able to access the API on their behalf. This means you will need to display to the user, the authorization
+screen, which can be generated using the `.generateAuthorizationUrl()` method.
+
+**Note:** At the very least, the **Client ID** and **Redirect URL** *must* be set for the helper, 
+otherwise, an unchecked `SpotifyAuthenticationException` is thrown and the program is terminated.
+
+**Usage:**
+
+```java
+SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
+    .setClientId(clientId)
+    .setRedirectUrl(redirectUrl)
+    .setShowDialog(true)
+    .build();
+
+SpotifyImplicitGrantFlow flow = new SpotifyImplicitGrantFlow(helper);
+
+URL url = flow.generateAuthorizationUrl();
+System.out.println(url);
+```
+
+#### Retrieving Access Token
+After you have gotten the user's authorization, you can then parse the result of that operation and extract the access 
+token.
+
+**Usage:**
+
+```java
+Map<SpotifyAuthenticationComponent, String> info = null;
+try {
+    info = flow.extractAuthorizationInfo(retrievedUrl);
+} catch (MalformedURLException e) {
+    e.printStackTrace();
+} catch (SpotifyAuthenticationException e) {
+    if (e.getImplicitGrantFlowComponentFail() != null) {
+        if (e.getImplicitGrantFlowComponentFail() == SpotifyImplicitGrantFlow.ParseComponent.Error) {
+            System.out.println("Cannot continue without your authorization");
+        }
+    }
+    e.printStackTrace();
+}
+```
+
+#### Creating a Spotify User
+Once you've successfully gotten the access token, you can then create a `SpotifyUser` object and begin accessing the 
+API.
+
+**Usage:**
+```java
+if (info != null) {
+    SpotifyUser user = flow.generateSpotifyUser(info);
+
+    System.out.println("Access Token:" + user.getAccessToken());
+}
+```
+
 ## Client Credential Flow
 **Benefits:**
 
@@ -151,7 +223,7 @@ SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
 
 SpotifyClientCredentialFlow flow = new SpotifyClientCredentialFlow(helper);
 
-Map<SpotifyClientCredentialFlow.AuthenticationComponent, String> authenticationMap = null;
+Map<SpotifyAuthenticationComponent, String> authenticationMap = null;
 try {
     authenticationMap = flow.requestAuthentication();
 } catch (SpotifyAuthenticationException e) {
