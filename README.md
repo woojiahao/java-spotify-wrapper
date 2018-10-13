@@ -21,7 +21,7 @@ the library supports the access of these resources.
 
 ## Sample Usage
 In order to begin using the Spotify API, you have to create what is known as a **SpotifyUser**. This can be done either 
-by following a flow and [generating one](https://woojiahao.github.io/java-spotify-wrapper/authentication_guide), or 
+by following a flow and [generating one](https://woojiahao.github.io/java-spotify-wrapper/#/authentication_guide), or 
 manually creating one yourself:
 
 ```java
@@ -54,7 +54,7 @@ able to continually access the API without having to authorize themselves everyt
 
 [Example implementation of the authorization flow using the library](https://github.com/woojiahao/java-spotify-wrapper/blob/master/examples/AuthorizationFlowDemo.java)
 
-[More information about the process steps](https://woojiahao.github.io/java-spotify-wrapper/authentication_guide?id=authorization-flow)
+[More information about the process steps](https://woojiahao.github.io/java-spotify-wrapper/#/authentication_guide?id=authorization-flow)
 
 ### Implicit Grant
 This method of user authentication is recommended if the information you want to retrieve from the user's account is 
@@ -62,7 +62,7 @@ one-time and you won't need a persistent connection.
 
 [Example implementation of the implicit grant flow using the library](https://github.com/woojiahao/java-spotify-wrapper/blob/master/examples/ImplicitGrantDemo.java)
 
-[More information about the process steps](https://woojiahao.github.io/java-spotify-wrapper/authentication_guide?id=implicit-grant)
+[More information about the process steps](https://woojiahao.github.io/java-spotify-wrapper/#/authentication_guide?id=implicit-grant)
 
 ### Client Credentials
 This method of user authentication is used for server-to-server communication and does not require any authorization. 
@@ -70,7 +70,7 @@ However, because of that, there is no refresh token provided.
 
 [Example implementation of the client credential flow using the library](https://github.com/woojiahao/java-spotify-wrapper/blob/master/examples/ClientCredentialFlowDemo.java)
 
-[More information about the process steps](https://woojiahao.github.io/java-spotify-wrapper/authentication_guide?id=client-credential-flow)
+[More information about the process steps](https://woojiahao.github.io/java-spotify-wrapper/#/authentication_guide?id=client-credential-flow)
 
 ## Code Structure
 > TODO: Create a directory list for the structure of the code
