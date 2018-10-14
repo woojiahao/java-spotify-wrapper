@@ -2,12 +2,6 @@ package me.chill.models
 
 import com.google.gson.annotations.SerializedName
 
-enum class ReleaseDatePrecision {
-	@SerializedName("year") Year,
-	@SerializedName("month") Month,
-	@SerializedName("day") Day
-}
-
 data class Album (
 	val albumType: String,
 	val artists: List<Artist>,
@@ -26,5 +20,9 @@ data class Album (
 	val releaseDatePrecision: ReleaseDatePrecision,
 	val tracks: Paging<Track>,
 	val type: String,
-	@SerializedName("uri") val albumSpotifyUri: String
-)
+	@SerializedName("uri") val albumSpotifyUri: String) {
+
+	fun getArtists() {
+
+	}
+}

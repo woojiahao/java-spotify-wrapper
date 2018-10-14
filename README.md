@@ -31,10 +31,11 @@ SpotifyUser refreshUser = new SpotifyUser("<access_token>", "refresh_token");
 
 After that, you can proceed to apply the methods you wish to use on this **SpotifyUser** object.
 
-**Example:**
+**Getting An Album:**
 
 ```java
-List<Follow> follows = oneTimeUser.getFollows();
+Album album = oneTimeUser.getAlbum("0sNOF9WDwhWunNAHPD3Baj");
+System.out.println(album.getArtist());
 ```
 
 More information:
