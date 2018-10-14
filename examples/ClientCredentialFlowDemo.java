@@ -33,7 +33,7 @@ public class ClientCredentialFlowDemo {
 		SpotifyClientCredentialFlow flow = new SpotifyClientCredentialFlow(helper);
 
 		/*
-		.requestAuthentication() returns a map with the access token and expiry duration of that token
+		.requestAuthentication() returns a map with the models token and expiry duration of that token
 		 */
 		Map<SpotifyAuthenticationComponent, String> authenticationMap = null;
 		try {

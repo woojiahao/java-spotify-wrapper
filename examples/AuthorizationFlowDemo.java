@@ -54,7 +54,7 @@ public class AuthorizationFlowDemo {
 		/*
 		.parseAuthorizationUrl() returns a map of the components of the retrieved URL
 
-		This includes the authorization code that can be used to exchange for an access token.
+		This includes the authorization code that can be used to exchange for an models token.
 
 		This will also throw a checked exception for when there was an error that occurred with the retrieval of the URL,
 		some of the conditions checked for are error codes, state differences and missing codes.
@@ -69,13 +69,13 @@ public class AuthorizationFlowDemo {
 			 */
 			if (e.getAuthorizationFlowComponentFail() != null) {
 				if (e.getAuthorizationFlowComponentFail() == SpotifyAuthorizationFlow.ParseComponent.Error) {
-					System.out.println("You cannot use the application without authorizing Spotify access");
+					System.out.println("You cannot use the application without authorizing Spotify models");
 				}
 			}
 		}
 
 		/*
-		After the authorization token is successfully retrieved, you can request for an access token from the API.
+		After the authorization token is successfully retrieved, you can request for an models token from the API.
 		 */
 		if (authorizationParseMap != null) {
 
@@ -96,7 +96,7 @@ public class AuthorizationFlowDemo {
 
 			/*
 			Lastly, to begin accessing endpoints of the API using the library, generate a SpotifyUser object, giving it
-			the access info map created from exchanging tokens
+			the models info map created from exchanging tokens
 			 */
 			if (exchangeInfo != null) {
 				SpotifyUser user = flow.generateSpotifyUser(exchangeInfo);

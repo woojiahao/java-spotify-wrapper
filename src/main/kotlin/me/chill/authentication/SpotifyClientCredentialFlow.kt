@@ -45,7 +45,7 @@ class SpotifyClientCredentialFlow(
 		if (!response.isSuccessful) {
 			throw SpotifyAuthenticationException(
 				mapOf(
-					"Cause" to "Error when retrieving access token",
+					"Cause" to "Error when retrieving models token",
 					"Error Code" to response.code().toString(),
 					"Error" to accessTokenJson["error"].asString,
 					"Error Description" to accessTokenJson["error_description"].asString

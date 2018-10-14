@@ -1,12 +1,9 @@
 package me.chill.authentication
 
+import me.chill.utility.createErrorMessage
 import java.lang.Exception
 
-/**
- * Creates a formatted exception message based on the errMap given
- */
-class SpotifyAuthenticationException(errMap: Map<String, String>) : Exception(
-	"\n\n${errMap.map { "\t${it.key}: ${it.value}" }.joinToString("\n")}\n") {
+class SpotifyAuthenticationException(errMap: Map<String, String>) : Exception(createErrorMessage(errMap)) {
 	var authorizationFlowComponentFail: SpotifyAuthorizationFlow.ParseComponent? = null
 	var implicitGrantFlowComponentFail: SpotifyImplicitGrantFlow.ParseComponent? = null
 
