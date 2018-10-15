@@ -89,9 +89,9 @@ However, because of that, there is no refresh token provided.
 <ul>
     <li>Albums
         <ul>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L37">Get an album</a><li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L40">Get an album's tracks</a><li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L43">Get several albums</a><li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L37">Get an album</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L40">Get an album's tracks</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L43">Get several albums</a></li>
         </ul>
     </li>
 </ul>
