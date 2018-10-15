@@ -3,17 +3,21 @@ Simple to use Java wrapper for the [Spotify web API](https://developer.spotify.c
 
 ## Contents
 
-1. [Anonymous Access](https://github.com/woojiahao/java-spotify-wrapper#anonymous-access)
-2. [Sample Usage](https://github.com/woojiahao/java-spotify-wrapper#sample-usage)
-3. [User Authentication](https://github.com/woojiahao/java-spotify-wrapper#user-authentication)
-  
-    1. [Authorization Flow](https://github.com/woojiahao/java-spotify-wrapper#authorization-flow)
-    2. [Implicit Grant](https://github.com/woojiahao/java-spotify-wrapper#implicit-grant)
-    3. [Client Credentials Flow](https://github.com/woojiahao/java-spotify-wrapper#client-credentials-flow)
-
-4. [Code Structure](https://github.com/woojiahao/java-spotify-wrapper#code-structure)
-5. [Contributing](https://github.com/woojiahao/java-spotify-wrapper#contributing)
-6. [License](https://github.com/woojiahao/java-spotify-wrapper#license)
+<ol>
+	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#anonymous-access">Anonymous Access</a></li>
+	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#sample-usage">Sample Usage</a></li>
+	<li>
+        <a href="https://github.com/woojiahao/java-spotify-wrapper#user-authentication">User Authentication</a>
+        <ul>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper#authorization-flow">Authorization Flow</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper#implicit-grant">Implicit Grant</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper#client-credentials-flow">Credit Credentials Flow</a></li>
+        </ul>
+    </li>
+	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#code-structure">Code Structure</a></li>
+	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#contributing">Contributing</a></li>
+	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#license">License</a></li>
+</ol>
 
 ## Anonymous Access
 Some of Spotify's Web API is available to users even without an access token or performing any form of user authentication,
