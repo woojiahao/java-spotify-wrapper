@@ -9,6 +9,8 @@ import me.chill.models.Album;
 import me.chill.models.Paging;
 import me.chill.models.Track;
 
+import java.sql.SQLOutput;
+import java.util.List;
 import java.util.Map;
 
 public class AlbumQueryDemo {
@@ -34,10 +36,13 @@ public class AlbumQueryDemo {
 			SpotifyUser user = flow.generateSpotifyUser(info);
 
 			Album album = user.getSingleAlbum("6akEvsycLGftJxYudPjmqK").build().execute();
-			System.out.println(album);
+			System.out.println(album.toString());
 
 			Paging<Track> tracksInAlbum = user.getTracks("6akEvsycLGftJxYudPjmqK").limit(30).build().execute();
-			System.out.println(tracksInAlbum);
+			System.out.println(tracksInAlbum.toString());
+
+			List<Album> albums = user.getManyAlbums().addId("41MnTivkwTO3UUJ8DrqEJJ").addId("6JWc4iAiJ9FjyK0B59ABb4").build().execute();
+			albums.forEach(a -> System.out.println(a.toString()));
 		}
 	}
 }
