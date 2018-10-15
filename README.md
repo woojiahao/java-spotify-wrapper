@@ -16,6 +16,7 @@ Simple to use Java wrapper for the [Spotify web API](https://developer.spotify.c
     </li>
 	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#code-structure">Code Structure</a></li>
 	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#contributing">Contributing</a></li>
+	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#examples">Examples</a></li>
 	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#license">License</a></li>
 </ol>
 
@@ -38,7 +39,7 @@ After that, you can proceed to apply the methods you wish to use on this **Spoti
 **Getting An Album:**
 
 ```java
-Album album = oneTimeUser.getAlbum("0sNOF9WDwhWunNAHPD3Baj");
+Album album = oneTimeUser.getAlbum("0sNOF9WDwhWunNAHPD3Baj").build().execute();
 System.out.println(album.getArtist());
 ```
 
@@ -82,6 +83,18 @@ However, because of that, there is no refresh token provided.
 
 ## Contributing
 > TODO: Create a code of conduct + contributing guide
+
+## Examples
+
+<ul>
+    <li>Albums
+        <ul>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L37">Get an album</a><li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L40">Get an album's tracks</a><li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L43">Get several albums</a><li>
+        </ul>
+    </li>
+</ul>
 
 ## License
 java-spotify-wrapper is licensed under the MIT license, more about that can be found [here.](https://opensource.org/licenses/MIT)
