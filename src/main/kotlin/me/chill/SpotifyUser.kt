@@ -2,7 +2,9 @@ package me.chill
 
 import com.neovisionaries.i18n.CountryCode
 import me.chill.authentication.SpotifyAuthenticationHelper
-import me.chill.queries.SpotifyAlbumQuery
+import me.chill.queries.album.AlbumTrackQuery
+import me.chill.queries.album.SingleAlbumQuery
+import me.chill.queries.album.SpotifyAlbumQuery
 
 class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: String) {
 	var refreshToken: String? = null
@@ -14,5 +16,7 @@ class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: Stri
 		}
 	}
 
-	fun getAlbum(id: String, countryCode: CountryCode? = null) = SpotifyAlbumQuery().getAlbum(accessToken, id, countryCode)
+	fun getSingleAlbum(id: String) = SingleAlbumQuery.Builder(id, accessToken)
+
+	fun getTracks(id: String) = AlbumTrackQuery.Builder(id, accessToken)
 }

@@ -10,4 +10,6 @@ class SpotifyQueryException(code: Int, message: String) : Exception(
 			"Error Message" to message
 		)
 	)
-)
+) {
+	constructor(message: String) : this(-1, message)
+}

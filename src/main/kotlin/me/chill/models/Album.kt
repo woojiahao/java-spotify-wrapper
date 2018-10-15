@@ -20,9 +20,4 @@ data class Album (
 	val releaseDatePrecision: ReleaseDatePrecision,
 	val tracks: Paging<Track>,
 	val type: String,
-	@SerializedName("uri") val albumSpotifyUri: String) {
-
-	fun getArtists() {
-
-	}
-}
+	@SerializedName("uri") val albumSpotifyUri: String)
