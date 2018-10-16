@@ -5,6 +5,7 @@ import me.chill.queries.album.AlbumTrackQuery
 import me.chill.queries.album.ManyAlbumQuery
 import me.chill.queries.album.SingleAlbumQuery
 import me.chill.queries.artist.*
+import me.chill.queries.browse.SingleCategoryQuery
 
 class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: String) {
 	var refreshToken: String? = null
@@ -31,4 +32,6 @@ class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: Stri
 	fun getRelatedArtists(artistId: String) = RelatedArtistsQuery.Builder(artistId, accessToken)
 
 	fun getManyArtists() = ManyArtistQuery.Builder(accessToken)
+
+	fun getCategory(categoryId: String) = SingleCategoryQuery.Builder(categoryId, accessToken)
 }
