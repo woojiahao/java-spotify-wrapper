@@ -39,6 +39,9 @@ public class ArtistQueryDemo {
 
 			Artist artist = user.getSingleArtist("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
 			System.out.println(artist);
+
+			Paging<Album> artistAlbums = user.getArtistAlbums("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
+			System.out.println(artistAlbums);
 		}
 
 	}
