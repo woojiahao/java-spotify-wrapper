@@ -22,7 +22,7 @@ class AlbumTrackQuery private constructor(
 
 		market?.let { parameters["market"] = it }
 
-		val response = get("$primaryEndpoint$id/tracks", generateHeaders(accessToken), parameters)
+		val response = get("$albumEndpoint$id/tracks", generateHeaders(accessToken), parameters)
 
 		response.responseCheck()
 

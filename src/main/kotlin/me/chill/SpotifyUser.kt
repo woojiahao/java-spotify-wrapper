@@ -6,6 +6,7 @@ import me.chill.queries.album.AlbumTrackQuery
 import me.chill.queries.album.ManyAlbumQuery
 import me.chill.queries.album.SingleAlbumQuery
 import me.chill.queries.album.SpotifyAlbumQuery
+import me.chill.queries.artist.SingleArtistQuery
 
 class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: String) {
 	var refreshToken: String? = null
@@ -22,4 +23,6 @@ class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: Stri
 	fun getTracks(id: String) = AlbumTrackQuery.Builder(id, accessToken)
 
 	fun getManyAlbums() = ManyAlbumQuery.Builder(accessToken)
+
+	fun getSingleArtist(id: String) = SingleArtistQuery.Builder(id, accessToken)
 }

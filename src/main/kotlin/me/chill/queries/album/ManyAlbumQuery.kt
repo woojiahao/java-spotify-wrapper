@@ -17,7 +17,7 @@ class ManyAlbumQuery private constructor(
 
 		market?.let { parameters["market"] = it }
 
-		val response = get(primaryEndpoint, generateHeaders(accessToken), parameters)
+		val response = get(albumEndpoint, generateHeaders(accessToken), parameters)
 		response.responseCheck()
 
 		return gson
