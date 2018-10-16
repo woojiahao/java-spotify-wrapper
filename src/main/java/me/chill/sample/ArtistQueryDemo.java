@@ -42,7 +42,9 @@ public class ArtistQueryDemo {
 
 			Paging<Album> artistAlbums = user.getArtistAlbums("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
 			System.out.println(artistAlbums);
-		}
 
+			List<Track> topTracks = user.getArtistTopTracks("43ZHCT0cAZBISjO8DG9PnE").market(CountryCode.SG).build().execute();
+			System.out.println(topTracks);
+		}
 	}
 }
