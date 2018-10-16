@@ -45,6 +45,9 @@ public class ArtistQueryDemo {
 
 			List<Track> topTracks = user.getArtistTopTracks("43ZHCT0cAZBISjO8DG9PnE").market(CountryCode.SG).build().execute();
 			System.out.println(topTracks);
+
+			List<Artist> relatedArtist = user.getRelatedArtists("43ZHCT0cAZBISjO8DG9PnE").build().execute();
+			System.out.println(relatedArtist);
 		}
 	}
 }
