@@ -1,6 +1,7 @@
 package me.chill.sample;
 
 import com.neovisionaries.i18n.CountryCode;
+import com.sun.org.apache.xalan.internal.xsltc.dom.AdaptiveResultTreeImpl;
 import com.sun.org.apache.xalan.internal.xsltc.dom.SortingIterator;
 import me.chill.SpotifyUser;
 import me.chill.authentication.SpotifyAuthenticationComponent;
@@ -37,17 +38,20 @@ public class ArtistQueryDemo {
 		if (info != null) {
 			SpotifyUser user = flow.generateSpotifyUser(info);
 
-			Artist artist = user.getSingleArtist("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
-			System.out.println(artist);
+//			Artist artist = user.getSingleArtist("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
+//			System.out.println(artist);
+//
+//			Paging<Album> artistAlbums = user.getArtistAlbums("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
+//			System.out.println(artistAlbums);
+//
+//			List<Track> topTracks = user.getArtistTopTracks("43ZHCT0cAZBISjO8DG9PnE").market(CountryCode.SG).build().execute();
+//			System.out.println(topTracks);
+//
+//			List<Artist> relatedArtist = user.getRelatedArtists("43ZHCT0cAZBISjO8DG9PnE").build().execute();
+//			System.out.println(relatedArtist);
 
-			Paging<Album> artistAlbums = user.getArtistAlbums("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
-			System.out.println(artistAlbums);
-
-			List<Track> topTracks = user.getArtistTopTracks("43ZHCT0cAZBISjO8DG9PnE").market(CountryCode.SG).build().execute();
-			System.out.println(topTracks);
-
-			List<Artist> relatedArtist = user.getRelatedArtists("43ZHCT0cAZBISjO8DG9PnE").build().execute();
-			System.out.println(relatedArtist);
+			List<Artist> artists = user.getManyArtists().addId("0oSGxfWSnnOXhD2fKuz2Gy").build().execute();
+			System.out.println(artists);
 		}
 	}
 }

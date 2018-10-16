@@ -9,11 +9,11 @@ import me.chill.utility.responseCheck
 
 class ManyAlbumQuery private constructor(
 	private val accessToken: String,
-	private val ids: List<String>,
+	private val ids: String,
 	private val market: String?) : SpotifyAlbumQuery() {
 
 	override fun execute(): List<Album?> {
-		val parameters = mutableMapOf("ids" to ids.joinToString(","))
+		val parameters = mutableMapOf("ids" to ids)
 
 		market?.let { parameters["market"] = it }
 
@@ -37,14 +37,11 @@ class ManyAlbumQuery private constructor(
 		}
 
 		fun addId(id: String): Builder {
-			if (ids.size > 20) throw SpotifyQueryException("ID list cannot have more than 20 IDs")
 			ids.add(id)
 			return this
 		}
 
 		fun setIds(ids: List<String>): Builder {
-			if (ids.size > 20) throw SpotifyQueryException("ID list cannot have more than 20 IDs")
-			if (ids.isEmpty()) throw SpotifyQueryException("ID list must have at least 1 ID")
 			this.ids.clear()
 			this.ids.addAll(ids)
 			return this
@@ -52,7 +49,8 @@ class ManyAlbumQuery private constructor(
 
 		fun build(): ManyAlbumQuery {
 			if (ids.isEmpty()) throw SpotifyQueryException("ID list must consist of at least 1 ID")
-			return ManyAlbumQuery(accessToken, ids, market)
+			if (ids.size > 20) throw SpotifyQueryException("ID list cannot have more than 20 IDs")
+			return ManyAlbumQuery(accessToken, ids.joinToString(","), market)
 		}
 	}
 }

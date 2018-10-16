@@ -4,10 +4,7 @@ import me.chill.authentication.SpotifyAuthenticationHelper
 import me.chill.queries.album.AlbumTrackQuery
 import me.chill.queries.album.ManyAlbumQuery
 import me.chill.queries.album.SingleAlbumQuery
-import me.chill.queries.artist.ArtistAlbumQuery
-import me.chill.queries.artist.ArtistTopTrackQuery
-import me.chill.queries.artist.RelatedArtistsQuery
-import me.chill.queries.artist.SingleArtistQuery
+import me.chill.queries.artist.*
 
 class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: String) {
 	var refreshToken: String? = null
@@ -32,4 +29,6 @@ class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: Stri
 	fun getArtistTopTracks(artistId: String) = ArtistTopTrackQuery.Builder(artistId, accessToken)
 
 	fun getRelatedArtists(artistId: String) = RelatedArtistsQuery.Builder(artistId, accessToken)
+
+	fun getManyArtists() = ManyArtistQuery.Builder(accessToken)
 }
