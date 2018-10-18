@@ -6,8 +6,7 @@ import me.chill.authentication.SpotifyAuthenticationComponent;
 import me.chill.authentication.SpotifyAuthenticationException;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyClientCredentialFlow;
-import me.chill.models.FeaturedPlaylists;
-import me.chill.models.NewReleases;
+import me.chill.models.*;
 
 import java.util.Map;
 
@@ -33,17 +32,17 @@ public class BrowseQueryDemo {
 		if (info != null) {
 			SpotifyUser user = flow.generateSpotifyUser(info);
 
-//			Category category = user.getCategory("party").build().execute();
-//			System.out.println(category);
-//
-//			Paging<Playlist> playlists = user.getCategoryPlaylists("party").limit(1).build().execute();
-//			System.out.println(playlists);
-//
-//			Paging<Category> categories = user.getCategoryList().limit(1).build().execute();
-//			System.out.println(categories);
+			Category category = user.getCategory("party").build().execute();
+			System.out.println(category);
 
-//			FeaturedPlaylists featuredPlaylists = user.getFeaturedPlaylists().timestamp(2014, 10, 11, 1, 45, 9).build().execute();
-//			System.out.println(featuredPlaylists);
+			Paging<Playlist> playlists = user.getCategoryPlaylists("party").limit(1).build().execute();
+			System.out.println(playlists);
+
+			Paging<Category> categories = user.getCategoryList().limit(1).build().execute();
+			System.out.println(categories);
+
+			FeaturedPlaylists featuredPlaylists = user.getFeaturedPlaylists().timestamp(2014, 10, 11, 1, 45, 9).build().execute();
+			System.out.println(featuredPlaylists);
 
 			NewReleases newReleases = user.getNewReleases().country(CountryCode.SE).build().execute();
 			System.out.println(newReleases);
