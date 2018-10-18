@@ -5,10 +5,7 @@ import me.chill.authentication.SpotifyAuthenticationComponent;
 import me.chill.authentication.SpotifyAuthenticationException;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyClientCredentialFlow;
-import me.chill.models.Album;
-import me.chill.models.Category;
-import me.chill.models.Paging;
-import me.chill.models.Track;
+import me.chill.models.*;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +34,9 @@ public class BrowseQueryDemo {
 
 			Category category = user.getCategory("party").build().execute();
 			System.out.println(category);
-		}
 
+			Paging<Playlist> playlists = user.getCategoryPlaylists("party").limit(1).build().execute();
+			System.out.println(playlists);
+		}
 	}
 }
