@@ -37,6 +37,9 @@ public class BrowseQueryDemo {
 
 			Paging<Playlist> playlists = user.getCategoryPlaylists("party").limit(1).build().execute();
 			System.out.println(playlists);
+
+			Paging<Category> categories = user.getCategoryList().limit(1).build().execute();
+			System.out.println(categories);
 		}
 	}
 }
