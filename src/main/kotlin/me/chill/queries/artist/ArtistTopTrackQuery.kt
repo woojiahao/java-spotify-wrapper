@@ -19,7 +19,7 @@ class ArtistTopTrackQuery private constructor(
 
 		val response = query("$artistEndpoint$id/top-tracks", accessToken, parameters)
 
-		response.responseCheck()
+
 
 		return gson
 			.fromJson(response.text, JsonObject::class.java)

@@ -11,7 +11,7 @@ class SingleArtistQuery private constructor(
 	override fun execute(): Artist {
 		val response = query("$artistEndpoint$id", accessToken)
 
-		response.responseCheck()
+
 
 		return gson.fromJson(response.text, Artist::class.java)
 	}

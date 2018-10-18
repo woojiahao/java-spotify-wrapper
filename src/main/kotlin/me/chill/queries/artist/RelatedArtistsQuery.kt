@@ -12,7 +12,7 @@ class RelatedArtistsQuery private constructor(
 	override fun execute(): List<Artist> {
 		val response = query("$artistEndpoint$id/related-artists", accessToken)
 
-		response.responseCheck()
+
 
 		return gson
 			.fromJson(response.text, JsonObject::class.java)

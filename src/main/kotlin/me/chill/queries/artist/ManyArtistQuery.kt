@@ -14,8 +14,6 @@ class ManyArtistQuery private constructor(
 
 		val response = query(artistEndpoint, accessToken, parameters)
 
-		response.responseCheck()
-
 		return gson
 			.fromJson(response.text, JsonObject::class.java)
 			.getAsJsonArray("artists")

@@ -1,9 +1,7 @@
 package me.chill.queries.album
 
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
 import me.chill.models.Album
-import me.chill.utility.responseCheck
 
 class SingleAlbumQuery private constructor(
 	private val id: String,
@@ -11,10 +9,9 @@ class SingleAlbumQuery private constructor(
 	private val market: String?) : SpotifyAlbumQuery() {
 
 	override fun execute(): Album {
-		val parameters = market?.let { mapOf("market" to it) } ?: emptyMap()
+		val parameters = mapOf("market" to market)
 
-		val response = query("$albumEndpoint$id", generateHeaders(accessToken), parameters)
-		response.responseCheck()
+		val response = query("$albumEndpoint$id", accessToken, parameters)
 
 		return gson.fromJson(response.text, Album::class.java)
 	}
