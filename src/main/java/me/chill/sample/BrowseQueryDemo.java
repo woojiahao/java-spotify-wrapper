@@ -42,7 +42,7 @@ public class BrowseQueryDemo {
 //			Paging<Category> categories = user.getCategoryList().limit(1).build().execute();
 //			System.out.println(categories);
 
-			FeaturedPlaylists featuredPlaylists = user.getFeaturedPlaylists().timestamp(2017, 10, 11, 1, 45, 9).build().execute();
+			FeaturedPlaylists featuredPlaylists = user.getFeaturedPlaylists().timestamp(2014, 10, 11, 1, 45, 9).build().execute();
 			System.out.println(featuredPlaylists);
 		}
 	}

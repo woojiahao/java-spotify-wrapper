@@ -1,7 +1,6 @@
 package me.chill.queries.browse
 
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
 import me.chill.models.Paging
 import me.chill.models.Playlist
 import me.chill.queries.SpotifyQueryException
@@ -30,10 +29,9 @@ class FeaturedPlaylistsQuery private constructor(
 			"locale" to locale,
 			"country" to country,
 			"timestamp" to timestamp
-		).generateParameters()
-		
-		val response = get("${browseEndpoint}featured-playlists", generateHeaders(accessToken), parameters)
-		response.responseCheck()
+		)
+
+		val response = query("${browseEndpoint}featured-playlists", accessToken, parameters)
 
 		return gson.fromJson(response.text, FeaturedPlaylists::class.java)
 	}
