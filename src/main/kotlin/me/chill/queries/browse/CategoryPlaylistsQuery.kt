@@ -17,15 +17,12 @@ class CategoryPlaylistsQuery private constructor(
 
 	override fun execute(): Paging<Playlist> {
 		val parameters = mutableMapOf(
-			"limit" to limit.toString(),
-			"offset" to offset.toString()
+			"limit" to limit,
+			"offset" to offset,
+			"country" to country
 		)
 
-		country?.let { parameters["country"] = it }
-
-		val response = get("${browseEndpoint}categories/$id/playlists", generateHeaders(accessToken), parameters)
-
-		response.responseCheck()
+		val response = query("${browseEndpoint}categories/$id/playlists", accessToken, parameters)
 
 		return gson.fromJson<Paging<Playlist>>(gson.fromJson(response.text, JsonObject::class.java)["playlists"], Paging::class.java)
 	}

@@ -21,17 +21,14 @@ class ArtistAlbumQuery private constructor(
 	}
 
 	override fun execute(): Paging<Album> {
-		val parameters = mutableMapOf(
+		val parameters = mapOf(
 			"include_groups" to includeGroups,
-			"limit" to limit.toString(),
-			"offset" to offset.toString()
+			"limit" to limit,
+			"offset" to offset,
+			"market" to market
 		)
 
-		market?.let { parameters["market"] = it }
-
-		val response = get("$artistEndpoint$id/albums", generateHeaders(accessToken), parameters)
-
-		response.responseCheck()
+		val response = query("$artistEndpoint$id/albums", accessToken, parameters)
 
 		return gson.fromJson<Paging<Album>>(response.text, Paging::class.java)
 	}

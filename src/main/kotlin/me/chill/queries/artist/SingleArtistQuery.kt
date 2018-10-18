@@ -9,7 +9,7 @@ class SingleArtistQuery private constructor(
 	private val accessToken: String) : SpotifyArtistQuery() {
 
 	override fun execute(): Artist {
-		val response = get("$artistEndpoint$id", generateHeaders(accessToken))
+		val response = query("$artistEndpoint$id", accessToken)
 
 		response.responseCheck()
 

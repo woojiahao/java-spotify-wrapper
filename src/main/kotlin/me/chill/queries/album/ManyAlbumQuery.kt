@@ -2,7 +2,6 @@ package me.chill.queries.album
 
 import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
 import me.chill.models.Album
 import me.chill.queries.SpotifyQueryException
 import me.chill.utility.responseCheck
@@ -13,12 +12,12 @@ class ManyAlbumQuery private constructor(
 	private val market: String?) : SpotifyAlbumQuery() {
 
 	override fun execute(): List<Album?> {
-		val parameters = mutableMapOf("ids" to ids)
+		val parameters = mapOf(
+			"ids" to ids,
+			"market" to market
+		)
 
-		market?.let { parameters["market"] = it }
-
-		val response = get(albumEndpoint, generateHeaders(accessToken), parameters)
-		response.responseCheck()
+		val response = query(albumEndpoint, accessToken, parameters)
 
 		return gson
 			.fromJson(response.text, JsonObject::class.java)

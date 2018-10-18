@@ -15,7 +15,7 @@ abstract class Query {
 
 	protected fun Map<String, Any?>.generateParameters() = mapNotNull { it.value?.let { _ -> Pair(it.key, it.value.toString()) } }.toMap()
 
-	protected fun query(endpoint: String, accessToken: String, parameters: Map<String, Any?>): Response {
+	protected fun query(endpoint: String, accessToken: String, parameters: Map<String, Any?> = mapOf()): Response {
 		val response = get(endpoint, generateHeaders(accessToken), parameters.generateParameters())
 		response.responseCheck()
 		return response

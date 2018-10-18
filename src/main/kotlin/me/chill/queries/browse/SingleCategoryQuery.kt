@@ -13,13 +13,12 @@ class SingleCategoryQuery private constructor(
 	private val locale: String?) : SpotifyBrowseQuery() {
 
 	override fun execute(): Category {
-		val parameters = mutableMapOf<String, String>()
-		country?.let { parameters["country"] = it }
-		locale?.let { parameters["locale"] = it }
+		val parameters = mapOf(
+			"country" to country,
+			"locale" to locale
+		)
 
-		val response = get("${browseEndpoint}categories/$id", generateHeaders(accessToken), parameters)
-
-		response.responseCheck()
+		val response = query("${browseEndpoint}categories/$id", accessToken, parameters)
 
 		return gson.fromJson(response.text, Category::class.java)
 	}

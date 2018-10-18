@@ -10,7 +10,7 @@ class RelatedArtistsQuery private constructor(
 	private val accessToken: String) : SpotifyArtistQuery() {
 
 	override fun execute(): List<Artist> {
-		val response = get("$artistEndpoint$id/related-artists", generateHeaders(accessToken))
+		val response = query("$artistEndpoint$id/related-artists", accessToken)
 
 		response.responseCheck()
 

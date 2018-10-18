@@ -1,8 +1,6 @@
 package me.chill.queries.artist
 
 import com.google.gson.JsonObject
-import javafx.scene.effect.Light
-import khttp.get
 import me.chill.models.Artist
 import me.chill.queries.SpotifyQueryException
 import me.chill.utility.responseCheck
@@ -14,7 +12,7 @@ class ManyArtistQuery private constructor(
 	override fun execute(): List<Artist> {
 		val parameters = mapOf("ids" to ids)
 
-		val response = get(artistEndpoint, generateHeaders(accessToken), parameters)
+		val response = query(artistEndpoint, accessToken, parameters)
 
 		response.responseCheck()
 

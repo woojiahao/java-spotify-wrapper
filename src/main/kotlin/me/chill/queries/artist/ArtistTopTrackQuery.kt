@@ -17,7 +17,7 @@ class ArtistTopTrackQuery private constructor(
 			"market" to market
 		)
 
-		val response = get("$artistEndpoint$id/top-tracks", generateHeaders(accessToken), parameters)
+		val response = query("$artistEndpoint$id/top-tracks", accessToken, parameters)
 
 		response.responseCheck()
 

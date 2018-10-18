@@ -1,11 +1,9 @@
 package me.chill.queries.album
 
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
 import me.chill.models.Paging
 import me.chill.models.Track
 import me.chill.queries.SpotifyQueryException
-import me.chill.utility.responseCheck
 
 class AlbumTrackQuery private constructor(
 	private val id: String,
@@ -15,16 +13,13 @@ class AlbumTrackQuery private constructor(
 	private val market: String?) : SpotifyAlbumQuery() {
 
 	override fun execute(): Paging<Track> {
-		val parameters = mutableMapOf(
-			"limit" to limit.toString(),
-			"offset" to offset.toString()
+		val parameters = mapOf(
+			"limit" to limit,
+			"offset" to offset,
+			"market" to market
 		)
 
-		market?.let { parameters["market"] = it }
-
-		val response = get("$albumEndpoint$id/tracks", generateHeaders(accessToken), parameters)
-
-		response.responseCheck()
+		val response = query("$albumEndpoint$id/tracks", accessToken, parameters)
 
 		return gson.fromJson<Paging<Track>>(response.text, Paging::class.java)
 	}

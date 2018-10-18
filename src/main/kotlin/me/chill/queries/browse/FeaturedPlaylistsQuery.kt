@@ -1,18 +1,11 @@
 package me.chill.queries.browse
 
 import com.neovisionaries.i18n.CountryCode
-import me.chill.models.Paging
-import me.chill.models.Playlist
+import me.chill.models.FeaturedPlaylists
 import me.chill.queries.SpotifyQueryException
-import me.chill.utility.responseCheck
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
-
-data class FeaturedPlaylists(
-	val message: String,
-	val playlists: Paging<Playlist>
-)
 
 class FeaturedPlaylistsQuery private constructor(
 	private val accessToken: String,

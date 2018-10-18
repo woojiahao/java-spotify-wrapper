@@ -16,17 +16,14 @@ class CategoryListQuery private constructor(
 	private val country: String?) : SpotifyBrowseQuery() {
 
 	override fun execute(): Paging<Category> {
-		val parameters = mutableMapOf(
-			"limit" to limit.toString(),
-			"offset" to offset.toString()
+		val parameters = mapOf(
+			"limit" to limit,
+			"offset" to offset,
+			"locale" to locale,
+			"country" to country
 		)
 
-		locale?.let { parameters["locale"] = it }
-		country?.let { parameters["country"] = it }
-
-		val response = get("${browseEndpoint}categories", generateHeaders(accessToken), parameters)
-
-		response.responseCheck()
+		val response = query("${browseEndpoint}categories", accessToken, parameters)
 
 		return gson.fromJson<Paging<Category>>(gson.fromJson(response.text, JsonObject::class.java)["categories"], Paging::class.java)
 	}

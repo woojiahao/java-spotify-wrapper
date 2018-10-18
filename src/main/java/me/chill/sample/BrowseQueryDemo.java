@@ -5,10 +5,8 @@ import me.chill.authentication.SpotifyAuthenticationComponent;
 import me.chill.authentication.SpotifyAuthenticationException;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyClientCredentialFlow;
-import me.chill.models.*;
-import me.chill.queries.browse.FeaturedPlaylists;
+import me.chill.models.FeaturedPlaylists;
 
-import java.util.List;
 import java.util.Map;
 
 public class BrowseQueryDemo {
