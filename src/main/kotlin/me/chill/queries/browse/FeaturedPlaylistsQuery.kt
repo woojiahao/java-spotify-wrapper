@@ -24,15 +24,14 @@ class FeaturedPlaylistsQuery private constructor(
 	private val timestamp: String?) : SpotifyBrowseQuery() {
 
 	override fun execute(): FeaturedPlaylists {
-		val parameters = mutableMapOf(
-			"limit" to limit.toString(),
-			"offset" to offset.toString()
-		)
-
-		locale?.let { parameters["locale"] = it }
-		country?.let { parameters["country"] = it }
-		timestamp?.let { parameters["timestamp"] = it }
-
+		val parameters = mapOf(
+			"limit" to limit,
+			"offset" to offset,
+			"locale" to locale,
+			"country" to country,
+			"timestamp" to timestamp
+		).generateParameters()
+		
 		val response = get("${browseEndpoint}featured-playlists", generateHeaders(accessToken), parameters)
 		response.responseCheck()
 

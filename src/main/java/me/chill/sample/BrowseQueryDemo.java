@@ -33,14 +33,14 @@ public class BrowseQueryDemo {
 		if (info != null) {
 			SpotifyUser user = flow.generateSpotifyUser(info);
 
-			Category category = user.getCategory("party").build().execute();
-			System.out.println(category);
-
-			Paging<Playlist> playlists = user.getCategoryPlaylists("party").limit(1).build().execute();
-			System.out.println(playlists);
-
-			Paging<Category> categories = user.getCategoryList().limit(1).build().execute();
-			System.out.println(categories);
+//			Category category = user.getCategory("party").build().execute();
+//			System.out.println(category);
+//
+//			Paging<Playlist> playlists = user.getCategoryPlaylists("party").limit(1).build().execute();
+//			System.out.println(playlists);
+//
+//			Paging<Category> categories = user.getCategoryList().limit(1).build().execute();
+//			System.out.println(categories);
 
 			FeaturedPlaylists featuredPlaylists = user.getFeaturedPlaylists().timestamp(2017, 10, 11, 1, 45, 9).build().execute();
 			System.out.println(featuredPlaylists);
