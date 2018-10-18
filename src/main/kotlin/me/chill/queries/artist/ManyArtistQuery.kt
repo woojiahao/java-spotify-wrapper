@@ -3,7 +3,6 @@ package me.chill.queries.artist
 import com.google.gson.JsonObject
 import me.chill.models.Artist
 import me.chill.queries.SpotifyQueryException
-import me.chill.utility.responseCheck
 
 class ManyArtistQuery private constructor(
 	private val accessToken: String,

@@ -1,11 +1,13 @@
 package me.chill.sample;
 
+import com.neovisionaries.i18n.CountryCode;
 import me.chill.SpotifyUser;
 import me.chill.authentication.SpotifyAuthenticationComponent;
 import me.chill.authentication.SpotifyAuthenticationException;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyClientCredentialFlow;
 import me.chill.models.FeaturedPlaylists;
+import me.chill.models.NewReleases;
 
 import java.util.Map;
 
@@ -40,8 +42,11 @@ public class BrowseQueryDemo {
 //			Paging<Category> categories = user.getCategoryList().limit(1).build().execute();
 //			System.out.println(categories);
 
-			FeaturedPlaylists featuredPlaylists = user.getFeaturedPlaylists().timestamp(2014, 10, 11, 1, 45, 9).build().execute();
-			System.out.println(featuredPlaylists);
+//			FeaturedPlaylists featuredPlaylists = user.getFeaturedPlaylists().timestamp(2014, 10, 11, 1, 45, 9).build().execute();
+//			System.out.println(featuredPlaylists);
+
+			NewReleases newReleases = user.getNewReleases().country(CountryCode.SE).build().execute();
+			System.out.println(newReleases);
 		}
 	}
 }
