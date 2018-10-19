@@ -94,6 +94,25 @@ However, because of that, there is no refresh token provided.
             <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L43">Get several albums</a></li>
         </ul>
     </li>
+    <li>Artists
+        <ul>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L39">Get an artist</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L42">Get an artist's albums</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L45">Get an artist's top tracks</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L48">Get an artist's related artists</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L51">Get several artists</a></li>
+        </ul>
+    </li>
+    <li>Browse
+        <ul>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L35">Get a category</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L38">Get a category's playlists</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L41">Get a list of categories</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L44">Get a list of featured playlists</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L47">Get a list of new releases</a></li>
+            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L35">Get a list of recommendations</a></li>
+        </ul>
+    </li>
 </ul>
 
 ## License
