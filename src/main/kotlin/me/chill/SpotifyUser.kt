@@ -42,4 +42,6 @@ class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: Stri
 	fun getFeaturedPlaylists() = FeaturedPlaylistsQuery.Builder(accessToken)
 
 	fun getNewReleases() = NewReleasesQuery.Builder(accessToken)
+
+	fun getSeedRecommendation() = SeedQuery.Builder(accessToken)
 }

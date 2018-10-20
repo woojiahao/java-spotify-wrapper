@@ -7,6 +7,7 @@ import me.chill.authentication.SpotifyAuthenticationException;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyClientCredentialFlow;
 import me.chill.models.*;
+import me.chill.queries.browse.SeedQuery;
 
 import java.util.Map;
 
@@ -46,6 +47,21 @@ public class BrowseQueryDemo {
 
 			NewReleases newReleases = user.getNewReleases().country(CountryCode.SE).build().execute();
 			System.out.println(newReleases);
+
+			Recommendation recommendation = user
+				.getSeedRecommendation()
+				.limit(1)
+				.acousticness(SeedQuery.Flag.Min, 0.1)
+				.addSeedArtist("4NHQUGzhtTLFvgF5SZesLK")
+				.addSeedGenre("party")
+				.addSeedGenre("chill")
+				.danceability(SeedQuery.Flag.Max, 0.8)
+				.danceability(SeedQuery.Flag.Min, 0.5)
+				.duration(SeedQuery.Flag.Target, 1400)
+				.build()
+				.execute();
+
+			recommendation.getSeeds().forEach(System.out::println);
 		}
 	}
 }
