@@ -32,17 +32,11 @@ open class SpotifyAuthenticationMethod(
 
 	fun generateSpotifyUser(authenticationMap: Map<SpotifyAuthenticationComponent, String>): SpotifyUser {
 		val accessToken = authenticationMap[SpotifyAuthenticationComponent.AccessToken]
+			?: throw SpotifyAuthenticationException("Access Token cannot be null")
 		val expiryDuration = authenticationMap[SpotifyAuthenticationComponent.ExpiryDuration]
+		val refreshToken = authenticationMap[SpotifyAuthenticationComponent.RefreshToken]
 
-		val user = SpotifyUser(helper, accessToken!!)
-		expiryDuration?.toIntOrNull()?.let { user.expiryDuration = it }
-
-		authenticationMap
-			.takeIf { it.containsKey(SpotifyAuthenticationComponent.RefreshToken) }
-			?.get(SpotifyAuthenticationComponent.RefreshToken)
-			.let { user.refreshToken = it }
-
-		return user
+		return SpotifyUser(clientId, helper.clientSecret, accessToken, refreshToken, expiryDuration?.toInt())
 	}
 
 	fun isFinalRedirectUrl(url: String): Boolean {

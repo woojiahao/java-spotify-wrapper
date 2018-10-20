@@ -1,21 +1,66 @@
 package me.chill
 
-import me.chill.authentication.SpotifyAuthenticationHelper
+import khttp.post
+import me.chill.authentication.SpotifyAuthenticationException
 import me.chill.queries.album.AlbumTrackQuery
 import me.chill.queries.album.ManyAlbumQuery
 import me.chill.queries.album.SingleAlbumQuery
 import me.chill.queries.artist.*
 import me.chill.queries.browse.*
+import java.util.*
+import kotlin.concurrent.timerTask
 
-class SpotifyUser(val helper: SpotifyAuthenticationHelper, val accessToken: String) {
-	var refreshToken: String? = null
-	var expiryDuration: Int? = null
+class SpotifyUser(
+	val clientId: String,
+	val clientSecret: String?,
+	private var accessToken: String,
+	private val refreshToken: String? = null,
+	private var expiryDuration: Int? = null) {
 
 	init {
-		refreshToken?.let {
-			// TODO: Implement token refreshing logic
+		refreshToken?.let { _ ->
+			expiryDuration?.let { _ ->
+				println("Auto refreshing access tokens")
+				Timer().scheduleAtFixedRate(
+					timerTask {
+						clientSecret?.let { _ ->
+							val base64EncodedAuthorization = String(Base64.getUrlEncoder().encode("$clientId:$clientSecret".toByteArray()))
+
+							val response = post(
+								"https://accounts.spotify.com/api/token",
+								mapOf(
+									"Content-Type" to "application/x-www-form-urlencoded",
+									"Authorization" to "Basic $base64EncodedAuthorization"
+								),
+								data = mapOf(
+									"grant_type" to "refresh_token",
+									"refresh_token" to refreshToken
+								)
+							)
+
+							if (response.statusCode >= 400) {
+								cancel()
+								throw SpotifyAuthenticationException(
+									mapOf(
+										"Error Code" to response.statusCode.toString(),
+										"Error" to response.jsonObject.getString("error"),
+										"Error Description" to response.jsonObject.getString("error_description")
+									)
+								)
+							}
+
+							accessToken = response.jsonObject.getString("access_token")
+							expiryDuration = response.jsonObject.getInt("expires_in")
+
+							expiryDuration ?: cancel()
+						}
+					}, (expiryDuration!! * 1000).toLong(), (expiryDuration!! * 1000).toLong()
+				)
+			}
 		}
 	}
+
+	fun getAccessToken() = accessToken
 
 	fun getSingleAlbum(albumId: String) = SingleAlbumQuery.Builder(albumId, accessToken)
 

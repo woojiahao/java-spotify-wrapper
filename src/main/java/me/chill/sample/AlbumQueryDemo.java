@@ -15,7 +15,7 @@ import java.util.Map;
 public class AlbumQueryDemo {
 	public static void main(String[] args) {
 		String clientId = "cea6a21eeb874d1d91dbaaccce0996f3";
-		String clientSecret = "5c8851ba3b3f4b4b8d71c791eb6865f9";
+		String clientSecret = "34dfe5eb8e5b4766a6fb4d8103605baa";
 
 		SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
 			.setClientId(clientId)

@@ -62,7 +62,6 @@ class SpotifyAuthorizationFlow(
 			)
 		}
 
-
 		return mapOf(
 			SpotifyAuthenticationComponent.AccessToken to accessTokenJson["access_token"].asString,
 			SpotifyAuthenticationComponent.RefreshToken to accessTokenJson["refresh_token"].asString,
