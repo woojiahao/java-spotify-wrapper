@@ -9,6 +9,7 @@ import me.chill.authentication.SpotifyClientCredentialFlow;
 import me.chill.models.*;
 import me.chill.queries.browse.SeedQuery;
 
+import java.util.List;
 import java.util.Map;
 
 public class BrowseQueryDemo {
@@ -62,6 +63,9 @@ public class BrowseQueryDemo {
 				.execute();
 
 			recommendation.getSeeds().forEach(System.out::println);
+
+			List<String> availableGenresForSeeds = user.getAvailableGenreSeeds().build().execute();
+			availableGenresForSeeds.forEach(System.out::println);
 		}
 	}
 }

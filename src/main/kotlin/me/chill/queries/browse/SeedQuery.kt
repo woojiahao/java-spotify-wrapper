@@ -4,6 +4,7 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Recommendation
 import me.chill.queries.SpotifyQueryException
 
+// TODO: Make an enumeration for the genre types
 class SeedQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
