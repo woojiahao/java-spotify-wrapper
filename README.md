@@ -88,7 +88,40 @@ However, because of that, there is no refresh token provided.
 [More information about the process steps](https://woojiahao.github.io/java-spotify-wrapper/#/authentication_guide?id=client-credential-flow)
 
 ## Code Structure
-> TODO: Create a directory list for the structure of the code
+### Folder Structure
+```
+(/)
+|
+|_____(docs) - Library's documentation
+|
+|_____(src/main) - Source code and examples
+|     |
+|     |_____(java/me/chill/sample) - Example usage  
+|     |
+|     |_____(kotlin/me/chill) - Library root
+|           |
+|           |_____(authentication) - Code for authentication method
+|           |
+|           |_____(models) - Every data model used
+|           |
+|           |_____(queries) - Contains sub-folders for each endpoint
+|           |
+|           |_____(utility) - General utility functions
+|           |
+|           |_____[SpotifyUser.kt] - Authenticated user type
+|  
+|_____[.gitignore]
+|
+|_____[CODE_OF_CONDUCT.md] 
+|
+|_____[CONTRIBUTING.md] 
+|
+|_____[LICENSE.md] 
+|
+|_____[README.md] 
+|
+|_____[pom.xml] 
+```
 
 ## Contributing
 The project's code of conduct can be found [here.](https://github.com/woojiahao/java-spotify-wrapper/blob/master/CODE_OF_CONDUCT.md)
