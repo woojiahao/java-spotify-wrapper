@@ -92,7 +92,7 @@ However, because of that, there is no refresh token provided.
 ## Contributing
 The project's code of conduct can be found [here.](https://github.com/woojiahao/java-spotify-wrapper/blob/master/CODE_OF_CONDUCT.md)
 
-If you wish to make a contribution, be sure to read the [contribution guide.](https://github.com/woojiahao/java-spotify-wrapper/blob/master/CONTRIBUTION.md)
+If you wish to make a contribution, be sure to read the [contribution guide.](https://github.com/woojiahao/java-spotify-wrapper/blob/master/CONTRIBUTING.md)
 
 ## Examples
 
