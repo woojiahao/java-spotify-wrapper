@@ -108,12 +108,13 @@ If you wish to make a contribution, be sure to read the [contribution guide.](ht
     * [Get an artist's related artists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L48)
     * [Get several artists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L51)
 * **Browse**
-    * [Get a category](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L35)
-    * [Get a category's playlists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L38)
-    * [Get a list of categories](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L41)
-    * [Get a list of featured playlists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L44)
-    * [Get a list of new releases](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L47)
-    * [Get a list of recommendations](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L35)
+    * [Get a category](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L37)
+    * [Get a category's playlists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L40)
+    * [Get a list of categories](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L43)
+    * [Get a list of featured playlists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L46)
+    * [Get a list of new releases](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L49)
+    * [Get a list of recommendations](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L52)
+    * [Get a list of available genre seeds](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L67)
 
 ## License
 java-spotify-wrapper is licensed under the MIT license, more about that can be found [here.](https://opensource.org/licenses/MIT)
@@ -136,6 +137,7 @@ java-spotify-wrapper is licensed under the MIT license, more about that can be f
         * [ ] Bug Reporting
         * [ ] Feature
     * [ ] PR Templates
+    * [ ] Documentation Templates
 * [ ] Sample Application
 * [ ] Testing
     * [ ] CI
