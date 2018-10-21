@@ -1,4 +1,4 @@
 * [Home](/)
 * [Quickstart](/)
 * [Authentication Guide](authentication_guide.md)
-* [Album Queries](album_query.md)
+<!-- * [Album Endpoint](album_endpoint.md) -->

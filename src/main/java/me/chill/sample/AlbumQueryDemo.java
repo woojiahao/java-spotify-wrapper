@@ -37,7 +37,7 @@ public class AlbumQueryDemo {
 			Album album = user.getSingleAlbum("6akEvsycLGftJxYudPjmqK").build().execute();
 			System.out.println(album.toString());
 
-			Paging<Track> tracksInAlbum = user.getTracks("6akEvsycLGftJxYudPjmqK").limit(30).build().execute();
+			Paging<Track> tracksInAlbum = user.getAlbumTracks("6akEvsycLGftJxYudPjmqK").limit(30).build().execute();
 			System.out.println(tracksInAlbum.toString());
 
 			List<Album> albums = user.getManyAlbums().addId("41MnTivkwTO3UUJ8DrqEJJ").addId("6JWc4iAiJ9FjyK0B59ABb4").build().execute();
