@@ -2,8 +2,8 @@ package me.chill.authentication
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import okhttp3.*
-import java.io.IOException
+import khttp.post
+import okhttp3.HttpUrl
 import java.net.MalformedURLException
 import java.util.*
 
@@ -16,46 +16,25 @@ class SpotifyAuthorizationFlow(
 	fun exchangeAuthorizationCode(authorizationCode: String): Map<SpotifyAuthenticationComponent, String> {
 		val base64EncodedAuthorization = String(Base64.getUrlEncoder().encode("$clientId:$clientSecret".toByteArray()))
 
-		val accessTokenUrl = HttpUrl.Builder()
-			.scheme("https")
-			.host("accounts.spotify.com")
-			.addPathSegment("api")
-			.addPathSegment("token")
-			.build()
-			.url()
+		val response = post(
+			"https://accounts.spotify.com/api/token",
+			mapOf(
+				"Content-Type" to "application/x-www-form-urlencoded",
+				"Authorization" to "Basic $base64EncodedAuthorization"
+			),
+			data = mapOf(
+				"grant_type" to "authorization_code",
+				"code" to authorizationCode,
+				"redirect_uri" to redirectUrl
+			))
 
-		val requestBody = FormBody.Builder()
-			.add("grant_type", "authorization_code")
-			.add("code", authorizationCode)
-			.add("redirect_uri", redirectUrl)
-			.add("client_id", clientId)
-			.add("client_secret", clientSecret)
-			.build()
+		val accessTokenJson = Gson().fromJson(response.text, JsonObject::class.java)
 
-		val headers = Headers.Builder()
-			.add("Content-Type", "application/x-www-form-urlencoded")
-			.add("Authorization", "Basic $base64EncodedAuthorization")
-			.build()
-
-		val request = Request.Builder().url(accessTokenUrl).headers(headers).post(requestBody).build()
-
-		val client = OkHttpClient()
-		var response: Response? = null
-		try {
-			response = client.newCall(request).execute()
-		} catch (e: IOException) {
-			e.printStackTrace()
-		}
-
-		response ?: throw SpotifyAuthenticationException("JSON response for token was null")
-
-		val accessTokenJson = Gson().fromJson(response.body()?.string(), JsonObject::class.java)
-
-		if (!response.isSuccessful) {
+		if (response.statusCode >= 400) {
 			throw SpotifyAuthenticationException(
 				mapOf(
 					"Cause" to "Error when retrieving models token",
-					"Error Code" to response.code().toString(),
+					"Error Code" to response.statusCode.toString(),
 					"Error" to accessTokenJson["error"].asString,
 					"Error Description" to accessTokenJson["error_description"].asString
 				)
