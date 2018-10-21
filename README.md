@@ -51,7 +51,6 @@ Recommendation recommendation = oneTimeUser
 recommendation.getSeeds().forEach(System.out::println)
 ```
 
-
 More information:
 
 * [Examples](https://github.com/woojiahao/java-spotify-wrapper/tree/master/examples)
