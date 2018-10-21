@@ -90,7 +90,9 @@ However, because of that, there is no refresh token provided.
 > TODO: Create a directory list for the structure of the code
 
 ## Contributing
-> TODO: Create a code of conduct + contributing guide
+The project's code of conduct can be found [here.](https://github.com/woojiahao/java-spotify-wrapper/blob/master/CODE_OF_CONDUCT.md)
+
+If you wish to make a contribution, be sure to read the [contribution guide.](https://github.com/woojiahao/java-spotify-wrapper/blob/master/CONTRIBUTION.md)
 
 ## Examples
 
