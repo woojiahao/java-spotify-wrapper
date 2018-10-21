@@ -2,23 +2,16 @@
 Simple to use Java wrapper for the [Spotify web API](https://developer.spotify.com/documentation/web-api/)
 
 ## Contents
-
-<ol>
-	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#anonymous-access">Anonymous Access</a></li>
-	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#sample-usage">Sample Usage</a></li>
-	<li>
-        <a href="https://github.com/woojiahao/java-spotify-wrapper#user-authentication">User Authentication</a>
-        <ul>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper#authorization-flow">Authorization Flow</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper#implicit-grant">Implicit Grant</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper#client-credentials-flow">Credit Credentials Flow</a></li>
-        </ul>
-    </li>
-	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#code-structure">Code Structure</a></li>
-	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#contributing">Contributing</a></li>
-	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#examples">Examples</a></li>
-	<li><a href="https://github.com/woojiahao/java-spotify-wrapper#license">License</a></li>
-</ol>
+1. **[Anonymous Access](https://github.com/woojiahao/java-spotify-wrapper#anonymous-access)**
+2. **[Sample Usage](https://github.com/woojiahao/java-spotify-wrapper#sample-usage)**
+3. **[User Authentication](https://github.com/woojiahao/java-spotify-wrapper#user-authentication)**
+   * [Authorization Flow](https://github.com/woojiahao/java-spotify-wrapper#authorization-flow)
+   * [Implicit Grant](https://github.com/woojiahao/java-spotify-wrapper#implicit-grant)
+   * [Credit Credentials Flow](https://github.com/woojiahao/java-spotify-wrapper#client-credentials-flow)
+4. **[Code Structure](https://github.com/woojiahao/java-spotify-wrapper#code-structure)**
+5. **[Contributing](https://github.com/woojiahao/java-spotify-wrapper#contributing)**
+6. **[Examples](https://github.com/woojiahao/java-spotify-wrapper#examples)**
+7. **[License](https://github.com/woojiahao/java-spotify-wrapper#license)**
 
 ## Anonymous Access
 Some of Spotify's Web API is available to users even without an access token or performing any form of user authentication,
@@ -36,12 +29,27 @@ SpotifyUser refreshUser = new SpotifyUser("<access_token>", "refresh_token");
 
 After that, you can proceed to apply the methods you wish to use on this **SpotifyUser** object.
 
-**Getting An Album:**
+**Example: Getting an album**
 
 ```java
 Album album = oneTimeUser.getAlbum("0sNOF9WDwhWunNAHPD3Baj").build().execute();
 System.out.println(album.getArtist());
 ```
+
+**Example: Generating recommendations based off a seed**
+
+```java
+Recommendation recommendation = oneTimeUser
+    .getSeedRecommendation()
+    .limit(5)
+    .addSeedGenre("party")
+    .setSeedArtists(listOf("4NHQUGzhtTLFvgF5SZesLK", "43ZHCT0cAZBISjO8DG9PnE"))
+    .danceability(SeedQuery.Flag.Min, 0.6)
+    .build()
+    .execute();
+recommendation.getSeeds().forEach(System.out::println)
+```
+
 
 More information:
 
@@ -86,34 +94,23 @@ However, because of that, there is no refresh token provided.
 
 ## Examples
 
-<ul>
-    <li>Albums
-        <ul>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L37">Get an album</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L40">Get an album's tracks</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L43">Get several albums</a></li>
-        </ul>
-    </li>
-    <li>Artists
-        <ul>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L39">Get an artist</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L42">Get an artist's albums</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L45">Get an artist's top tracks</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L48">Get an artist's related artists</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L51">Get several artists</a></li>
-        </ul>
-    </li>
-    <li>Browse
-        <ul>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L35">Get a category</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L38">Get a category's playlists</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L41">Get a list of categories</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L44">Get a list of featured playlists</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L47">Get a list of new releases</a></li>
-            <li><a href="https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L35">Get a list of recommendations</a></li>
-        </ul>
-    </li>
-</ul>
+* **Albums**
+    * [Get an album](https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L37)
+    * [Get an album's tracks](https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L40)
+    * [Get several albums](https://github.com/woojiahao/java-spotify-wrapper/blob/b6b593ac15988109763cf94cb48c171fd6ecf2a6/src/main/java/me/chill/sample/AlbumQueryDemo.java#L43)
+* **Artists**
+    * [Get an artist](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L39)
+    * [Get an artist's albums](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L42)
+    * [Get an artist's top tracks](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L45)
+    * [Get an artist's related artists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L48)
+    * [Get several artists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/ArtistQueryDemo.java#L51)
+* **Browse**
+    * [Get a category](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L35)
+    * [Get a category's playlists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L38)
+    * [Get a list of categories](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L41)
+    * [Get a list of featured playlists](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L44)
+    * [Get a list of new releases](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L47)
+    * [Get a list of recommendations](https://github.com/woojiahao/java-spotify-wrapper/blob/d2d99b8a0cdee55f5399134709f5d8018307790d/src/main/java/me/chill/sample/BrowseQueryDemo.java#L35)
 
 ## License
 java-spotify-wrapper is licensed under the MIT license, more about that can be found [here.](https://opensource.org/licenses/MIT)
