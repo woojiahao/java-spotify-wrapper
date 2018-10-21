@@ -2,16 +2,17 @@
 Simple to use Java wrapper for the [Spotify web API](https://developer.spotify.com/documentation/web-api/)
 
 ## Contents
-1. **[Anonymous Access](https://github.com/woojiahao/java-spotify-wrapper#anonymous-access)**
-2. **[Sample Usage](https://github.com/woojiahao/java-spotify-wrapper#sample-usage)**
-3. **[User Authentication](https://github.com/woojiahao/java-spotify-wrapper#user-authentication)**
+1. [Anonymous Access](https://github.com/woojiahao/java-spotify-wrapper#anonymous-access)
+2. [Sample Usage](https://github.com/woojiahao/java-spotify-wrapper#sample-usage)
+3. [User Authentication](https://github.com/woojiahao/java-spotify-wrapper#user-authentication)
    * [Authorization Flow](https://github.com/woojiahao/java-spotify-wrapper#authorization-flow)
    * [Implicit Grant](https://github.com/woojiahao/java-spotify-wrapper#implicit-grant)
    * [Credit Credentials Flow](https://github.com/woojiahao/java-spotify-wrapper#client-credentials-flow)
-4. **[Code Structure](https://github.com/woojiahao/java-spotify-wrapper#code-structure)**
-5. **[Contributing](https://github.com/woojiahao/java-spotify-wrapper#contributing)**
-6. **[Examples](https://github.com/woojiahao/java-spotify-wrapper#examples)**
-7. **[License](https://github.com/woojiahao/java-spotify-wrapper#license)**
+4. [Code Structure](https://github.com/woojiahao/java-spotify-wrapper#code-structure)
+5. [Examples](https://github.com/woojiahao/java-spotify-wrapper#examples)
+6. [Contributing](https://github.com/woojiahao/java-spotify-wrapper#contributing)
+7. [License](https://github.com/woojiahao/java-spotify-wrapper#license)
+8. [Checklist](https://github.com/woojiahao/java-spotify-wrapper#checklist)
 
 ## Anonymous Access
 Some of Spotify's Web API is available to users even without an access token or performing any form of user authentication,
@@ -116,3 +117,23 @@ If you wish to make a contribution, be sure to read the [contribution guide.](ht
 
 ## License
 java-spotify-wrapper is licensed under the MIT license, more about that can be found [here.](https://opensource.org/licenses/MIT)
+
+## Checklist
+* [ ] Endpoints
+    * [X] Album
+    * [X] Artist
+    * [X] Browse
+    * [ ] Follow
+    * [ ] Library
+    * [ ] Personalization
+    * [ ] Player
+    * [ ] Playlists
+    * [ ] Search
+    * [ ] User Profile 
+* [ ] Administrative
+    * [X] Contribution Guide
+    * [ ] Issues Templates
+        * [ ] Bug Reporting
+        * [ ] Feature
+    * [ ] PR Templates
+* [ ] Sample Application
