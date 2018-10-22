@@ -7,6 +7,7 @@ import me.chill.authentication.SpotifyAuthenticationException;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyClientCredentialFlow;
 import me.chill.models.*;
+import me.chill.queries.SpotifyQueryException;
 import me.chill.queries.browse.SeedQuery;
 
 import java.util.List;

@@ -7,6 +7,7 @@ import me.chill.queries.album.ManyAlbumQuery
 import me.chill.queries.album.SingleAlbumQuery
 import me.chill.queries.artist.*
 import me.chill.queries.browse.*
+import me.chill.queries.follow.IsFollowingQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -91,4 +92,6 @@ class SpotifyUser(
 	fun getSeedRecommendation() = SeedQuery.Builder(accessToken)
 
 	fun getAvailableGenreSeeds() = AvailableGenreSeedsQuery.Builder(accessToken)
+
+	fun isFollowing() = IsFollowingQuery.Builder(accessToken)
 }

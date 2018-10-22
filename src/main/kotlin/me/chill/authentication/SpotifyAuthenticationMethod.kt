@@ -80,8 +80,7 @@ open class SpotifyAuthenticationMethod(
 		helper.state?.let { builder.addQueryParameter("state", it) }
 
 		helper.scopes.takeIf { it.isNotEmpty() }?.distinct()?.apply {
-			val scopes = URLEncoder.encode(this.asSequence().distinct().joinToString(" ") { it.scopeName }, "UTF-8")
-			builder.addQueryParameter("scope", scopes)
+			builder.addQueryParameter("scope", asSequence().distinct().joinToString(" ") { it.scopeName })
 		}
 
 		helper.showDialog.takeIf { it }?.apply { builder.addQueryParameter("show_dialog", "true") }
