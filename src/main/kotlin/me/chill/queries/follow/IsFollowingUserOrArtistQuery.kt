@@ -8,8 +8,6 @@ class IsFollowingUserOrArtistQuery private constructor(
 	private val type: String,
 	private val ids: String) : SpotifyFollowQuery() {
 
-	enum class UserType { Artist, User }
-
 	override fun execute(): Map<String, Boolean> {
 		val parameters = mapOf(
 			"type" to type,
