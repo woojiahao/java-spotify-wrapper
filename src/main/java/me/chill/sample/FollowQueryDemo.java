@@ -1,9 +1,7 @@
 package me.chill.sample;
 
 import me.chill.SpotifyUser;
-import me.chill.authentication.SpotifyAuthenticationHelper;
-import me.chill.authentication.SpotifyScope;
-import me.chill.queries.follow.IsFollowingQuery;
+import me.chill.queries.follow.IsFollowingUserOrArtistQuery;
 
 import java.util.Map;
 
@@ -16,15 +14,23 @@ public class FollowQueryDemo {
 			null,
 			null);
 
+		customUser.disableTimer();
 		Map<String, Boolean> isFollowingMap = customUser
-			.isFollowing()
-			.type(IsFollowingQuery.UserType.Artist)
+			.isFollowingUserOrArtist()
+			.type(IsFollowingUserOrArtistQuery.UserType.Artist)
 			.addId("74ASZWbe4lXaubB36ztrGX")
 			.addId("74ASZWbe4lXaubB36ztrGX")
 			.build()
 			.execute();
 		isFollowingMap.forEach((key, value) -> {
 			System.out.println("User is " + value + " user: " + key);
+		});
+
+		Map<String, Boolean> areUserFollowing = customUser.areUsersFollowingPlaylist("2v3iNvBX8Ay1Gt2uXtUKUT")
+			.addUser("_woojiahao_,_woojiahao_")
+			.build().execute();
+		areUserFollowing.forEach((key, value) -> {
+			System.out.println("User " + key + " is " + value);
 		});
 	}
 }

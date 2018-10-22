@@ -7,7 +7,8 @@ import me.chill.queries.album.ManyAlbumQuery
 import me.chill.queries.album.SingleAlbumQuery
 import me.chill.queries.artist.*
 import me.chill.queries.browse.*
-import me.chill.queries.follow.IsFollowingQuery
+import me.chill.queries.follow.AreUsersFollowingPlaylistQuery
+import me.chill.queries.follow.IsFollowingUserOrArtistQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -18,47 +19,56 @@ class SpotifyUser(
 	private val refreshToken: String? = null,
 	private var expiryDuration: Int? = null) {
 
+	private val refreshTaskTimer = Timer()
+
 	init {
 		refreshToken?.let { _ ->
 			expiryDuration?.let { _ ->
 				println("Auto refreshing access tokens")
-				Timer().scheduleAtFixedRate(
-					timerTask {
-						clientSecret?.let { _ ->
-							val base64EncodedAuthorization = String(Base64.getUrlEncoder().encode("$clientId:$clientSecret".toByteArray()))
-
-							val response = post(
-								"https://accounts.spotify.com/api/token",
-								mapOf(
-									"Content-Type" to "application/x-www-form-urlencoded",
-									"Authorization" to "Basic $base64EncodedAuthorization"
-								),
-								data = mapOf(
-									"grant_type" to "refresh_token",
-									"refresh_token" to refreshToken
-								)
-							)
-
-							if (response.statusCode >= 400) {
-								cancel()
-								throw SpotifyAuthenticationException(
-									mapOf(
-										"Error Code" to response.statusCode.toString(),
-										"Error" to response.jsonObject.getString("error"),
-										"Error Description" to response.jsonObject.getString("error_description")
-									)
-								)
-							}
-
-							accessToken = response.jsonObject.getString("access_token")
-							expiryDuration = response.jsonObject.getInt("expires_in")
-
-							expiryDuration ?: cancel()
-						}
-					}, (expiryDuration!! * 1000).toLong(), (expiryDuration!! * 1000).toLong()
-				)
+				startTimer()
 			}
 		}
+	}
+
+	fun disableTimer() = refreshTaskTimer.cancel()
+
+	fun startTimer() {
+		refreshTaskTimer.purge()
+		refreshTaskTimer.scheduleAtFixedRate(
+			timerTask {
+				clientSecret?.let { _ ->
+					val base64EncodedAuthorization = String(Base64.getUrlEncoder().encode("$clientId:$clientSecret".toByteArray()))
+
+					val response = post(
+						"https://accounts.spotify.com/api/token",
+						mapOf(
+							"Content-Type" to "application/x-www-form-urlencoded",
+							"Authorization" to "Basic $base64EncodedAuthorization"
+						),
+						data = mapOf(
+							"grant_type" to "refresh_token",
+							"refresh_token" to refreshToken
+						)
+					)
+
+					if (response.statusCode >= 400) {
+						cancel()
+						throw SpotifyAuthenticationException(
+							mapOf(
+								"Error Code" to response.statusCode.toString(),
+								"Error" to response.jsonObject.getString("error"),
+								"Error Description" to response.jsonObject.getString("error_description")
+							)
+						)
+					}
+
+					accessToken = response.jsonObject.getString("access_token")
+					expiryDuration = response.jsonObject.getInt("expires_in")
+
+					expiryDuration ?: cancel()
+				}
+			}, (expiryDuration!! * 1000).toLong(), (expiryDuration!! * 1000).toLong()
+		)
 	}
 
 	fun getAccessToken() = accessToken
@@ -93,5 +103,7 @@ class SpotifyUser(
 
 	fun getAvailableGenreSeeds() = AvailableGenreSeedsQuery.Builder(accessToken)
 
-	fun isFollowing() = IsFollowingQuery.Builder(accessToken)
+	fun isFollowingUserOrArtist() = IsFollowingUserOrArtistQuery.Builder(accessToken)
+
+	fun areUsersFollowingPlaylist(playlistId: String) = AreUsersFollowingPlaylistQuery.Builder(playlistId, accessToken)
 }

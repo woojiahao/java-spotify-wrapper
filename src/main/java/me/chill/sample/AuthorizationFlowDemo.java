@@ -6,6 +6,7 @@ import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyAuthorizationFlow;
 import me.chill.authentication.SpotifyAuthenticationException;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ public class AuthorizationFlowDemo {
 	public static void main(String[] args) {
 		String redirectUrl = "https://woojiahao.github.io";
 		String clientId = "cea6a21eeb874d1d91dbaaccce0996f3";
-		String clientSecret = "34dfe5eb8e5b4766a6fb4d8103605baa";
+		String clientSecret = "14371e50d4c8423fa5d3804bd8f975b9";
 
 		SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
 			.setClientId(clientId)
@@ -29,10 +30,17 @@ public class AuthorizationFlowDemo {
 		System.out.println(authorizationUrl);
 
 		SpotifyUser user = getAuthorization(flow);
+
+		if (user == null) return;
+
+		List<String> genres = user.getAvailableGenreSeeds().build().execute();
+		genres.forEach(System.out::println);
+
+//		user.disableTimer();
 	}
 
 	private static SpotifyUser getAuthorization(SpotifyAuthorizationFlow flow) {
-		String retrievedUrl = "https://woojiahao.github.io/?code=AQDjm43-u-Uer4eMSDmsFCY9RrxbbIho4qrIZypZSnqABNRvkgStLdJ081p8jIVsBvok59n2jBFKLbtfCrW_rNspFo2QZY8QoRKOXt2Vv3lnnBAh7aj0KifmAyB0Vc39hOzvsIr0QkqqlzFzlBWbIR2pAaRQz3XZXmqMrfcJmwX5g_mzmeLqPbAThX_6MkVTF_ly";
+		String retrievedUrl = "https://woojiahao.github.io/?code=AQCDXNNdRuCU2s_6mSs_ZdrfBGk21DznGJGBWWPPq8DTnM30fIuciBHanfqZO1jO3dmKU1OkhlOLjw8KYfn9C570jC6HIXRJZtrdcxpvRA-knCt13_emHXdLM13M7mq0B-kmPGTJZE8ZroxRMS1QzmYi-aPh5hin69ZRup_tednAv_AgCl7yrnifpbDCKgVlafht";
 
 		Map<SpotifyAuthorizationFlow.ParseComponent, String> authorizationParseMap = null;
 		try {
