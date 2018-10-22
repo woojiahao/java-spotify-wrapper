@@ -7,10 +7,7 @@ import me.chill.queries.album.ManyAlbumQuery
 import me.chill.queries.album.SingleAlbumQuery
 import me.chill.queries.artist.*
 import me.chill.queries.browse.*
-import me.chill.queries.follow.AreUsersFollowingPlaylistQuery
-import me.chill.queries.follow.FollowPlaylistQuery
-import me.chill.queries.follow.FollowUserOrArtistQuery
-import me.chill.queries.follow.IsFollowingUserOrArtistQuery
+import me.chill.queries.follow.*
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -112,4 +109,6 @@ class SpotifyUser(
 	fun followUserOrArtist() = FollowUserOrArtistQuery.Builder(accessToken)
 
 	fun followPlaylist(playlistId: String) = FollowPlaylistQuery.Builder(playlistId, accessToken)
+
+	fun getFollowedArtists() = FollowedArtistsQuery.Builder(accessToken)
 }
