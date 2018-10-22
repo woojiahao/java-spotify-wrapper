@@ -1,6 +1,9 @@
 # Java Spotify Wrapper
 Simple to use Java wrapper for the [Spotify web API](https://developer.spotify.com/documentation/web-api/)
 
+**IMPORTANT:** The library is still under development, you can check out what needs to be completed in the [checklist below.](https://github.com/woojiahao/java-spotify-wrapper#checklist) Only some of the endpoints and authentication flow has been 
+completed.
+
 ## Contents
 1. [Anonymous Access](https://github.com/woojiahao/java-spotify-wrapper#anonymous-access)
 2. [Sample Usage](https://github.com/woojiahao/java-spotify-wrapper#sample-usage)
@@ -166,6 +169,7 @@ java-spotify-wrapper is licensed under the MIT license, more about that can be f
 * [ ] Administrative
     * [X] Contribution Guide
     * [ ] Deploy to Maven Central
+    * [ ] Include instructions to install in Maven if possible
     * [ ] Issues Templates
         * [ ] Bug Reporting
         * [ ] Feature
