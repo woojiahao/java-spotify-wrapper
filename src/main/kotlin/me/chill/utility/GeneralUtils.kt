@@ -9,6 +9,7 @@ import me.chill.queries.SpotifyQueryException
 fun createErrorMessage(errMap: Map<String, String>) =
 	"\n\n${errMap.map { "\t${it.key}: ${it.value}" }.joinToString("\n")}\n"
 
+// TODO: Move this as a protected function
 fun Response.responseCheck() {
 	if (statusCode >= 400) {
 		val errorBody = Gson().fromJson(Gson().fromJson(text, JsonObject::class.java)["error"], RegularError::class.java)

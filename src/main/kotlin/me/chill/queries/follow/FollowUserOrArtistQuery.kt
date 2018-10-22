@@ -1,8 +1,6 @@
 package me.chill.queries.follow
 
-import khttp.put
 import me.chill.queries.SpotifyQueryException
-import me.chill.utility.responseCheck
 
 class FollowUserOrArtistQuery private constructor(
 	private val accessToken: String,
@@ -15,13 +13,7 @@ class FollowUserOrArtistQuery private constructor(
 			"ids" to ids
 		)
 
-		val headers = mapOf(
-			"Authorization" to "Bearer $accessToken",
-			"Content-Type" to "application/json"
-		)
-
-		val response = put(followEndpoint, headers, parameters.generateParameters())
-		response.responseCheck()
+		val response = put(followEndpoint, accessToken, parameters)
 
 		return response.statusCode == 204
 	}

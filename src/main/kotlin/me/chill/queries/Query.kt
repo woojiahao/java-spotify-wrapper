@@ -21,5 +21,17 @@ abstract class Query {
 		return response
 	}
 
+	protected fun put(endpoint: String, accessToken: String, parameters: Map<String, Any?> = mapOf()): Response {
+		val headers = mapOf(
+			"Authorization" to "Bearer $accessToken",
+			"Content-Type" to "application/json"
+		)
+
+		val response = khttp.put(endpoint, headers, parameters.generateParameters())
+		response.responseCheck()
+
+		return response
+	}
+
 	abstract fun execute(): Any
 }

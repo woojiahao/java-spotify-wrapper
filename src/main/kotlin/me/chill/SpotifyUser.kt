@@ -8,6 +8,7 @@ import me.chill.queries.album.SingleAlbumQuery
 import me.chill.queries.artist.*
 import me.chill.queries.browse.*
 import me.chill.queries.follow.AreUsersFollowingPlaylistQuery
+import me.chill.queries.follow.FollowPlaylistQuery
 import me.chill.queries.follow.FollowUserOrArtistQuery
 import me.chill.queries.follow.IsFollowingUserOrArtistQuery
 import java.util.*
@@ -109,4 +110,6 @@ class SpotifyUser(
 	fun areUsersFollowingPlaylist(playlistId: String) = AreUsersFollowingPlaylistQuery.Builder(playlistId, accessToken)
 
 	fun followUserOrArtist() = FollowUserOrArtistQuery.Builder(accessToken)
+
+	fun followPlaylist(playlistId: String) = FollowPlaylistQuery.Builder(playlistId, accessToken)
 }
