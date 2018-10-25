@@ -9,7 +9,7 @@ class CheckSavedTracksQuery private constructor(
 	private val accessToken: String,
 	private val ids: String) : SpotifyLibraryQuery() {
 
-	override fun execute(): Any {
+	override fun execute(): Map<String, Boolean> {
 		val parameters = mapOf("ids" to ids)
 
 		val response = query("https://api.spotify.com/v1/me/tracks/contains", accessToken, parameters)
