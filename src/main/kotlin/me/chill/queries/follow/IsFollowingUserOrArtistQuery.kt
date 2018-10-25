@@ -19,8 +19,7 @@ class IsFollowingUserOrArtistQuery private constructor(
 		return ids.split(",").distinct().zip(gson.fromJson(response.text, JsonArray::class.java).map { it.asBoolean }).toMap()
 	}
 
-	class Builder(private val accessToken: String) {
-		private var type: UserType? = null
+	class Builder(private val accessToken: String, private val userType: UserType) {
 		private val ids = mutableListOf<String>()
 
 		fun addId(id: String): Builder {
@@ -34,18 +33,16 @@ class IsFollowingUserOrArtistQuery private constructor(
 			return this
 		}
 
-		fun type(type: UserType): Builder {
-			this.type = type
-			return this
-		}
-
 		fun build(): IsFollowingUserOrArtistQuery {
 			if (ids.isEmpty()) throw SpotifyQueryException("ID list cannot be empty")
 			if (ids.size > 50) throw SpotifyQueryException("ID list cannot contain more than 50 IDs at a time")
 
-			type ?: throw SpotifyQueryException("A UserType must be set for a query")
 
-			return IsFollowingUserOrArtistQuery(accessToken, type!!.name.toLowerCase(), ids.asSequence().distinct().joinToString(","))
+			return IsFollowingUserOrArtistQuery(
+				accessToken,
+				userType.name.toLowerCase(),
+				ids.asSequence().distinct().joinToString(",")
+			)
 		}
 	}
 }
