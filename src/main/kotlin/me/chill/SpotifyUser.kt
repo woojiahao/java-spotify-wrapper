@@ -129,4 +129,6 @@ class SpotifyUser(
 	fun removeSavedAlbums() = RemoveSavedAlbumsQuery.Builder(accessToken)
 
 	fun removeSavedTracks() = RemoveSavedTracksQuery.Builder(accessToken)
+
+	fun saveAlbums() = SaveAlbumsQuery.Builder(accessToken)
 }

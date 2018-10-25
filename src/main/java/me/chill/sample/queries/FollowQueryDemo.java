@@ -2,6 +2,7 @@ package me.chill.sample.queries;
 
 import me.chill.SpotifyUser;
 import me.chill.queries.follow.IsFollowingUserOrArtistQuery;
+import me.chill.queries.follow.UserType;
 
 import java.util.Map;
 
@@ -16,8 +17,7 @@ public class FollowQueryDemo {
 
 		customUser.disableTimer();
 		Map<String, Boolean> isFollowingMap = customUser
-			.isFollowingUserOrArtist()
-			.type(IsFollowingUserOrArtistQuery.UserType.Artist)
+			.isFollowingUserOrArtist(UserType.Artist)
 			.addId("74ASZWbe4lXaubB36ztrGX")
 			.addId("74ASZWbe4lXaubB36ztrGX")
 			.build()
