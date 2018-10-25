@@ -1,9 +1,8 @@
 package me.chill.queries.follow
 
-import com.google.gson.JsonObject
+import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Artist
 import me.chill.models.CursorBasedPaging
-import me.chill.queries.SpotifyQueryException
 
 class FollowedArtistsQuery private constructor(
 	private val accessToken: String,

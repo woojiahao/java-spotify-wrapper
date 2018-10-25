@@ -1,8 +1,8 @@
 package me.chill.queries.browse
 
 import com.neovisionaries.i18n.CountryCode
+import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.FeaturedPlaylists
-import me.chill.queries.SpotifyQueryException
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*

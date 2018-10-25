@@ -2,7 +2,9 @@ package me.chill.queries.artist
 
 import com.google.gson.JsonObject
 import me.chill.models.Artist
-import me.chill.queries.SpotifyQueryException
+import me.chill.queries.checkEmpty
+import me.chill.queries.checkLimit
+import me.chill.queries.generateString
 
 class ManyArtistQuery private constructor(
 	private val accessToken: String,
@@ -20,23 +22,24 @@ class ManyArtistQuery private constructor(
 	}
 
 	class Builder(private val accessToken: String) {
-		private val ids = mutableListOf<String>()
+		private val artists = mutableListOf<String>()
 
-		fun addId(id: String): Builder {
-			ids.addAll(id.split(","))
+		fun addId(artist: String): Builder {
+			artists.add(artist)
 			return this
 		}
 
-		fun setIds(ids: List<String>): Builder {
-			this.ids.clear()
-			this.ids.addAll(ids)
+		fun setIds(artists: List<String>): Builder {
+			this.artists.clear()
+			this.artists.addAll(artists)
 			return this
 		}
 
 		fun build(): ManyArtistQuery {
-			if (ids.isEmpty()) throw SpotifyQueryException("ID list must consist of at least 1 ID")
-			if (ids.size > 50) throw SpotifyQueryException("ID list cannot contain more than 50 IDs")
-			return ManyArtistQuery(accessToken, ids.joinToString(","))
+			artists.checkEmpty("Artists")
+			artists.checkLimit("Artists", 50)
+
+			return ManyArtistQuery(accessToken, artists.generateString())
 		}
 	}
 }

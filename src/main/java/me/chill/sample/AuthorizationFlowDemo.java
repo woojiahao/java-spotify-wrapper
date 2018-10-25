@@ -4,11 +4,10 @@ import me.chill.SpotifyUser;
 import me.chill.authentication.SpotifyAuthenticationComponent;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyAuthorizationFlow;
-import me.chill.authentication.SpotifyAuthenticationException;
+import me.chill.exceptions.SpotifyAuthenticationException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class AuthorizationFlowDemo {
 	public static void main(String[] args) {

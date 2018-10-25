@@ -1,8 +1,9 @@
 package me.chill.queries.browse
 
 import com.neovisionaries.i18n.CountryCode
+import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Recommendation
-import me.chill.queries.SpotifyQueryException
+import me.chill.queries.generateNullableString
 
 // TODO: Make an enumeration for the genre types
 class SeedQuery private constructor(
@@ -207,9 +208,9 @@ class SeedQuery private constructor(
 				accessToken,
 				limit,
 				attributes,
-				seedArtists.takeIf { it.isNotEmpty() }?.joinToString(","),
-				seedGenres.takeIf { it.isNotEmpty() }?.joinToString(","),
-				seedTracks.takeIf { it.isNotEmpty() }?.joinToString(","),
+				seedArtists.generateNullableString(),
+				seedGenres.generateNullableString(),
+				seedTracks.generateNullableString(),
 				market?.alpha2
 			)
 		}

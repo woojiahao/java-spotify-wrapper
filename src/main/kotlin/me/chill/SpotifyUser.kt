@@ -1,13 +1,14 @@
 package me.chill
 
 import khttp.post
-import me.chill.authentication.SpotifyAuthenticationException
+import me.chill.exceptions.SpotifyAuthenticationException
 import me.chill.queries.album.AlbumTrackQuery
 import me.chill.queries.album.ManyAlbumQuery
 import me.chill.queries.album.SingleAlbumQuery
 import me.chill.queries.artist.*
 import me.chill.queries.browse.*
 import me.chill.queries.follow.*
+import me.chill.queries.library.CheckSavedAlbumsQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -115,4 +116,6 @@ class SpotifyUser(
 	fun unfollowUserOrArtist(userType: UserType) = UnfollowUserOrArtistQuery.Builder(accessToken, userType)
 
 	fun unfollowPlaylist(playlistId: String) = UnfollowPlaylistQuery.Builder(playlistId, accessToken)
+
+	fun checkSavedAlbums() = CheckSavedAlbumsQuery.Builder(accessToken)
 }

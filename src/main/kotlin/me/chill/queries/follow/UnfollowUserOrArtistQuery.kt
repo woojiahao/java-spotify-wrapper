@@ -1,8 +1,9 @@
 package me.chill.queries.follow
 
 import khttp.delete
-import me.chill.queries.SpotifyQueryException
-import me.chill.utility.responseCheck
+import me.chill.exceptions.SpotifyQueryException
+import me.chill.queries.checkLimit
+import me.chill.queries.generateNullableString
 
 class UnfollowUserOrArtistQuery private constructor(
 	private val accessToken: String,
@@ -27,26 +28,23 @@ class UnfollowUserOrArtistQuery private constructor(
 	}
 
 	class Builder(private val accessToken: String, private val userType: UserType) {
-		private val users = mutableListOf<String>()
+		private val ids = mutableListOf<String>()
 
-		fun addUser(user: String): Builder {
-			users.addAll(user.split(","))
+		fun addId(id: String): Builder {
+			ids.add(id)
 			return this
 		}
 
-		fun setUsers(users: List<String>): Builder {
-			this.users.clear()
-			this.users.addAll(users)
+		fun setIds(ids: List<String>): Builder {
+			this.ids.clear()
+			this.ids.addAll(ids)
 			return this
 		}
 
 		fun build(): UnfollowUserOrArtistQuery {
-			if (users.size > 50) throw SpotifyQueryException("Users ID list cannot have more than 50 IDs")
-			return UnfollowUserOrArtistQuery(
-				accessToken,
-				userType.name.toLowerCase(),
-				users.takeIf { it.isNotEmpty() }?.joinToString(",")
-			)
+			ids.checkLimit("IDs", 50)
+
+			return UnfollowUserOrArtistQuery(accessToken, userType.name.toLowerCase(), ids.generateNullableString())
 		}
 	}
 }

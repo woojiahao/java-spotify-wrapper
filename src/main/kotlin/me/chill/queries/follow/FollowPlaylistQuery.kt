@@ -1,7 +1,5 @@
 package me.chill.queries.follow
 
-import me.chill.utility.responseCheck
-
 class FollowPlaylistQuery private constructor(
 	private val id: String,
 	private val accessToken: String,

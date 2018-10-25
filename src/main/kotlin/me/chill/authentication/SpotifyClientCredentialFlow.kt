@@ -2,6 +2,7 @@ package me.chill.authentication
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import me.chill.exceptions.SpotifyAuthenticationException
 import okhttp3.*
 import java.io.IOException
 import java.util.*

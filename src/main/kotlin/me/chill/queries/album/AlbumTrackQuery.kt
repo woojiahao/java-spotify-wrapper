@@ -3,7 +3,7 @@ package me.chill.queries.album
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Paging
 import me.chill.models.Track
-import me.chill.queries.SpotifyQueryException
+import me.chill.exceptions.SpotifyQueryException
 
 class AlbumTrackQuery private constructor(
 	private val id: String,
@@ -35,7 +35,6 @@ class AlbumTrackQuery private constructor(
 			return this
 		}
 
-		// TODO: Check if the offset is valid, maybe?
 		fun offset(offset: Int): Builder {
 			if (offset < 0) throw SpotifyQueryException("Offset cannot be less than 0")
 			this.offset = offset

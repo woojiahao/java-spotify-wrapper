@@ -2,11 +2,9 @@ package me.chill.queries.browse
 
 import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
+import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Paging
 import me.chill.models.Playlist
-import me.chill.queries.SpotifyQueryException
-import me.chill.utility.responseCheck
 
 class CategoryPlaylistsQuery private constructor(
 	private val id: String,

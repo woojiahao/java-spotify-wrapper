@@ -2,10 +2,8 @@ package me.chill.queries.artist
 
 import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
+import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Track
-import me.chill.queries.SpotifyQueryException
-import me.chill.utility.responseCheck
 
 class ArtistTopTrackQuery private constructor(
 	private val id: String,
@@ -18,8 +16,6 @@ class ArtistTopTrackQuery private constructor(
 		)
 
 		val response = query("$artistEndpoint$id/top-tracks", accessToken, parameters)
-
-
 
 		return gson
 			.fromJson(response.text, JsonObject::class.java)

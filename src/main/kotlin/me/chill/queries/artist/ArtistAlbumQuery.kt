@@ -1,11 +1,9 @@
 package me.chill.queries.artist
 
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
+import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Album
 import me.chill.models.Paging
-import me.chill.queries.SpotifyQueryException
-import me.chill.utility.responseCheck
 
 
 class ArtistAlbumQuery private constructor(
@@ -71,7 +69,7 @@ class ArtistAlbumQuery private constructor(
 		fun build(): ArtistAlbumQuery {
 			if (includeGroups.isEmpty()) includeGroups.addAll(ArtistAlbumIncludeGroup.values())
 
-			val includeGroupsString = includeGroups.joinToString(",") { it.queryValue }
+			val includeGroupsString = includeGroups.asSequence().distinct().joinToString(",") { it.queryValue }
 			return ArtistAlbumQuery(id, accessToken, includeGroupsString, limit, offset, market?.alpha2)
 		}
 	}

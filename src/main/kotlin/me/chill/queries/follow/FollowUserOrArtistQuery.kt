@@ -1,6 +1,8 @@
 package me.chill.queries.follow
 
-import me.chill.queries.SpotifyQueryException
+import me.chill.exceptions.SpotifyQueryException
+import me.chill.queries.checkLimit
+import me.chill.queries.generateNullableString
 
 class FollowUserOrArtistQuery private constructor(
 	private val accessToken: String,
@@ -28,7 +30,7 @@ class FollowUserOrArtistQuery private constructor(
 		}
 
 		fun addUser(user: String): Builder {
-			users.addAll(user.split(","))
+			users.add(user)
 			return this
 		}
 
@@ -39,11 +41,11 @@ class FollowUserOrArtistQuery private constructor(
 		}
 
 		fun build(): FollowUserOrArtistQuery {
-			if (users.size > 50) throw SpotifyQueryException("Users list cannot contain more than 50 IDs")
+			users.checkLimit("Users", 50)
 
 			type ?: throw SpotifyQueryException("User Type must be specified")
 
-			return FollowUserOrArtistQuery(accessToken, type!!.name, users.takeIf { it.isNotEmpty() }?.joinToString(","))
+			return FollowUserOrArtistQuery(accessToken, type!!.name, users.generateNullableString())
 		}
 	}
 }

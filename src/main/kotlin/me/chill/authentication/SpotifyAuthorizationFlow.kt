@@ -3,6 +3,7 @@ package me.chill.authentication
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import khttp.post
+import me.chill.exceptions.SpotifyAuthenticationException
 import okhttp3.HttpUrl
 import java.net.MalformedURLException
 import java.util.*

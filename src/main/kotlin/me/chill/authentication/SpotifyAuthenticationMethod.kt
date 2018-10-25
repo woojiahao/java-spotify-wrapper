@@ -1,10 +1,10 @@
 package me.chill.authentication
 
 import me.chill.SpotifyUser
+import me.chill.exceptions.SpotifyAuthenticationException
 import okhttp3.HttpUrl
 import java.net.MalformedURLException
 import java.net.URL
-import java.net.URLEncoder
 
 open class SpotifyAuthenticationMethod(
 	private val helper: SpotifyAuthenticationHelper,

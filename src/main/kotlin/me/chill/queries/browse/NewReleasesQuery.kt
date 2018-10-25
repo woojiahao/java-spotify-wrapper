@@ -1,8 +1,8 @@
 package me.chill.queries.browse
 
 import com.neovisionaries.i18n.CountryCode
+import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.NewReleases
-import me.chill.queries.SpotifyQueryException
 
 class NewReleasesQuery private constructor(
 	private val accessToken: String,

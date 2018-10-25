@@ -1,9 +1,7 @@
 package me.chill.queries.artist
 
 import com.google.gson.JsonObject
-import khttp.get
 import me.chill.models.Artist
-import me.chill.utility.responseCheck
 
 class RelatedArtistsQuery private constructor(
 	private val id: String,
@@ -11,8 +9,6 @@ class RelatedArtistsQuery private constructor(
 
 	override fun execute(): List<Artist> {
 		val response = query("$artistEndpoint$id/related-artists", accessToken)
-
-
 
 		return gson
 			.fromJson(response.text, JsonObject::class.java)

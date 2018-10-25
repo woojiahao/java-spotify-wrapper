@@ -2,10 +2,8 @@ package me.chill.queries.browse
 
 import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
 import me.chill.models.Category
 import me.chill.models.Paging
-import me.chill.utility.responseCheck
 import java.util.*
 
 class CategoryListQuery private constructor(

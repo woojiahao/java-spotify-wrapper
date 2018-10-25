@@ -2,9 +2,11 @@ package me.chill.queries
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import khttp.get
 import khttp.responses.Response
-import me.chill.utility.responseCheck
+import me.chill.exceptions.SpotifyQueryException
+import me.chill.models.RegularError
 
 abstract class Query {
 	protected val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
@@ -32,6 +34,27 @@ abstract class Query {
 
 		return response
 	}
+
+	protected fun Response.responseCheck() {
+		if (statusCode >= 400) {
+			val errorBody = gson.fromJson(gson.fromJson(text, JsonObject::class.java)["error"], RegularError::class.java)
+			throw SpotifyQueryException(errorBody.status, errorBody.message)
+		}
+	}
+
+	private fun List<String>.trimList() = map { it.split(",") }.flatten()
+
+	protected fun checkEmpty(list: List<String>, listName: String) =
+		list.trimList()
+			.takeIf { it.isEmpty() }
+			?.let { throw SpotifyQueryException("$listName cannot be empty") }
+
+	protected fun List<String>.checkLimit(listName: String, limit: Int = 20) =
+		trimList()
+			.takeIf { it.size > limit }
+			?.let { throw SpotifyQueryException("$listName cannot contain more than $limit entries") }
+
+	protected fun List<String>.generateString() = trimList().asSequence().distinct().joinToString(",")
 
 	abstract fun execute(): Any
 }

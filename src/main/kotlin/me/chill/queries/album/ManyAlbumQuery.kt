@@ -3,8 +3,9 @@ package me.chill.queries.album
 import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Album
-import me.chill.queries.SpotifyQueryException
-import me.chill.utility.responseCheck
+import me.chill.queries.checkEmpty
+import me.chill.queries.checkLimit
+import me.chill.queries.generateString
 
 class ManyAlbumQuery private constructor(
 	private val accessToken: String,
@@ -27,7 +28,7 @@ class ManyAlbumQuery private constructor(
 
 
 	class Builder(private val accessToken: String) {
-		private val ids = mutableListOf<String>()
+		private val albums = mutableListOf<String>()
 		private var market: String? = null
 
 		fun market(market: CountryCode): Builder {
@@ -35,21 +36,22 @@ class ManyAlbumQuery private constructor(
 			return this
 		}
 
-		fun addId(id: String): Builder {
-			ids.addAll(id.split(","))
+		fun addId(album: String): Builder {
+			albums.add(album)
 			return this
 		}
 
-		fun setIds(ids: List<String>): Builder {
-			this.ids.clear()
-			this.ids.addAll(ids)
+		fun setIds(albums: List<String>): Builder {
+			this.albums.clear()
+			this.albums.addAll(albums)
 			return this
 		}
 
 		fun build(): ManyAlbumQuery {
-			if (ids.isEmpty()) throw SpotifyQueryException("ID list must consist of at least 1 ID")
-			if (ids.size > 20) throw SpotifyQueryException("ID list cannot have more than 20 IDs")
-			return ManyAlbumQuery(accessToken, ids.joinToString(","), market)
+			albums.checkEmpty("Albums")
+			albums.checkLimit("Albums")
+
+			return ManyAlbumQuery(accessToken, albums.generateString(), market)
 		}
 	}
 }

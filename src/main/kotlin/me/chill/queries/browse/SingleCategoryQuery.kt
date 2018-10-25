@@ -1,9 +1,7 @@
 package me.chill.queries.browse
 
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
 import me.chill.models.Category
-import me.chill.utility.responseCheck
 import java.util.*
 
 class SingleCategoryQuery private constructor(

@@ -2,7 +2,7 @@ package me.chill.sample;
 
 import me.chill.SpotifyUser;
 import me.chill.authentication.SpotifyAuthenticationComponent;
-import me.chill.authentication.SpotifyAuthenticationException;
+import me.chill.exceptions.SpotifyAuthenticationException;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyClientCredentialFlow;
 import me.chill.models.Album;
