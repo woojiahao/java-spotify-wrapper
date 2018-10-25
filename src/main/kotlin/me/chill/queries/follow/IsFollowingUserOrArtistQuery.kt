@@ -1,8 +1,7 @@
 package me.chill.queries.follow
 
-import com.google.gson.JsonArray
 import me.chill.queries.checkEmpty
-import me.chill.queries.checkLimit
+import me.chill.queries.checkListSizeLimit
 import me.chill.queries.createCheckMap
 import me.chill.queries.generateString
 
@@ -38,7 +37,7 @@ class IsFollowingUserOrArtistQuery private constructor(
 
 		fun build(): IsFollowingUserOrArtistQuery {
 			ids.checkEmpty("IDs")
-			ids.checkLimit("IDs", 50)
+			ids.checkListSizeLimit("IDs", 50)
 
 			return IsFollowingUserOrArtistQuery(accessToken, userType.name.toLowerCase(), ids.generateString())
 		}

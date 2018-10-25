@@ -4,6 +4,8 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Paging
 import me.chill.models.SavedTrack
+import me.chill.queries.checkLimit
+import me.chill.queries.checkOffset
 
 class RetrieveSavedTracksQuery private constructor(
 	private val accessToken: String,
@@ -44,8 +46,8 @@ class RetrieveSavedTracksQuery private constructor(
 		}
 
 		fun build(): RetrieveSavedTracksQuery {
-			if (limit < 1 || limit > 50) throw SpotifyQueryException("Limit must be greater than 0 and less than 51")
-			if (offset < 0) throw SpotifyQueryException("Offset must be greater than 0")
+			limit.checkLimit()
+			offset.checkOffset()
 
 			return RetrieveSavedTracksQuery(accessToken, limit, offset, market?.alpha2)
 		}

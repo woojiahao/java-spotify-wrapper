@@ -5,6 +5,10 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Paging
 import me.chill.models.Playlist
+import me.chill.queries.checkLimit
+import me.chill.queries.checkLower
+import me.chill.queries.checkOffset
+import me.chill.queries.checkRange
 
 class CategoryPlaylistsQuery private constructor(
 	private val id: String,
@@ -36,17 +40,20 @@ class CategoryPlaylistsQuery private constructor(
 		}
 
 		fun limit(limit: Int): Builder {
-			if (limit < 1 || limit > 50) throw SpotifyQueryException("Limit must be greater than 0 and less than 51")
 			this.limit = limit
 			return this
 		}
 
 		fun offset(offset: Int): Builder {
-			if (offset < 0) throw SpotifyQueryException("Offset cannot be less than 0")
 			this.offset = offset
 			return this
 		}
 
-		fun build() = CategoryPlaylistsQuery(id, accessToken, limit, offset, country?.alpha2)
+		fun build(): CategoryPlaylistsQuery {
+			limit.checkLimit()
+			offset.checkOffset()
+
+			return CategoryPlaylistsQuery(id, accessToken, limit, offset, country?.alpha2)
+		}
 	}
 }

@@ -3,7 +3,7 @@ package me.chill.queries.artist
 import com.google.gson.JsonObject
 import me.chill.models.Artist
 import me.chill.queries.checkEmpty
-import me.chill.queries.checkLimit
+import me.chill.queries.checkListSizeLimit
 import me.chill.queries.generateString
 
 class ManyArtistQuery private constructor(
@@ -37,7 +37,7 @@ class ManyArtistQuery private constructor(
 
 		fun build(): ManyArtistQuery {
 			artists.checkEmpty("Artists")
-			artists.checkLimit("Artists", 50)
+			artists.checkListSizeLimit("Artists", 50)
 
 			return ManyArtistQuery(accessToken, artists.generateString())
 		}

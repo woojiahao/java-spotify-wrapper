@@ -4,6 +4,8 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Album
 import me.chill.models.Paging
+import me.chill.queries.checkLower
+import me.chill.queries.checkRange
 
 
 class ArtistAlbumQuery private constructor(
@@ -43,13 +45,11 @@ class ArtistAlbumQuery private constructor(
 		}
 
 		fun limit(limit: Int): Builder {
-			if (limit < 1 || limit > 50) throw SpotifyQueryException("Limit cannot be less than 1 or more than 50")
 			this.limit = limit
 			return this
 		}
 
 		fun offset(offset: Int): Builder {
-			if (offset < 0) throw SpotifyQueryException("Offset cannot be less than 0")
 			this.offset = offset
 			return this
 		}
@@ -67,9 +67,12 @@ class ArtistAlbumQuery private constructor(
 		}
 
 		fun build(): ArtistAlbumQuery {
-			if (includeGroups.isEmpty()) includeGroups.addAll(ArtistAlbumIncludeGroup.values())
-
+			includeGroups.takeIf { it.isEmpty() }?.apply { addAll(ArtistAlbumIncludeGroup.values()) }
 			val includeGroupsString = includeGroups.asSequence().distinct().joinToString(",") { it.queryValue }
+
+			limit.checkLimit()
+			offset.checkOffset()
+
 			return ArtistAlbumQuery(id, accessToken, includeGroupsString, limit, offset, market?.alpha2)
 		}
 	}

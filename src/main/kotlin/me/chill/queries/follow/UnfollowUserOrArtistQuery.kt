@@ -1,8 +1,7 @@
 package me.chill.queries.follow
 
 import khttp.delete
-import me.chill.exceptions.SpotifyQueryException
-import me.chill.queries.checkLimit
+import me.chill.queries.checkListSizeLimit
 import me.chill.queries.generateNullableString
 
 class UnfollowUserOrArtistQuery private constructor(
@@ -42,7 +41,7 @@ class UnfollowUserOrArtistQuery private constructor(
 		}
 
 		fun build(): UnfollowUserOrArtistQuery {
-			ids.checkLimit("IDs", 50)
+			ids.checkListSizeLimit("IDs", 50)
 
 			return UnfollowUserOrArtistQuery(accessToken, userType.name.toLowerCase(), ids.generateNullableString())
 		}

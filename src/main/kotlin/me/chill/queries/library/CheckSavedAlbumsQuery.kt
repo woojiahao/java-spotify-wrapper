@@ -1,7 +1,7 @@
 package me.chill.queries.library
 
 import me.chill.queries.checkEmpty
-import me.chill.queries.checkLimit
+import me.chill.queries.checkListSizeLimit
 import me.chill.queries.createCheckMap
 import me.chill.queries.generateString
 
@@ -33,7 +33,7 @@ class CheckSavedAlbumsQuery private constructor(
 
 		fun build(): CheckSavedAlbumsQuery {
 			albums.checkEmpty("Albums")
-			albums.checkLimit("Albums", 50)
+			albums.checkListSizeLimit("Albums", 50)
 
 			return CheckSavedAlbumsQuery(accessToken, albums.generateString())
 		}

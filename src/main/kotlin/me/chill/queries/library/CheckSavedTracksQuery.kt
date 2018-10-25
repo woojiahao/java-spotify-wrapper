@@ -1,7 +1,7 @@
 package me.chill.queries.library
 
 import me.chill.queries.checkEmpty
-import me.chill.queries.checkLimit
+import me.chill.queries.checkListSizeLimit
 import me.chill.queries.createCheckMap
 import me.chill.queries.generateString
 
@@ -33,7 +33,7 @@ class CheckSavedTracksQuery private constructor(
 
 		fun build(): CheckSavedTracksQuery {
 			tracks.checkEmpty("Tracks")
-			tracks.checkLimit("Tracks", 50)
+			tracks.checkListSizeLimit("Tracks", 50)
 
 			return CheckSavedTracksQuery(accessToken, tracks.generateString())
 		}

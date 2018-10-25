@@ -1,7 +1,7 @@
 package me.chill.queries.follow
 
 import me.chill.exceptions.SpotifyQueryException
-import me.chill.queries.checkLimit
+import me.chill.queries.checkListSizeLimit
 import me.chill.queries.generateNullableString
 
 class FollowUserOrArtistQuery private constructor(
@@ -41,7 +41,7 @@ class FollowUserOrArtistQuery private constructor(
 		}
 
 		fun build(): FollowUserOrArtistQuery {
-			users.checkLimit("Users", 50)
+			users.checkListSizeLimit("Users", 50)
 
 			type ?: throw SpotifyQueryException("User Type must be specified")
 

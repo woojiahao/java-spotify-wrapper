@@ -1,8 +1,8 @@
 package me.chill.queries.follow
 
-import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Artist
 import me.chill.models.CursorBasedPaging
+import me.chill.queries.checkLimit
 
 class FollowedArtistsQuery private constructor(
 	private val accessToken: String,
@@ -26,7 +26,6 @@ class FollowedArtistsQuery private constructor(
 		private var after: String? = null
 
 		fun limit(limit: Int): Builder {
-			if (limit < 1 || limit > 50) throw SpotifyQueryException("Limit cannot be less than 1 or greater than a 50	")
 			this.limit = limit
 			return this
 		}
@@ -36,6 +35,9 @@ class FollowedArtistsQuery private constructor(
 			return this
 		}
 
-		fun build() = FollowedArtistsQuery(accessToken, limit, after)
+		fun build(): FollowedArtistsQuery {
+			limit.checkLimit()
+			return FollowedArtistsQuery(accessToken, limit, after)
+		}
 	}
 }

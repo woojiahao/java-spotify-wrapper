@@ -3,6 +3,10 @@ package me.chill.queries.browse
 import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.NewReleases
+import me.chill.queries.checkLimit
+import me.chill.queries.checkLower
+import me.chill.queries.checkOffset
+import me.chill.queries.checkRange
 
 class NewReleasesQuery private constructor(
 	private val accessToken: String,
@@ -28,13 +32,11 @@ class NewReleasesQuery private constructor(
 		private var country: CountryCode? = null
 
 		fun limit(limit: Int): Builder {
-			if (limit < 1 || limit > 50) throw SpotifyQueryException("Limit must be greater than 0 and less than 51")
 			this.limit = limit
 			return this
 		}
 
 		fun offset(offset: Int): Builder {
-			if (offset < 0) throw SpotifyQueryException("Offset must be greater than 0")
 			this.offset = offset
 			return this
 		}
@@ -44,6 +46,11 @@ class NewReleasesQuery private constructor(
 			return this
 		}
 
-		fun build() = NewReleasesQuery(accessToken, limit, offset, country?.alpha2)
+		fun build(): NewReleasesQuery {
+			limit.checkLimit()
+			offset.checkOffset()
+
+			return NewReleasesQuery(accessToken, limit, offset, country?.alpha2)
+		}
 	}
 }

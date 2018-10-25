@@ -13,6 +13,6 @@ class SingleArtistQuery private constructor(
 	}
 
 	class Builder(private val id: String, private val accessToken: String) {
-		fun build(): SingleArtistQuery = SingleArtistQuery(id, accessToken)
+		fun build() = SingleArtistQuery(id, accessToken)
 	}
 }

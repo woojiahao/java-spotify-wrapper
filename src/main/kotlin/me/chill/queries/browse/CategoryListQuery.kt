@@ -2,8 +2,13 @@ package me.chill.queries.browse
 
 import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
+import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Category
 import me.chill.models.Paging
+import me.chill.queries.checkLimit
+import me.chill.queries.checkLower
+import me.chill.queries.checkOffset
+import me.chill.queries.checkRange
 import java.util.*
 
 class CategoryListQuery private constructor(
@@ -52,6 +57,11 @@ class CategoryListQuery private constructor(
 			return this
 		}
 
-		fun build() = CategoryListQuery(accessToken, limit, offset, locale, country?.alpha2)
+		fun build(): CategoryListQuery {
+			limit.checkLimit()
+			offset.checkOffset()
+
+			return CategoryListQuery(accessToken, limit, offset, locale, country?.alpha2)
+		}
 	}
 }

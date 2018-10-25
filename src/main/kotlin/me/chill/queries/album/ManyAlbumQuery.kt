@@ -4,7 +4,7 @@ import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Album
 import me.chill.queries.checkEmpty
-import me.chill.queries.checkLimit
+import me.chill.queries.checkListSizeLimit
 import me.chill.queries.generateString
 
 class ManyAlbumQuery private constructor(
@@ -49,7 +49,7 @@ class ManyAlbumQuery private constructor(
 
 		fun build(): ManyAlbumQuery {
 			albums.checkEmpty("Albums")
-			albums.checkLimit("Albums")
+			albums.checkListSizeLimit("Albums")
 
 			return ManyAlbumQuery(accessToken, albums.generateString(), market)
 		}

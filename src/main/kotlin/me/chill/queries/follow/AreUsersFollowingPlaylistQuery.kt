@@ -1,7 +1,7 @@
 package me.chill.queries.follow
 
 import me.chill.queries.checkEmpty
-import me.chill.queries.checkLimit
+import me.chill.queries.checkListSizeLimit
 import me.chill.queries.createCheckMap
 import me.chill.queries.generateString
 
@@ -34,7 +34,7 @@ class AreUsersFollowingPlaylistQuery private constructor(
 
 		fun build(): AreUsersFollowingPlaylistQuery {
 			users.checkEmpty("Users")
-			users.checkLimit("Users", 5)
+			users.checkListSizeLimit("Users", 5)
 
 			return AreUsersFollowingPlaylistQuery(id, accessToken, users.generateString())
 		}

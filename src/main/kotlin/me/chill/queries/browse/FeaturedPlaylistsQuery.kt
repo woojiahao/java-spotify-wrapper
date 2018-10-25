@@ -3,6 +3,8 @@ package me.chill.queries.browse
 import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.FeaturedPlaylists
+import me.chill.queries.checkLimit
+import me.chill.queries.checkOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
@@ -37,13 +39,11 @@ class FeaturedPlaylistsQuery private constructor(
 		private var timestamp: String? = null
 
 		fun limit(limit: Int): Builder {
-			if (limit < 1 || limit > 50) throw SpotifyQueryException("Limit must be greater than 0 and less than 51")
 			this.limit = limit
 			return this
 		}
 
 		fun offset(offset: Int): Builder {
-			if (offset < 0) throw SpotifyQueryException("Offset must be greater than 0")
 			this.offset = offset
 			return this
 		}
@@ -72,7 +72,12 @@ class FeaturedPlaylistsQuery private constructor(
 			return this
 		}
 
-		fun build() = FeaturedPlaylistsQuery(accessToken, limit, offset, locale, country?.alpha2, timestamp)
+		fun build(): FeaturedPlaylistsQuery {
+			limit.checkLimit()
+			offset.checkOffset()
+
+			return FeaturedPlaylistsQuery(accessToken, limit, offset, locale, country?.alpha2, timestamp)
+		}
 
 		private fun padTimeUnit(timeUnit: Int) = timeUnit.toString().padStart(2, '0')
 	}
