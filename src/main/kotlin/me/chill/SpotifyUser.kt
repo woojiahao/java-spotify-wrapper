@@ -8,11 +8,7 @@ import me.chill.queries.album.SingleAlbumQuery
 import me.chill.queries.artist.*
 import me.chill.queries.browse.*
 import me.chill.queries.follow.*
-import me.chill.queries.library.CheckSavedAlbumsQuery
-import me.chill.queries.library.CheckSavedTracksQuery
-import me.chill.queries.library.RetrieveSavedAlbumsQuery
-import me.chill.queries.library.RetrieveSavedTracksQuery
-import me.chill.queries.library.RemoveAlbumsQuery
+import me.chill.queries.library.*
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -130,5 +126,7 @@ class SpotifyUser(
 
 	fun getSavedTracks() = RetrieveSavedTracksQuery.Builder(accessToken)
 
-	fun removeAlbums() = RemoveAlbumsQuery.Builder(accessToken)
+	fun removeSavedAlbums() = RemoveSavedAlbumsQuery.Builder(accessToken)
+
+	fun removeSavedTracks() = RemoveSavedTracksQuery.Builder(accessToken)
 }

@@ -4,11 +4,11 @@ import khttp.delete
 import me.chill.queries.checkListSizeLimit
 import me.chill.queries.generateNullableString
 
-class RemoveAlbumsQuery private constructor(
+class RemoveSavedTracksQuery private constructor(
 	private val accessToken: String,
-	private val ids: String?) : SpotifyLibraryQuery() {
+	private val ids: String?): SpotifyLibraryQuery() {
 
-	override fun execute(): Boolean {
+	override fun execute(): Any {
 		val parameters = mapOf("ids" to ids).generateParameters()
 
 		val headers = mapOf(
@@ -23,23 +23,23 @@ class RemoveAlbumsQuery private constructor(
 	}
 
 	class Builder(private val accessToken: String) {
-		private val albums = mutableListOf<String>()
+		private val tracks = mutableListOf<String>()
 
-		fun addAlbum(album: String): Builder {
-			albums.add(album)
+		fun addTrack(track: String): Builder {
+			tracks.add(track)
 			return this
 		}
 
-		fun setAlbums(albums: List<String>): Builder {
-			this.albums.clear()
-			this.albums.addAll(albums)
+		fun setTracks(tracks: List<String>): Builder {
+			this.tracks.clear()
+			this.tracks.addAll(tracks)
 			return this
 		}
 
-		fun build(): RemoveAlbumsQuery {
-			albums.checkListSizeLimit("Albums", 50)
+		fun build(): RemoveSavedTracksQuery {
+			tracks.checkListSizeLimit("tracks", 50)
 
-			return RemoveAlbumsQuery(accessToken, albums.generateNullableString())
+			return RemoveSavedTracksQuery(accessToken, tracks.generateNullableString())
 		}
 	}
 }
