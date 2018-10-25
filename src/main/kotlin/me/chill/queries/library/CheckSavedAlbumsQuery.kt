@@ -1,16 +1,20 @@
 package me.chill.queries.library
 
-import me.chill.exceptions.SpotifyQueryException
+import com.google.gson.JsonArray
 import me.chill.queries.checkEmpty
 import me.chill.queries.checkLimit
 import me.chill.queries.generateString
 
 class CheckSavedAlbumsQuery private constructor(
 	private val accessToken: String,
-	private val ids: String) : SpotifyLibraryQuery(){
+	private val ids: String) : SpotifyLibraryQuery() {
 
-	override fun execute(): Any {
-		TODO("not implemented")
+	override fun execute(): Map<String, Boolean> {
+		val parameters = mapOf("ids" to ids)
+
+		val response = query("${libraryEndpoint}contains", accessToken, parameters)
+
+		return ids.split(",").zip(gson.fromJson(response.text, JsonArray::class.java).map { it.asBoolean }).toMap()
 	}
 
 	class Builder(private val accessToken: String) {

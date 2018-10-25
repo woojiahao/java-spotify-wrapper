@@ -1,7 +1,6 @@
 package me.chill.queries.follow
 
 import com.google.gson.JsonArray
-import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.checkEmpty
 import me.chill.queries.checkLimit
 import me.chill.queries.generateString
