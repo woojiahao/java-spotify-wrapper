@@ -23,7 +23,7 @@ class ManyArtistQuery private constructor(
 		private val ids = mutableListOf<String>()
 
 		fun addId(id: String): Builder {
-			ids.add(id)
+			ids.addAll(id.split(","))
 			return this
 		}
 

@@ -79,7 +79,7 @@ class SeedQuery private constructor(
 		}
 
 		fun addSeedArtist(seedArtist: String): Builder {
-			seedArtists.add(seedArtist)
+			seedArtists.addAll(seedArtist.split(","))
 			return this
 		}
 
@@ -90,7 +90,7 @@ class SeedQuery private constructor(
 		}
 
 		fun addSeedGenre(seedGenre: String): Builder {
-			seedGenres.add(seedGenre)
+			seedGenres.addAll(seedGenre.split(","))
 			return this
 		}
 
@@ -101,7 +101,7 @@ class SeedQuery private constructor(
 		}
 
 		fun addSeedTrack(seedTrack: String): Builder {
-			seedTracks.add(seedTrack)
+			seedTracks.addAll(seedTrack.split(","))
 			return this
 		}
 

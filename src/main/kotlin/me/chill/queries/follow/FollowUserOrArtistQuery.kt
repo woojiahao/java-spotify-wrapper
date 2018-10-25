@@ -28,7 +28,7 @@ class FollowUserOrArtistQuery private constructor(
 		}
 
 		fun addUser(user: String): Builder {
-			users.add(user)
+			users.addAll(user.split(","))
 			return this
 		}
 

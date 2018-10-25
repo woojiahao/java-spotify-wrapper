@@ -20,7 +20,7 @@ class AreUsersFollowingPlaylistQuery private constructor(
 		private val users = mutableListOf<String>()
 
 		fun addUser(user: String): Builder {
-			users.add(user)
+			users.addAll(user.split(","))
 			return this
 		}
 

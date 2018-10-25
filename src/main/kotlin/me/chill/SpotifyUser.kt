@@ -102,6 +102,7 @@ class SpotifyUser(
 
 	fun getAvailableGenreSeeds() = AvailableGenreSeedsQuery.Builder(accessToken)
 
+	// TODO: Plug the user type as a parameter instead of a mutable property via Builder
 	fun isFollowingUserOrArtist() = IsFollowingUserOrArtistQuery.Builder(accessToken)
 
 	fun areUsersFollowingPlaylist(playlistId: String) = AreUsersFollowingPlaylistQuery.Builder(playlistId, accessToken)
