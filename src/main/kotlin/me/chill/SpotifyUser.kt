@@ -113,4 +113,6 @@ class SpotifyUser(
 	fun getFollowedArtists() = FollowedArtistsQuery.Builder(accessToken)
 
 	fun unfollowUserOrArtist(userType: UserType) = UnfollowUserOrArtistQuery.Builder(accessToken, userType)
+
+	fun unfollowPlaylist(playlistId: String) = UnfollowPlaylistQuery.Builder(playlistId, accessToken)
 }
