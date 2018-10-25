@@ -1,4 +1,4 @@
-package me.chill.sample;
+package me.chill.sample.queries;
 
 import me.chill.SpotifyUser;
 import me.chill.queries.follow.IsFollowingUserOrArtistQuery;

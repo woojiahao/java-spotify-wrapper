@@ -1,4 +1,4 @@
-package me.chill.sample;
+package me.chill.sample.queries;
 
 import com.neovisionaries.i18n.CountryCode;
 import me.chill.SpotifyUser;

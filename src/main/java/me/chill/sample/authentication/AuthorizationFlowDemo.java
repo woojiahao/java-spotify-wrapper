@@ -1,4 +1,4 @@
-package me.chill.sample;
+package me.chill.sample.authentication;
 
 import me.chill.SpotifyUser;
 import me.chill.authentication.SpotifyAuthenticationComponent;
