@@ -1,9 +1,9 @@
-package me.chill.authentication
+package me.chill.exceptions
 
-import me.chill.utility.createErrorMessage
-import java.lang.Exception
+import me.chill.authentication.SpotifyAuthorizationFlow
+import me.chill.authentication.SpotifyImplicitGrantFlow
 
-class SpotifyAuthenticationException(errMap: Map<String, String>) : Exception(createErrorMessage(errMap)) {
+class SpotifyAuthenticationException(errMap: Map<String, String>) : SpotifyException(errMap) {
 	var authorizationFlowComponentFail: SpotifyAuthorizationFlow.ParseComponent? = null
 	var implicitGrantFlowComponentFail: SpotifyImplicitGrantFlow.ParseComponent? = null
 
@@ -13,7 +13,7 @@ class SpotifyAuthenticationException(errMap: Map<String, String>) : Exception(cr
 		this.authorizationFlowComponentFail = parseComponentFail
 	}
 
-	constructor(parseComponentFail: SpotifyImplicitGrantFlow.ParseComponent, errMap: Map<String, String>): this(errMap) {
+	constructor(parseComponentFail: SpotifyImplicitGrantFlow.ParseComponent, errMap: Map<String, String>) : this(errMap) {
 		this.implicitGrantFlowComponentFail = parseComponentFail
 	}
 }
