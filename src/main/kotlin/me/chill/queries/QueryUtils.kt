@@ -1,5 +1,8 @@
 package me.chill.queries
 
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import khttp.responses.Response
 import me.chill.exceptions.SpotifyQueryException
 
 // TODO: Add a check to find duplicates in the list and display warning messages
@@ -19,3 +22,6 @@ fun List<String>.checkLimit(listName: String, limit: Int = 20) =
 fun List<String>.generateNullableString() = trimList().takeIf { it.isNotEmpty() }?.joinToString(",")
 
 fun List<String>.generateString() = trimList().joinToString(",")
+
+fun Response.createCheckMap(ids: String, gson: Gson) =
+	ids.split(",").zip(gson.fromJson(text, JsonArray::class.java).map { it.asBoolean }).toMap()

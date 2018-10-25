@@ -3,6 +3,7 @@ package me.chill.queries.follow
 import com.google.gson.JsonArray
 import me.chill.queries.checkEmpty
 import me.chill.queries.checkLimit
+import me.chill.queries.createCheckMap
 import me.chill.queries.generateString
 
 class IsFollowingUserOrArtistQuery private constructor(
@@ -18,7 +19,7 @@ class IsFollowingUserOrArtistQuery private constructor(
 
 		val response = query("${followEndpoint}contains", accessToken, parameters)
 
-		return ids.split(",").zip(gson.fromJson(response.text, JsonArray::class.java).map { it.asBoolean }).toMap()
+		return response.createCheckMap(ids, gson)
 	}
 
 	class Builder(private val accessToken: String, private val userType: UserType) {

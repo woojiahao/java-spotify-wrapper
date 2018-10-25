@@ -1,9 +1,8 @@
 package me.chill.queries.follow
 
-import com.google.gson.JsonArray
-import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.checkEmpty
 import me.chill.queries.checkLimit
+import me.chill.queries.createCheckMap
 import me.chill.queries.generateString
 
 class AreUsersFollowingPlaylistQuery private constructor(
@@ -16,7 +15,7 @@ class AreUsersFollowingPlaylistQuery private constructor(
 
 		val response = query("https://api.spotify.com/v1/playlists/$id/followers/contains", accessToken, parameters)
 
-		return ids.split(",").zip(gson.fromJson(response.text, JsonArray::class.java).map { it.asBoolean }).toMap()
+		return response.createCheckMap(ids, gson)
 	}
 
 	class Builder(private val id: String, private val accessToken: String) {

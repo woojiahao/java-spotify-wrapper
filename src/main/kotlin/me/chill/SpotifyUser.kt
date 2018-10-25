@@ -9,6 +9,7 @@ import me.chill.queries.artist.*
 import me.chill.queries.browse.*
 import me.chill.queries.follow.*
 import me.chill.queries.library.CheckSavedAlbumsQuery
+import me.chill.queries.library.CheckSavedTracksQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -118,4 +119,6 @@ class SpotifyUser(
 	fun unfollowPlaylist(playlistId: String) = UnfollowPlaylistQuery.Builder(playlistId, accessToken)
 
 	fun checkSavedAlbums() = CheckSavedAlbumsQuery.Builder(accessToken)
+
+	fun checkSavedTracks() = CheckSavedTracksQuery.Builder(accessToken)
 }
