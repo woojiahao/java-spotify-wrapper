@@ -1,7 +1,6 @@
 package me.chill.queries.library
 
 import com.neovisionaries.i18n.CountryCode
-import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Paging
 import me.chill.models.SavedTrack
 import me.chill.queries.checkLimit
