@@ -160,7 +160,7 @@ java-spotify-wrapper is licensed under the MIT license, more about that can be f
     * [X] Artist
     * [X] Browse
     * [X] Follow
-    * [ ] Library
+    * [X] Library
     * [ ] Personalization
     * [ ] Player
     * [ ] Playlists
