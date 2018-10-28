@@ -9,6 +9,8 @@ import me.chill.queries.artist.*
 import me.chill.queries.browse.*
 import me.chill.queries.follow.*
 import me.chill.queries.library.*
+import me.chill.queries.personalization.UserTopArtistsQuery
+import me.chill.queries.personalization.UserTopTracksQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -133,4 +135,8 @@ class SpotifyUser(
 	fun saveAlbums() = SaveAlbumsQuery.Builder(accessToken)
 
 	fun saveTracks() = SaveTracksQuery.Builder(accessToken)
+
+	fun getTopArtists() = UserTopArtistsQuery.Builder(accessToken)
+
+	fun getTopTracks() = UserTopTracksQuery.Builder(accessToken)
 }
