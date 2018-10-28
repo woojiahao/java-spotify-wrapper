@@ -30,12 +30,13 @@ class SpotifyUser(
 				println("Auto refreshing access tokens")
 				startTimer()
 			}
-		}
+		} ?: disableTimer()
 	}
 
 	fun disableTimer() = refreshTaskTimer.cancel()
 
 	fun startTimer() {
+		refreshToken ?: throw SpotifyAuthenticationException("Unable to start timer when no refresh token is given")
 		refreshTaskTimer.purge()
 		refreshTaskTimer.scheduleAtFixedRate(
 			timerTask {
