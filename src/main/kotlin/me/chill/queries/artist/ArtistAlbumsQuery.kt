@@ -8,7 +8,7 @@ import me.chill.queries.checkLimit
 import me.chill.queries.checkOffset
 
 
-class ArtistAlbumQuery private constructor(
+class ArtistAlbumsQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
 	private val includeGroups: String,
@@ -66,14 +66,14 @@ class ArtistAlbumQuery private constructor(
 			return this
 		}
 
-		fun build(): ArtistAlbumQuery {
+		fun build(): ArtistAlbumsQuery {
 			includeGroups.takeIf { it.isEmpty() }?.apply { addAll(ArtistAlbumIncludeGroup.values()) }
 			val includeGroupsString = includeGroups.asSequence().distinct().joinToString(",") { it.queryValue }
 
 			limit.checkLimit()
 			offset.checkOffset()
 
-			return ArtistAlbumQuery(id, accessToken, includeGroupsString, limit, offset, market?.alpha2)
+			return ArtistAlbumsQuery(id, accessToken, includeGroupsString, limit, offset, market?.alpha2)
 		}
 	}
 }

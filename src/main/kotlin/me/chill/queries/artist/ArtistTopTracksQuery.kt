@@ -5,7 +5,7 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Track
 
-class ArtistTopTrackQuery private constructor(
+class ArtistTopTracksQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
 	private val market: String) : SpotifyArtistQuery() {
@@ -15,7 +15,7 @@ class ArtistTopTrackQuery private constructor(
 			"market" to market
 		)
 
-		val response = query("$artistEndpoint$id/top-tracks", accessToken, parameters)
+		val response = query(artistTopTracksEndpoint.format(id), accessToken, parameters)
 
 		return gson
 			.fromJson(response.text, JsonObject::class.java)
@@ -31,10 +31,10 @@ class ArtistTopTrackQuery private constructor(
 			return this
 		}
 
-		fun build(): ArtistTopTrackQuery {
+		fun build(): ArtistTopTracksQuery {
 			market
 				?: throw SpotifyQueryException("You must specify the market in order to retrieve the artist's top tracks")
-			return ArtistTopTrackQuery(id, accessToken, market!!.alpha2)
+			return ArtistTopTracksQuery(id, accessToken, market!!.alpha2)
 		}
 	}
 }

@@ -85,9 +85,9 @@ class SpotifyUser(
 
 	fun getSingleArtist(artistId: String) = SingleArtistQuery.Builder(artistId, accessToken)
 
-	fun getArtistAlbums(artistId: String) = ArtistAlbumQuery.Builder(artistId, accessToken)
+	fun getArtistAlbums(artistId: String) = ArtistAlbumsQuery.Builder(artistId, accessToken)
 
-	fun getArtistTopTracks(artistId: String) = ArtistTopTrackQuery.Builder(artistId, accessToken)
+	fun getArtistTopTracks(artistId: String) = ArtistTopTracksQuery.Builder(artistId, accessToken)
 
 	fun getRelatedArtists(artistId: String) = RelatedArtistsQuery.Builder(artistId, accessToken)
 

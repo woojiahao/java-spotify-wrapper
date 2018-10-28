@@ -18,7 +18,7 @@ class UserTopTracksQuery private constructor(
 			"time_range" to timeRange
 		)
 
-		val response = query("${personalizationEndpoint}tracks", accessToken, parameters)
+		val response = query(topTracksEndpoint, accessToken, parameters)
 
 		return gson.fromJson<Paging<Track>>(response.text, Paging::class.java)
 	}

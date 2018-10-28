@@ -18,7 +18,7 @@ class UserTopArtistsQuery private constructor(
 			"time_range" to timeRange
 		)
 
-		val response = query("${personalizationEndpoint}artist", accessToken, parameters)
+		val response = query(topArtistsEndpoint, accessToken, parameters)
 
 		return gson.fromJson<Paging<Artist>>(response.text, Paging::class.java)
 	}

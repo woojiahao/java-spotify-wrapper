@@ -8,7 +8,7 @@ class RelatedArtistsQuery private constructor(
 	private val accessToken: String) : SpotifyArtistQuery() {
 
 	override fun execute(): List<Artist> {
-		val response = query("$artistEndpoint$id/related-artists", accessToken)
+		val response = query(relatedArtistEndpoint.format(id), accessToken)
 
 		return gson
 			.fromJson(response.text, JsonObject::class.java)
