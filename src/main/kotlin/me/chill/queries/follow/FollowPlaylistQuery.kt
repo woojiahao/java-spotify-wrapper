@@ -15,7 +15,7 @@ class FollowPlaylistQuery private constructor(
 			"Content-Type" to "application/json"
 		)
 
-		val response = khttp.put("https://api.spotify.com/v1/playlists/$id/followers", headers, data = body)
+		val response = khttp.put(followPlaylistEndpoint.format(id), headers, data = body)
 		response.responseCheck()
 
 		return response.statusCode == 200

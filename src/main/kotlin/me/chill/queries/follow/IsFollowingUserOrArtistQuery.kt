@@ -16,7 +16,7 @@ class IsFollowingUserOrArtistQuery private constructor(
 			"ids" to ids
 		)
 
-		val response = query("${followEndpoint}contains", accessToken, parameters)
+		val response = query(isFollowingArtistOrUserEndpoint, accessToken, parameters)
 
 		return response.createCheckMap(ids, gson)
 	}

@@ -3,11 +3,11 @@ package me.chill.queries.follow
 import khttp.delete
 
 class UnfollowPlaylistQuery private constructor(
-	private val playlistId: String,
+	private val id: String,
 	private val accessToken: String) : SpotifyFollowQuery() {
 
 	override fun execute(): Boolean {
-		val response = delete("https://api.spotify.com/v1/playlists/$playlistId/followers", generateHeaders(accessToken))
+		val response = delete(followPlaylistEndpoint.format(id), generateHeaders(accessToken))
 		response.responseCheck()
 
 		return response.statusCode == 200

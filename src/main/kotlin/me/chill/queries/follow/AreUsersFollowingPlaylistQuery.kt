@@ -13,7 +13,7 @@ class AreUsersFollowingPlaylistQuery private constructor(
 	override fun execute(): Map<String, Boolean> {
 		val parameters = mapOf("ids" to ids)
 
-		val response = query("https://api.spotify.com/v1/playlists/$id/followers/contains", accessToken, parameters)
+		val response = query(isFollowingPlaylistEndpoint.format(id), accessToken, parameters)
 
 		return response.createCheckMap(ids, gson)
 	}
