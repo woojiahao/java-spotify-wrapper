@@ -4,7 +4,9 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Paging
 import me.chill.models.Track
+import me.chill.queries.checkLimit
 import me.chill.queries.checkLower
+import me.chill.queries.checkOffset
 import me.chill.queries.checkRange
 
 class AlbumTrackQuery private constructor(
@@ -21,7 +23,7 @@ class AlbumTrackQuery private constructor(
 			"market" to market
 		)
 
-		val response = query("$albumEndpoint$id/tracks", accessToken, parameters)
+		val response = query(albumTrackEndpoint.format(id), accessToken, parameters)
 
 		return gson.fromJson<Paging<Track>>(response.text, Paging::class.java)
 	}

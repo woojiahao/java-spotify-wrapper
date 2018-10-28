@@ -11,7 +11,7 @@ class SingleAlbumQuery private constructor(
 	override fun execute(): Album {
 		val parameters = mapOf("market" to market)
 
-		val response = query("$albumEndpoint$id", accessToken, parameters)
+		val response = query(singleAlbumEndpoint.format(id), accessToken, parameters)
 
 		return gson.fromJson(response.text, Album::class.java)
 	}
