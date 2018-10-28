@@ -4,8 +4,8 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Album
 import me.chill.models.Paging
-import me.chill.queries.checkLower
-import me.chill.queries.checkRange
+import me.chill.queries.checkLimit
+import me.chill.queries.checkOffset
 
 
 class ArtistAlbumQuery private constructor(
@@ -28,7 +28,7 @@ class ArtistAlbumQuery private constructor(
 			"market" to market
 		)
 
-		val response = query("$artistEndpoint$id/albums", accessToken, parameters)
+		val response = query(artistAlbumsEndpoint.format(id), accessToken, parameters)
 
 		return gson.fromJson<Paging<Album>>(response.text, Paging::class.java)
 	}
