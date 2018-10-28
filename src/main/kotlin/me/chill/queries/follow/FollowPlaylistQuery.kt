@@ -10,12 +10,7 @@ class FollowPlaylistQuery private constructor(
 			"public" to public
 		).generateParameters()
 
-		val headers = mapOf(
-			"Authorization" to "Bearer $accessToken",
-			"Content-Type" to "application/json"
-		)
-
-		val response = khttp.put(followPlaylistEndpoint.format(id), headers, data = body)
+		val response = khttp.put(followPlaylistEndpoint.format(id), generateModificationHeaders(accessToken), data = body)
 		response.responseCheck()
 
 		return response.statusCode == 200

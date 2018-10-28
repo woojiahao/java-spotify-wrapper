@@ -15,12 +15,7 @@ class UnfollowUserOrArtistQuery private constructor(
 			"ids" to ids
 		).generateParameters()
 
-		val headers = mapOf(
-			"Authorization" to "Bearer $accessToken",
-			"Content-Type" to "application/json"
-		)
-
-		val response = delete(followEndpoint, headers, parameters)
+		val response = delete(followEndpoint, generateModificationHeaders(accessToken), parameters)
 		response.responseCheck()
 
 		return response.statusCode == 204

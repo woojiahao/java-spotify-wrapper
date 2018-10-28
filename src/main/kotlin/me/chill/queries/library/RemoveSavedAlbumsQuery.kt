@@ -10,13 +10,7 @@ class RemoveSavedAlbumsQuery private constructor(
 
 	override fun execute(): Boolean {
 		val parameters = mapOf("ids" to ids).generateParameters()
-
-		val headers = mapOf(
-			"Authorization" to "Bearer $accessToken",
-			"Content-Type" to "application/json"
-		)
-
-		val response = delete(libraryEndpoint, headers, parameters)
+		val response = delete(libraryEndpoint, generateModificationHeaders(accessToken), parameters)
 		response.responseCheck()
 
 		return response.statusCode == 200

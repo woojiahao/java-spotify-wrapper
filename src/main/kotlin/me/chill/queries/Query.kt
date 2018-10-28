@@ -8,7 +8,6 @@ import khttp.responses.Response
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.RegularError
 
-// TODO: Have a function for deleting or at least generating headers with content type included
 abstract class Query {
 	protected val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
@@ -25,16 +24,19 @@ abstract class Query {
 	}
 
 	protected fun put(endpoint: String, accessToken: String, parameters: Map<String, Any?> = mapOf()): Response {
-		val headers = mapOf(
-			"Authorization" to "Bearer $accessToken",
-			"Content-Type" to "application/json"
-		)
+		val headers = generateModificationHeaders(accessToken)
 
 		val response = khttp.put(endpoint, headers, parameters.generateParameters())
 		response.responseCheck()
 
 		return response
 	}
+
+	protected fun generateModificationHeaders(accessToken: String) =
+		mapOf(
+			"Authorization" to "Bearer $accessToken",
+			"Content-Type" to "application/json"
+		)
 
 	protected fun Response.responseCheck() {
 		if (statusCode >= 400) {
