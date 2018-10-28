@@ -41,7 +41,7 @@ class SeedQuery private constructor(
 			parameters["target_$key"] = attribute.target
 		}
 
-		val response = query("https://api.spotify.com/v1/recommendations", accessToken, parameters)
+		val response = query(recommendationSeedEndpoint, accessToken, parameters)
 
 		return gson.fromJson(response.text, Recommendation::class.java)
 	}

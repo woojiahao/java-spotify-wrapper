@@ -16,7 +16,7 @@ class SingleCategoryQuery private constructor(
 			"locale" to locale
 		)
 
-		val response = query("${browseEndpoint}categories/$id", accessToken, parameters)
+		val response = query(singleCategoryEndpoint.format(id), accessToken, parameters)
 
 		return gson.fromJson(response.text, Category::class.java)
 	}

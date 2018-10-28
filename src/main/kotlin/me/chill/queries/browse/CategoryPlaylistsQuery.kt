@@ -24,7 +24,7 @@ class CategoryPlaylistsQuery private constructor(
 			"country" to country
 		)
 
-		val response = query("${browseEndpoint}categories/$id/playlists", accessToken, parameters)
+		val response = query(categoryPlaylistsEndpoint.format(id), accessToken, parameters)
 
 		return gson.fromJson<Paging<Playlist>>(gson.fromJson(response.text, JsonObject::class.java)["playlists"], Paging::class.java)
 	}

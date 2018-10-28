@@ -15,7 +15,7 @@ import java.util.Map;
 public class BrowseQueryDemo {
 	public static void main(String[] args) {
 		String clientId = "cea6a21eeb874d1d91dbaaccce0996f3";
-		String clientSecret = "34dfe5eb8e5b4766a6fb4d8103605baa";
+		String clientSecret = "96729e5f290e496d8115d9e0bf27e515";
 
 		SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
 			.setClientId(clientId)

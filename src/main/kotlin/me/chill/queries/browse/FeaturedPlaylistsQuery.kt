@@ -26,7 +26,7 @@ class FeaturedPlaylistsQuery private constructor(
 			"timestamp" to timestamp
 		)
 
-		val response = query("${browseEndpoint}featured-playlists", accessToken, parameters)
+		val response = query(featuredPlaylistsEndpoint, accessToken, parameters)
 
 		return gson.fromJson(response.text, FeaturedPlaylists::class.java)
 	}

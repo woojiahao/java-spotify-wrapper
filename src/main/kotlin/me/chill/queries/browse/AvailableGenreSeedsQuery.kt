@@ -6,7 +6,7 @@ class AvailableGenreSeedsQuery private constructor(
 	private val accessToken: String) : SpotifyBrowseQuery() {
 
 	override fun execute(): List<String> {
-		val response = query("https://api.spotify.com/v1/recommendations/available-genre-seeds", accessToken)
+		val response = query(genreSeedsEndpoint, accessToken)
 
 		return gson
 			.fromJson(response.text, JsonObject::class.java)
