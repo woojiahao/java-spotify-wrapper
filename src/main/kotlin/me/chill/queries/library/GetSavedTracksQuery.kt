@@ -6,7 +6,7 @@ import me.chill.models.SavedTrack
 import me.chill.queries.checkLimit
 import me.chill.queries.checkOffset
 
-class RetrieveSavedTracksQuery private constructor(
+class GetSavedTracksQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
@@ -44,11 +44,11 @@ class RetrieveSavedTracksQuery private constructor(
 			return this
 		}
 
-		fun build(): RetrieveSavedTracksQuery {
+		fun build(): GetSavedTracksQuery {
 			limit.checkLimit()
 			offset.checkOffset()
 
-			return RetrieveSavedTracksQuery(accessToken, limit, offset, market?.alpha2)
+			return GetSavedTracksQuery(accessToken, limit, offset, market?.alpha2)
 		}
 	}
 }

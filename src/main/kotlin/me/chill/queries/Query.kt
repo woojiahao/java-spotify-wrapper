@@ -8,7 +8,6 @@ import khttp.responses.Response
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.RegularError
 
-// TODO: Extract every single unique endpoint for each type of query and store it in the parent class rather than formulating new ones all the time
 // TODO: Have a function for deleting or at least generating headers with content type included
 abstract class Query {
 	protected val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()

@@ -2,15 +2,15 @@ package me.chill
 
 import khttp.post
 import me.chill.exceptions.SpotifyAuthenticationException
-import me.chill.queries.album.AlbumTrackQuery
-import me.chill.queries.album.ManyAlbumQuery
-import me.chill.queries.album.SingleAlbumQuery
+import me.chill.queries.album.GetAlbumTracksQuery
+import me.chill.queries.album.GetSeveralAlbumsQuery
+import me.chill.queries.album.GetSingleAlbumQuery
 import me.chill.queries.artist.*
 import me.chill.queries.browse.*
 import me.chill.queries.follow.*
 import me.chill.queries.library.*
-import me.chill.queries.personalization.UserTopArtistsQuery
-import me.chill.queries.personalization.UserTopTracksQuery
+import me.chill.queries.personalization.GetUserTopArtistsQuery
+import me.chill.queries.personalization.GetUserTopTracksQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -77,35 +77,35 @@ class SpotifyUser(
 
 	fun getAccessToken() = accessToken
 
-	fun getSingleAlbum(albumId: String) = SingleAlbumQuery.Builder(albumId, accessToken)
+	fun getSingleAlbum(albumId: String) = GetSingleAlbumQuery.Builder(albumId, accessToken)
 
-	fun getAlbumTracks(albumId: String) = AlbumTrackQuery.Builder(albumId, accessToken)
+	fun getAlbumTracks(albumId: String) = GetAlbumTracksQuery.Builder(albumId, accessToken)
 
-	fun getManyAlbums() = ManyAlbumQuery.Builder(accessToken)
+	fun getSeveralAlbums() = GetSeveralAlbumsQuery.Builder(accessToken)
 
-	fun getSingleArtist(artistId: String) = SingleArtistQuery.Builder(artistId, accessToken)
+	fun getSingleArtist(artistId: String) = GetSingleArtistQuery.Builder(artistId, accessToken)
 
-	fun getArtistAlbums(artistId: String) = ArtistAlbumsQuery.Builder(artistId, accessToken)
+	fun getArtistAlbums(artistId: String) = GetArtistAlbumsQuery.Builder(artistId, accessToken)
 
-	fun getArtistTopTracks(artistId: String) = ArtistTopTracksQuery.Builder(artistId, accessToken)
+	fun getArtistTopTracks(artistId: String) = GetArtistTopTracksQuery.Builder(artistId, accessToken)
 
-	fun getRelatedArtists(artistId: String) = RelatedArtistsQuery.Builder(artistId, accessToken)
+	fun getRelatedArtists(artistId: String) = GetRelatedArtistsQuery.Builder(artistId, accessToken)
 
-	fun getManyArtists() = ManyArtistQuery.Builder(accessToken)
+	fun getSeveralArtists() = GetSeveralArtistsQuery.Builder(accessToken)
 
-	fun getCategory(categoryId: String) = SingleCategoryQuery.Builder(categoryId, accessToken)
+	fun getCategory(categoryId: String) = GetSingleCategoryQuery.Builder(categoryId, accessToken)
 
-	fun getCategoryPlaylists(categoryId: String) = CategoryPlaylistsQuery.Builder(categoryId, accessToken)
+	fun getCategoryPlaylists(categoryId: String) = GetCategoryPlaylistsQuery.Builder(categoryId, accessToken)
 
-	fun getCategoryList() = CategoryListQuery.Builder(accessToken)
+	fun getCategoryList() = GetCategoryListQuery.Builder(accessToken)
 
-	fun getFeaturedPlaylists() = FeaturedPlaylistsQuery.Builder(accessToken)
+	fun getFeaturedPlaylists() = GetFeaturedPlaylistsQuery.Builder(accessToken)
 
-	fun getNewReleases() = NewReleasesQuery.Builder(accessToken)
+	fun getNewReleases() = GetNewReleasesQuery.Builder(accessToken)
 
-	fun getSeedRecommendation() = SeedQuery.Builder(accessToken)
+	fun getRecommendationsFromSeed() = GetRecommendationFromSeedQuery.Builder(accessToken)
 
-	fun getAvailableGenreSeeds() = AvailableGenreSeedsQuery.Builder(accessToken)
+	fun getAvailableGenreSeeds() = GetAvailableGenreSeedsQuery.Builder(accessToken)
 
 	fun isFollowingUserOrArtist(userType: UserType) = IsFollowingUserOrArtistQuery.Builder(accessToken, userType)
 
@@ -115,7 +115,7 @@ class SpotifyUser(
 
 	fun followPlaylist(playlistId: String) = FollowPlaylistQuery.Builder(playlistId, accessToken)
 
-	fun getFollowedArtists() = FollowedArtistsQuery.Builder(accessToken)
+	fun getFollowedArtists() = GetFollowedArtistsQuery.Builder(accessToken)
 
 	fun unfollowUserOrArtist(userType: UserType) = UnfollowUserOrArtistQuery.Builder(accessToken, userType)
 
@@ -125,9 +125,9 @@ class SpotifyUser(
 
 	fun checkSavedTracks() = CheckSavedTracksQuery.Builder(accessToken)
 
-	fun getSavedAlbums() = RetrieveSavedAlbumsQuery.Builder(accessToken)
+	fun getSavedAlbums() = GetSavedAlbumsQuery.Builder(accessToken)
 
-	fun getSavedTracks() = RetrieveSavedTracksQuery.Builder(accessToken)
+	fun getSavedTracks() = GetSavedTracksQuery.Builder(accessToken)
 
 	fun removeSavedAlbums() = RemoveSavedAlbumsQuery.Builder(accessToken)
 
@@ -137,7 +137,7 @@ class SpotifyUser(
 
 	fun saveTracks() = SaveTracksQuery.Builder(accessToken)
 
-	fun getTopArtists() = UserTopArtistsQuery.Builder(accessToken)
+	fun getTopArtists() = GetUserTopArtistsQuery.Builder(accessToken)
 
-	fun getTopTracks() = UserTopTracksQuery.Builder(accessToken)
+	fun getTopTracks() = GetUserTopTracksQuery.Builder(accessToken)
 }

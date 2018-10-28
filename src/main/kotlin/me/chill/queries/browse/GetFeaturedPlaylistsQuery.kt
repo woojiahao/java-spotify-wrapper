@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
 
-class FeaturedPlaylistsQuery private constructor(
+class GetFeaturedPlaylistsQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
@@ -72,11 +72,11 @@ class FeaturedPlaylistsQuery private constructor(
 			return this
 		}
 
-		fun build(): FeaturedPlaylistsQuery {
+		fun build(): GetFeaturedPlaylistsQuery {
 			limit.checkLimit()
 			offset.checkOffset()
 
-			return FeaturedPlaylistsQuery(accessToken, limit, offset, locale, country?.alpha2, timestamp)
+			return GetFeaturedPlaylistsQuery(accessToken, limit, offset, locale, country?.alpha2, timestamp)
 		}
 
 		private fun padTimeUnit(timeUnit: Int) = timeUnit.toString().padStart(2, '0')

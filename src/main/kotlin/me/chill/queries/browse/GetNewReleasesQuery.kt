@@ -1,14 +1,11 @@
 package me.chill.queries.browse
 
 import com.neovisionaries.i18n.CountryCode
-import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.NewReleases
 import me.chill.queries.checkLimit
-import me.chill.queries.checkLower
 import me.chill.queries.checkOffset
-import me.chill.queries.checkRange
 
-class NewReleasesQuery private constructor(
+class GetNewReleasesQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
@@ -46,11 +43,11 @@ class NewReleasesQuery private constructor(
 			return this
 		}
 
-		fun build(): NewReleasesQuery {
+		fun build(): GetNewReleasesQuery {
 			limit.checkLimit()
 			offset.checkOffset()
 
-			return NewReleasesQuery(accessToken, limit, offset, country?.alpha2)
+			return GetNewReleasesQuery(accessToken, limit, offset, country?.alpha2)
 		}
 	}
 }

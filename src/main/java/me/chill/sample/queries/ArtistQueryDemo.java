@@ -48,7 +48,7 @@ public class ArtistQueryDemo {
 			List<Artist> relatedArtist = user.getRelatedArtists("43ZHCT0cAZBISjO8DG9PnE").build().execute();
 			System.out.println(relatedArtist);
 
-			List<Artist> artists = user.getManyArtists().addId("0oSGxfWSnnOXhD2fKuz2Gy").build().execute();
+			List<Artist> artists = user.getSeveralArtists().addId("0oSGxfWSnnOXhD2fKuz2Gy").build().execute();
 			System.out.println(artists);
 		}
 	}

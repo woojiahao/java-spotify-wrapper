@@ -3,7 +3,7 @@ package me.chill.queries.album
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Album
 
-class SingleAlbumQuery private constructor(
+class GetSingleAlbumQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
 	private val market: String?) : SpotifyAlbumQuery() {
@@ -24,6 +24,6 @@ class SingleAlbumQuery private constructor(
 			return this
 		}
 
-		fun build() = SingleAlbumQuery(id, accessToken, market?.alpha2)
+		fun build() = GetSingleAlbumQuery(id, accessToken, market?.alpha2)
 	}
 }

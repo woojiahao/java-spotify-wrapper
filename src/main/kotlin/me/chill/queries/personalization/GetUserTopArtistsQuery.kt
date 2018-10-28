@@ -5,7 +5,7 @@ import me.chill.models.Paging
 import me.chill.queries.checkLimit
 import me.chill.queries.checkOffset
 
-class UserTopArtistsQuery private constructor(
+class GetUserTopArtistsQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
@@ -43,11 +43,11 @@ class UserTopArtistsQuery private constructor(
 			return this
 		}
 
-		fun build(): UserTopArtistsQuery {
+		fun build(): GetUserTopArtistsQuery {
 			limit.checkLimit()
 			offset.checkOffset()
 
-			return UserTopArtistsQuery(accessToken, limit, offset, timeRange.getValue())
+			return GetUserTopArtistsQuery(accessToken, limit, offset, timeRange.getValue())
 		}
 	}
 }

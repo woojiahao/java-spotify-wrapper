@@ -2,7 +2,7 @@ package me.chill.queries.browse
 
 import com.google.gson.JsonObject
 
-class AvailableGenreSeedsQuery private constructor(
+class GetAvailableGenreSeedsQuery private constructor(
 	private val accessToken: String) : SpotifyBrowseQuery() {
 
 	override fun execute(): List<String> {
@@ -15,6 +15,6 @@ class AvailableGenreSeedsQuery private constructor(
 	}
 
 	class Builder(private val accessToken: String) {
-		fun build() = AvailableGenreSeedsQuery(accessToken)
+		fun build() = GetAvailableGenreSeedsQuery(accessToken)
 	}
 }

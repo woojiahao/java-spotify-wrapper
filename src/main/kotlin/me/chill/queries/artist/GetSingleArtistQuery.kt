@@ -2,7 +2,7 @@ package me.chill.queries.artist
 
 import me.chill.models.Artist
 
-class SingleArtistQuery private constructor(
+class GetSingleArtistQuery private constructor(
 	private val id: String,
 	private val accessToken: String) : SpotifyArtistQuery() {
 
@@ -13,6 +13,6 @@ class SingleArtistQuery private constructor(
 	}
 
 	class Builder(private val id: String, private val accessToken: String) {
-		fun build() = SingleArtistQuery(id, accessToken)
+		fun build() = GetSingleArtistQuery(id, accessToken)
 	}
 }

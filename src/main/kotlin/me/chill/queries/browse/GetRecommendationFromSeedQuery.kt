@@ -9,7 +9,7 @@ import me.chill.queries.checkRange
 import me.chill.queries.generateNullableString
 
 // TODO: Make an enumeration for the genre types
-class SeedQuery private constructor(
+class GetRecommendationFromSeedQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val attributes: Map<String, *>,
@@ -197,13 +197,13 @@ class SeedQuery private constructor(
 			return this
 		}
 
-		fun build(): SeedQuery {
+		fun build(): GetRecommendationFromSeedQuery {
 			val totalSeedSize = seedArtists.size + seedGenres.size + seedTracks.size
 			totalSeedSize.checkRange("Seed values", upper = 5)
 
 			limit.checkLimit(upper = 100)
 
-			return SeedQuery(
+			return GetRecommendationFromSeedQuery(
 				accessToken,
 				limit,
 				attributes,

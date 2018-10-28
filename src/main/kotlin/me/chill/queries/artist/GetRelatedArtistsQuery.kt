@@ -3,7 +3,7 @@ package me.chill.queries.artist
 import com.google.gson.JsonObject
 import me.chill.models.Artist
 
-class RelatedArtistsQuery private constructor(
+class GetRelatedArtistsQuery private constructor(
 	private val id: String,
 	private val accessToken: String) : SpotifyArtistQuery() {
 
@@ -17,6 +17,6 @@ class RelatedArtistsQuery private constructor(
 	}
 
 	class Builder(private val id: String, private val accessToken: String) {
-		fun build() = RelatedArtistsQuery(id, accessToken)
+		fun build() = GetRelatedArtistsQuery(id, accessToken)
 	}
 }

@@ -1,13 +1,12 @@
 package me.chill.queries.library
 
 import com.neovisionaries.i18n.CountryCode
-import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Paging
 import me.chill.models.SavedAlbum
 import me.chill.queries.checkLimit
 import me.chill.queries.checkOffset
 
-class RetrieveSavedAlbumsQuery private constructor(
+class GetSavedAlbumsQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
@@ -45,11 +44,11 @@ class RetrieveSavedAlbumsQuery private constructor(
 			return this
 		}
 
-		fun build(): RetrieveSavedAlbumsQuery {
+		fun build(): GetSavedAlbumsQuery {
 			limit.checkLimit()
 			offset.checkOffset()
 
-			return RetrieveSavedAlbumsQuery(accessToken, limit, offset, market?.alpha2)
+			return GetSavedAlbumsQuery(accessToken, limit, offset, market?.alpha2)
 		}
 	}
 }

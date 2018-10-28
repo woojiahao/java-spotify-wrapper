@@ -6,7 +6,7 @@ import me.chill.queries.checkEmpty
 import me.chill.queries.checkListSizeLimit
 import me.chill.queries.generateString
 
-class ManyArtistQuery private constructor(
+class GetSeveralArtistsQuery private constructor(
 	private val accessToken: String,
 	private val ids: String) : SpotifyArtistQuery() {
 
@@ -35,11 +35,11 @@ class ManyArtistQuery private constructor(
 			return this
 		}
 
-		fun build(): ManyArtistQuery {
+		fun build(): GetSeveralArtistsQuery {
 			artists.checkEmpty("Artists")
 			artists.checkListSizeLimit("Artists", 50)
 
-			return ManyArtistQuery(accessToken, artists.generateString())
+			return GetSeveralArtistsQuery(accessToken, artists.generateString())
 		}
 	}
 }

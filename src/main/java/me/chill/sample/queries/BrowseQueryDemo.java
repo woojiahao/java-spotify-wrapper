@@ -7,7 +7,7 @@ import me.chill.exceptions.SpotifyAuthenticationException;
 import me.chill.authentication.SpotifyAuthenticationHelper;
 import me.chill.authentication.SpotifyClientCredentialFlow;
 import me.chill.models.*;
-import me.chill.queries.browse.SeedQuery;
+import me.chill.queries.browse.GetRecommendationFromSeedQuery;
 
 import java.util.List;
 import java.util.Map;
@@ -50,15 +50,15 @@ public class BrowseQueryDemo {
 			System.out.println(newReleases);
 
 			Recommendation recommendation = user
-				.getSeedRecommendation()
+				.getRecommendationsFromSeed()
 				.limit(1)
-				.acousticness(SeedQuery.Flag.Min, 0.1)
+				.acousticness(GetRecommendationFromSeedQuery.Flag.Min, 0.1)
 				.addSeedArtist("4NHQUGzhtTLFvgF5SZesLK")
 				.addSeedGenre("party")
 				.addSeedGenre("chill")
-				.danceability(SeedQuery.Flag.Max, 0.8)
-				.danceability(SeedQuery.Flag.Min, 0.5)
-				.duration(SeedQuery.Flag.Target, 1400)
+				.danceability(GetRecommendationFromSeedQuery.Flag.Max, 0.8)
+				.danceability(GetRecommendationFromSeedQuery.Flag.Min, 0.5)
+				.duration(GetRecommendationFromSeedQuery.Flag.Target, 1400)
 				.build()
 				.execute();
 

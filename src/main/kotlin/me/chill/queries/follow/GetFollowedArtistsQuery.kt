@@ -4,7 +4,7 @@ import me.chill.models.Artist
 import me.chill.models.CursorBasedPaging
 import me.chill.queries.checkLimit
 
-class FollowedArtistsQuery private constructor(
+class GetFollowedArtistsQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val after: String?) : SpotifyFollowQuery() {
@@ -35,9 +35,9 @@ class FollowedArtistsQuery private constructor(
 			return this
 		}
 
-		fun build(): FollowedArtistsQuery {
+		fun build(): GetFollowedArtistsQuery {
 			limit.checkLimit()
-			return FollowedArtistsQuery(accessToken, limit, after)
+			return GetFollowedArtistsQuery(accessToken, limit, after)
 		}
 	}
 }

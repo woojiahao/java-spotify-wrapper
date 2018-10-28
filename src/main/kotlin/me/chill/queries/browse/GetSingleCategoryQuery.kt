@@ -4,7 +4,7 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Category
 import java.util.*
 
-class SingleCategoryQuery private constructor(
+class GetSingleCategoryQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
 	private val country: String?,
@@ -35,6 +35,6 @@ class SingleCategoryQuery private constructor(
 			return this
 		}
 
-		fun build() = SingleCategoryQuery(id, accessToken, country?.alpha2, locale)
+		fun build() = GetSingleCategoryQuery(id, accessToken, country?.alpha2, locale)
 	}
 }

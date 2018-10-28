@@ -2,15 +2,12 @@ package me.chill.queries.browse
 
 import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
-import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Paging
 import me.chill.models.Playlist
 import me.chill.queries.checkLimit
-import me.chill.queries.checkLower
 import me.chill.queries.checkOffset
-import me.chill.queries.checkRange
 
-class CategoryPlaylistsQuery private constructor(
+class GetCategoryPlaylistsQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
 	private val limit: Int,
@@ -49,11 +46,11 @@ class CategoryPlaylistsQuery private constructor(
 			return this
 		}
 
-		fun build(): CategoryPlaylistsQuery {
+		fun build(): GetCategoryPlaylistsQuery {
 			limit.checkLimit()
 			offset.checkOffset()
 
-			return CategoryPlaylistsQuery(id, accessToken, limit, offset, country?.alpha2)
+			return GetCategoryPlaylistsQuery(id, accessToken, limit, offset, country?.alpha2)
 		}
 	}
 }
