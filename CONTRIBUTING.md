@@ -7,6 +7,21 @@ Ask your questions in `#wrapper-help` and you will receive a reply.
 
 Any issues opened must be specifically targeted at this project's source code, nothing else.
 
+## Tools
+### Access Token Generator
+It is too tedious to set up a access token every time you want to work on the library, so Woo Jia Hao has created a tool
+from JavaFX that assists you in generating and managing the access tokens so you can focus on simply making a single
+SpotifyUser object and managing that single access token.
+
+The link to the tool's repository can be found [here](https://github.com/woojiahao/spotify-access-token-generator)
+
+So, your workflow when testing whether endpoints are working should look like this:
+
+```java
+SpotifyUser user = new SpotifyUser("<access token generated>");
+//...
+```
+
 ## Contribution quality
 ### Commits
 1. Make small atomic commits
