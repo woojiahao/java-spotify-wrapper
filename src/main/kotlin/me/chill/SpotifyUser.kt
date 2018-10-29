@@ -17,6 +17,7 @@ import java.util.*
 import kotlin.concurrent.timerTask
 
 // TODO: Handle caching with e-tags
+// TODO: Create an observer system for whenever the access token gets refreshed
 class SpotifyUser(
 	val clientId: String,
 	val clientSecret: String?,
@@ -39,6 +40,7 @@ class SpotifyUser(
 
 	fun disableTimer() = refreshTaskTimer.cancel()
 
+	// TODO: When launching this method after disabling, an exception is thrown since the timer is cancelled, re-create a new timer and start that one instead
 	fun startTimer() {
 		refreshToken ?: throw SpotifyAuthenticationException("Unable to start timer when no refresh token is given")
 		refreshTaskTimer.purge()
@@ -80,6 +82,8 @@ class SpotifyUser(
 	}
 
 	fun getAccessToken() = accessToken
+
+	fun getExpiryDuration() = expiryDuration
 
 	fun getSingleAlbum(albumId: String) = GetSingleAlbumQuery.Builder(albumId, accessToken)
 

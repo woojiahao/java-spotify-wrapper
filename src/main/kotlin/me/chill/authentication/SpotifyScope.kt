@@ -5,6 +5,7 @@ package me.chill.authentication
  */
 enum class SpotifyScope(val scopeName: String) {
 	// Streaming
+	// TODO: Add the app-remote-control scope
 	Streaming("streaming"),
 
 	// Follow

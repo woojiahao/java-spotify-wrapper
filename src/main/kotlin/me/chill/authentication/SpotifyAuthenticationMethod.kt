@@ -42,7 +42,7 @@ open class SpotifyAuthenticationMethod(
 	fun isFinalRedirectUrl(url: String): Boolean {
 		val httpUrl = HttpUrl.parse(url) ?: throw MalformedURLException("URL: $url is malformed")
 		helper.redirectUrl ?: throw IllegalStateException("Redirect URL should have been specified previously")
-		return httpUrl.toString().startsWith(helper.redirectUrl) && httpUrl.queryParameter("state") != null
+		return httpUrl.toString().startsWith(helper.redirectUrl)
 	}
 
 	protected fun checkMatchingState(receivedState: String?) {
