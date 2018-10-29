@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Track
+import me.chill.queries.readFromJsonArray
 
 class GetArtistTopTracksQuery private constructor(
 	private val id: String,
@@ -11,16 +12,11 @@ class GetArtistTopTracksQuery private constructor(
 	private val market: String) : SpotifyArtistQuery() {
 
 	override fun execute(): List<Track> {
-		val parameters = mapOf(
-			"market" to market
-		)
+		val parameters = mapOf("market" to market)
 
 		val response = query(artistTopTracksEndpoint.format(id), accessToken, parameters)
 
-		return gson
-			.fromJson(response.text, JsonObject::class.java)
-			.getAsJsonArray("tracks")
-			.map { gson.fromJson(it, Track::class.java) }
+		return gson.readFromJsonArray("tracks", response)
 	}
 
 	class Builder(private val id: String, private val accessToken: String) {

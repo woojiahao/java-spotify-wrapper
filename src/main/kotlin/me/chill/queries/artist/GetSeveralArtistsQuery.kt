@@ -5,6 +5,7 @@ import me.chill.models.Artist
 import me.chill.queries.checkEmpty
 import me.chill.queries.checkListSizeLimit
 import me.chill.queries.generateString
+import me.chill.queries.readFromJsonArray
 
 class GetSeveralArtistsQuery private constructor(
 	private val accessToken: String,
@@ -15,10 +16,7 @@ class GetSeveralArtistsQuery private constructor(
 
 		val response = query(artistEndpoint, accessToken, parameters)
 
-		return gson
-			.fromJson(response.text, JsonObject::class.java)
-			.getAsJsonArray("artists")
-			.map { gson.fromJson(it, Artist::class.java) }
+		return gson.readFromJsonArray("artists", response)
 	}
 
 	class Builder(private val accessToken: String) {

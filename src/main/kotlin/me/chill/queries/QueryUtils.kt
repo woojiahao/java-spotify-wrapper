@@ -5,7 +5,6 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import khttp.responses.Response
 import me.chill.exceptions.SpotifyQueryException
-import me.chill.models.Device
 
 // TODO: Add a check to find duplicates in the list and display warning messages
 
@@ -56,7 +55,7 @@ fun Int.checkLimit(lower: Int = 1, upper: Int = 50) = checkRange("Limit", lower,
 
 fun Int.checkOffset() = checkLower("Offset")
 
-fun Gson.readFromJsonArray(arrayName: String, content: String) =
-	fromJson(content, JsonObject::class.java)
+inline fun <reified T> Gson.readFromJsonArray(arrayName: String, response: Response) =
+	fromJson(response.text, JsonObject::class.java)
 		.getAsJsonArray(arrayName)
-		.map { fromJson(it, Device::class.java) }
+		.map { fromJson(it, T::class.java) }

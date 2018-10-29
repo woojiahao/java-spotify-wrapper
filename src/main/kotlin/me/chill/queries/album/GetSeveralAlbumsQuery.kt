@@ -6,6 +6,7 @@ import me.chill.models.Album
 import me.chill.queries.checkEmpty
 import me.chill.queries.checkListSizeLimit
 import me.chill.queries.generateString
+import me.chill.queries.readFromJsonArray
 
 class GetSeveralAlbumsQuery private constructor(
 	private val accessToken: String,
@@ -20,10 +21,7 @@ class GetSeveralAlbumsQuery private constructor(
 
 		val response = query(albumEndpoint, accessToken, parameters)
 
-		return gson
-			.fromJson(response.text, JsonObject::class.java)
-			.getAsJsonArray("albums")
-			.map { gson.fromJson(it, Album::class.java) }
+		return gson.readFromJsonArray("albums", response)
 	}
 
 
