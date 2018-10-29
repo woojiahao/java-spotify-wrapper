@@ -2,8 +2,10 @@ package me.chill.queries
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import khttp.responses.Response
 import me.chill.exceptions.SpotifyQueryException
+import me.chill.models.Device
 
 // TODO: Add a check to find duplicates in the list and display warning messages
 
@@ -36,7 +38,7 @@ fun Int.checkLower(name: String, limit: Int = 0) =
 
 fun Int.checkRange(rangeName: String, lower: Int = 1, upper: Int = 50) =
 	takeIf { (it < lower) || (it > upper) }
-		?.let { throw SpotifyQueryException("$rangeName cannot be less than $lower or greater than $upper")  }
+		?.let { throw SpotifyQueryException("$rangeName cannot be less than $lower or greater than $upper") }
 
 fun Double.checkGreater(name: String, limit: Double = 50.0) =
 	takeIf { it > limit }
@@ -48,8 +50,13 @@ fun Double.checkLower(name: String, limit: Double = 0.0) =
 
 fun Double.checkRange(rangeName: String, lower: Double = 1.0, upper: Double = 50.0) =
 	takeIf { (it < lower) || (it > upper) }
-		?.let { throw SpotifyQueryException("$rangeName cannot be less than $lower or greater than $upper")  }
+		?.let { throw SpotifyQueryException("$rangeName cannot be less than $lower or greater than $upper") }
 
 fun Int.checkLimit(lower: Int = 1, upper: Int = 50) = checkRange("Limit", lower, upper)
 
 fun Int.checkOffset() = checkLower("Offset")
+
+fun Gson.readFromJsonArray(arrayName: String, content: String) =
+	fromJson(content, JsonObject::class.java)
+		.getAsJsonArray(arrayName)
+		.map { fromJson(it, Device::class.java) }
