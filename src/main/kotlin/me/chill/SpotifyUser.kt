@@ -24,6 +24,8 @@ class SpotifyUser(
 
 	private val refreshTaskTimer = Timer()
 
+	constructor(accessToken: String): this("", null, accessToken, null, null)
+
 	init {
 		refreshToken?.let { _ ->
 			expiryDuration?.let { _ ->
