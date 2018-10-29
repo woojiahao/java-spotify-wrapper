@@ -59,5 +59,5 @@ abstract class Query {
 
 	protected fun List<String>.generateString() = trimList().asSequence().distinct().joinToString(",")
 
-	abstract fun execute(): Any
+	abstract fun execute(): Any?
 }

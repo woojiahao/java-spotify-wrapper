@@ -11,6 +11,8 @@ import me.chill.queries.follow.*
 import me.chill.queries.library.*
 import me.chill.queries.personalization.GetUserTopArtistsQuery
 import me.chill.queries.personalization.GetUserTopTracksQuery
+import me.chill.queries.player.GetAvailableDevicesQuery
+import me.chill.queries.player.GetCurrentPlaybackInformationQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -24,7 +26,7 @@ class SpotifyUser(
 
 	private val refreshTaskTimer = Timer()
 
-	constructor(accessToken: String): this("", null, accessToken, null, null)
+	constructor(accessToken: String) : this("", null, accessToken, null, null)
 
 	init {
 		refreshToken?.let { _ ->
@@ -142,4 +144,8 @@ class SpotifyUser(
 	fun getTopArtists() = GetUserTopArtistsQuery.Builder(accessToken)
 
 	fun getTopTracks() = GetUserTopTracksQuery.Builder(accessToken)
+
+	fun getAvailableDevices() = GetAvailableDevicesQuery.Builder(accessToken)
+
+	fun getCurrentPlaybackInformation() = GetCurrentPlaybackInformationQuery.Builder(accessToken)
 }
