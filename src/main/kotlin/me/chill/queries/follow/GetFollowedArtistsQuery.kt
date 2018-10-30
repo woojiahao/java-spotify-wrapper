@@ -2,12 +2,14 @@ package me.chill.queries.follow
 
 import me.chill.models.Artist
 import me.chill.models.CursorBasedPaging
-import me.chill.queries.checkLimit
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLimit
+import me.chill.utility.request.query
 
 class GetFollowedArtistsQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
-	private val after: String?) : SpotifyFollowQuery() {
+	private val after: String?) : AbstractQuery("me", "following") {
 
 	override fun execute(): Any {
 		val parameters = mapOf(
@@ -16,7 +18,7 @@ class GetFollowedArtistsQuery private constructor(
 			"after" to after
 		)
 
-		val response = query(followEndpoint, accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson<CursorBasedPaging<Artist>>(response.jsonObject.getString("artists"), CursorBasedPaging::class.java)
 	}

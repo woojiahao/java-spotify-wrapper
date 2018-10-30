@@ -1,17 +1,18 @@
 package me.chill.queries.album
 
-import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Album
-import me.chill.queries.checkEmpty
-import me.chill.queries.checkListSizeLimit
-import me.chill.queries.generateString
-import me.chill.queries.readFromJsonArray
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkEmpty
+import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.generateString
+import me.chill.utility.request.query
+import me.chill.utility.request.readFromJsonArray
 
 class GetSeveralAlbumsQuery private constructor(
 	private val accessToken: String,
 	private val ids: String,
-	private val market: String?) : SpotifyAlbumQuery() {
+	private val market: String?) : AbstractQuery("albums") {
 
 	override fun execute(): List<Album?> {
 		val parameters = mapOf(
@@ -19,7 +20,7 @@ class GetSeveralAlbumsQuery private constructor(
 			"market" to market
 		)
 
-		val response = query(albumEndpoint, accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.readFromJsonArray("albums", response)
 	}

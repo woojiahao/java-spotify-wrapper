@@ -2,13 +2,15 @@ package me.chill.queries.browse
 
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Category
+import me.chill.queries.AbstractQuery
+import me.chill.utility.request.query
 import java.util.*
 
 class GetSingleCategoryQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
 	private val country: String?,
-	private val locale: String?) : SpotifyBrowseQuery() {
+	private val locale: String?) : AbstractQuery("browse", "categories", id) {
 
 	override fun execute(): Category {
 		val parameters = mapOf(
@@ -16,7 +18,7 @@ class GetSingleCategoryQuery private constructor(
 			"locale" to locale
 		)
 
-		val response = query(singleCategoryEndpoint.format(id), accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson(response.text, Category::class.java)
 	}

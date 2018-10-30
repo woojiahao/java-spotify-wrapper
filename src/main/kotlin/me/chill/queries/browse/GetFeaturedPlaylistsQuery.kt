@@ -3,8 +3,10 @@ package me.chill.queries.browse
 import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.FeaturedPlaylists
-import me.chill.queries.checkLimit
-import me.chill.queries.checkOffset
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLimit
+import me.chill.utility.extensions.checkOffset
+import me.chill.utility.request.query
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
@@ -15,7 +17,7 @@ class GetFeaturedPlaylistsQuery private constructor(
 	private val offset: Int,
 	private val locale: String?,
 	private val country: String?,
-	private val timestamp: String?) : SpotifyBrowseQuery() {
+	private val timestamp: String?) : AbstractQuery("browse", "featured-playlists") {
 
 	override fun execute(): FeaturedPlaylists {
 		val parameters = mapOf(
@@ -26,7 +28,7 @@ class GetFeaturedPlaylistsQuery private constructor(
 			"timestamp" to timestamp
 		)
 
-		val response = query(featuredPlaylistsEndpoint, accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson(response.text, FeaturedPlaylists::class.java)
 	}

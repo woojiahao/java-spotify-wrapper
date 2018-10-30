@@ -4,8 +4,10 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Album
 import me.chill.models.Paging
-import me.chill.queries.checkLimit
-import me.chill.queries.checkOffset
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLimit
+import me.chill.utility.extensions.checkOffset
+import me.chill.utility.request.query
 
 
 class GetArtistAlbumsQuery private constructor(
@@ -14,7 +16,7 @@ class GetArtistAlbumsQuery private constructor(
 	private val includeGroups: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val market: String?) : SpotifyArtistQuery() {
+	private val market: String?) : AbstractQuery("artists", id, "albums") {
 
 	enum class ArtistAlbumIncludeGroup(val queryValue: String) {
 		Album("album"), Single("single"), AppearsOn("appears_on"), Compilation("compilation")
@@ -28,7 +30,7 @@ class GetArtistAlbumsQuery private constructor(
 			"market" to market
 		)
 
-		val response = query(artistAlbumsEndpoint.format(id), accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson<Paging<Album>>(response.text, Paging::class.java)
 	}

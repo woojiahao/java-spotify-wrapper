@@ -2,54 +2,29 @@ package me.chill.sample.queries;
 
 import com.neovisionaries.i18n.CountryCode;
 import me.chill.SpotifyUser;
-import me.chill.authentication.SpotifyAuthenticationComponent;
-import me.chill.exceptions.SpotifyAuthenticationException;
-import me.chill.authentication.SpotifyAuthenticationHelper;
-import me.chill.authentication.SpotifyClientCredentialFlow;
 import me.chill.models.Album;
 import me.chill.models.Artist;
 import me.chill.models.Paging;
 import me.chill.models.Track;
 
 import java.util.List;
-import java.util.Map;
 
 public class ArtistQueryDemo {
 	public static void main(String[] args) {
-		String clientId = "cea6a21eeb874d1d91dbaaccce0996f3";
-		String clientSecret = "96729e5f290e496d8115d9e0bf27e515";
+		SpotifyUser user = new SpotifyUser("BQCAaTIN0csJXOT2kpwaZtz2k57FIzgZ7PuvwCGTQ7AgAUOmVS__m3OUhh_CpVUEiscPIvb0Aq3hAzglNav1jSP_iE43azjjNugGwKN-1NhQ9ck1Hn7iLB6G_ptTWQwPBWNWdhIq4i8vxmcUApJZHfRXAX0ahYB7OUlqaOiiZLP7v8H4seLG0O1M6zHRkLNHYyGpgkQVSoknM9WxRFsUpmBjOBmlCCJj8LO12rRHOy-PTYV3IOhNK7-wk_uuLnOzWEH-zAUbfpvaGDMuMgfECg");
+		Artist artist = user.getSingleArtist("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
+		System.out.println(artist);
 
-		SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
-			.setClientId(clientId)
-			.setClientSecret(clientSecret)
-			.build();
+		Paging<Album> artistAlbums = user.getArtistAlbums("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
+		System.out.println(artistAlbums);
 
-		SpotifyClientCredentialFlow flow = new SpotifyClientCredentialFlow(helper);
+		List<Track> topTracks = user.getArtistTopTracks("43ZHCT0cAZBISjO8DG9PnE").market(CountryCode.SG).build().execute();
+		System.out.println(topTracks);
 
-		Map<SpotifyAuthenticationComponent, String> info = null;
-		try {
-			info = flow.requestAuthentication();
-		} catch (SpotifyAuthenticationException e) {
-			e.printStackTrace();
-		}
+		List<Artist> relatedArtist = user.getRelatedArtists("43ZHCT0cAZBISjO8DG9PnE").build().execute();
+		System.out.println(relatedArtist);
 
-		if (info != null) {
-			SpotifyUser user = flow.generateSpotifyUser(info);
-
-			Artist artist = user.getSingleArtist("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
-			System.out.println(artist);
-
-			Paging<Album> artistAlbums = user.getArtistAlbums("0OdUWJ0sBjDrqHygGUXeCF").build().execute();
-			System.out.println(artistAlbums);
-
-			List<Track> topTracks = user.getArtistTopTracks("43ZHCT0cAZBISjO8DG9PnE").market(CountryCode.SG).build().execute();
-			System.out.println(topTracks);
-
-			List<Artist> relatedArtist = user.getRelatedArtists("43ZHCT0cAZBISjO8DG9PnE").build().execute();
-			System.out.println(relatedArtist);
-
-			List<Artist> artists = user.getSeveralArtists().addId("0oSGxfWSnnOXhD2fKuz2Gy").build().execute();
-			System.out.println(artists);
-		}
+		List<Artist> artists = user.getSeveralArtists().addId("0oSGxfWSnnOXhD2fKuz2Gy").build().execute();
+		System.out.println(artists);
 	}
 }

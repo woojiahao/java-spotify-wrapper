@@ -1,13 +1,15 @@
 package me.chill.queries.follow
 
 import me.chill.exceptions.SpotifyQueryException
-import me.chill.queries.checkListSizeLimit
-import me.chill.queries.generateNullableString
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.generateNullableString
+import me.chill.utility.request.put
 
 class FollowUserOrArtistQuery private constructor(
 	private val accessToken: String,
 	private val userType: String,
-	private val ids: String?) : SpotifyFollowQuery() {
+	private val ids: String?) : AbstractQuery("me", "following") {
 
 	override fun execute(): Boolean {
 		val parameters = mapOf(
@@ -15,7 +17,7 @@ class FollowUserOrArtistQuery private constructor(
 			"ids" to ids
 		)
 
-		val response = put(followEndpoint, accessToken, parameters)
+		val response = put(queryEndpoint, accessToken, parameters)
 
 		return response.statusCode == 204
 	}

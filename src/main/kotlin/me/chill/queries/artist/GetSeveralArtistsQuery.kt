@@ -1,23 +1,18 @@
 package me.chill.queries.artist
 
-import com.google.gson.JsonObject
 import me.chill.models.Artist
-import me.chill.queries.checkEmpty
-import me.chill.queries.checkListSizeLimit
-import me.chill.queries.generateString
-import me.chill.queries.readFromJsonArray
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkEmpty
+import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.generateString
+import me.chill.utility.request.query
+import me.chill.utility.request.readFromJsonArray
 
 class GetSeveralArtistsQuery private constructor(
 	private val accessToken: String,
-	private val ids: String) : SpotifyArtistQuery() {
+	private val ids: String) : AbstractQuery("artists") {
 
-	override fun execute(): List<Artist> {
-		val parameters = mapOf("ids" to ids)
-
-		val response = query(artistEndpoint, accessToken, parameters)
-
-		return gson.readFromJsonArray("artists", response)
-	}
+	override fun execute() = gson.readFromJsonArray<Artist>("artists", query(queryEndpoint, accessToken, mapOf("ids" to ids)))
 
 	class Builder(private val accessToken: String) {
 		private val artists = mutableListOf<String>()

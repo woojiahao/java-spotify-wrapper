@@ -1,16 +1,27 @@
 package me.chill.queries.follow
 
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.generateParameters
+import me.chill.utility.request.Header
+import me.chill.utility.request.responseCheck
+
 class FollowPlaylistQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
-	private val public: Boolean) : SpotifyFollowQuery() {
+	private val public: Boolean) : AbstractQuery("playlists", id, "followers") {
 
 	override fun execute(): Boolean {
 		val body = mapOf(
 			"public" to public
 		).generateParameters()
 
-		val response = khttp.put(followPlaylistEndpoint.format(id), generateModificationHeaders(accessToken), data = body)
+		val headers = Header.Builder()
+			.accessToken(accessToken)
+			.contentType(Header.Builder.ContentType.Json)
+			.build()
+			.generate()
+
+		val response = khttp.put(queryEndpoint, headers, data = body)
 		response.responseCheck()
 
 		return response.statusCode == 200

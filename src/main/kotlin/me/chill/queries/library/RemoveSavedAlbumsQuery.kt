@@ -1,16 +1,20 @@
 package me.chill.queries.library
 
 import khttp.delete
-import me.chill.queries.checkListSizeLimit
-import me.chill.queries.generateNullableString
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.generateNullableString
+import me.chill.utility.extensions.generateParameters
+import me.chill.utility.request.generateModificationHeader
+import me.chill.utility.request.responseCheck
 
 class RemoveSavedAlbumsQuery private constructor(
 	private val accessToken: String,
-	private val ids: String?) : SpotifyLibraryQuery() {
+	private val ids: String?) : AbstractQuery("me", "albums") {
 
 	override fun execute(): Boolean {
 		val parameters = mapOf("ids" to ids).generateParameters()
-		val response = delete(libraryEndpoint, generateModificationHeaders(accessToken), parameters)
+		val response = delete(queryEndpoint, generateModificationHeader(accessToken), parameters)
 		response.responseCheck()
 
 		return response.statusCode == 200

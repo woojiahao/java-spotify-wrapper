@@ -2,14 +2,16 @@ package me.chill.queries.personalization
 
 import me.chill.models.Paging
 import me.chill.models.Track
-import me.chill.queries.checkLimit
-import me.chill.queries.checkOffset
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLimit
+import me.chill.utility.extensions.checkOffset
+import me.chill.utility.request.query
 
 class GetUserTopTracksQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val timeRange: String) : SpotifyPersonalizationQuery() {
+	private val timeRange: String) : AbstractQuery("me", "top", "tracks") {
 
 	override fun execute(): Paging<Track> {
 		val parameters = mapOf(
@@ -18,7 +20,7 @@ class GetUserTopTracksQuery private constructor(
 			"time_range" to timeRange
 		)
 
-		val response = query(topTracksEndpoint, accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson<Paging<Track>>(response.text, Paging::class.java)
 	}

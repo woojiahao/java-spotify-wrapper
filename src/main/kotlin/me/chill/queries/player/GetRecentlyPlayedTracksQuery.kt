@@ -3,14 +3,16 @@ package me.chill.queries.player
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.CursorBasedPaging
 import me.chill.models.PlayHistory
-import me.chill.queries.checkLimit
-import me.chill.queries.checkLower
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLimit
+import me.chill.utility.extensions.checkLower
+import me.chill.utility.request.query
 
 class GetRecentlyPlayedTracksQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val after: Int?,
-	private val before: Int?) : SpotifyPlayerQuery() {
+	private val before: Int?) : AbstractQuery("me", "player", "recently-played") {
 
 	override fun execute(): CursorBasedPaging<PlayHistory>? {
 		val parameters = mapOf(
@@ -19,7 +21,7 @@ class GetRecentlyPlayedTracksQuery private constructor(
 			"before" to before
 		)
 
-		val response = query(recentlyPlayedTracksEndpoint, accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		response.statusCode.takeIf { it == 204 }?.let { return null }
 

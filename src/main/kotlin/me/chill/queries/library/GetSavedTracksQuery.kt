@@ -3,14 +3,16 @@ package me.chill.queries.library
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Paging
 import me.chill.models.SavedTrack
-import me.chill.queries.checkLimit
-import me.chill.queries.checkOffset
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLimit
+import me.chill.utility.extensions.checkOffset
+import me.chill.utility.request.query
 
 class GetSavedTracksQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val market: String?) : SpotifyLibraryQuery() {
+	private val market: String?) : AbstractQuery("me", "tracks") {
 
 	override fun execute(): Paging<SavedTrack> {
 		val parameters = mapOf(
@@ -19,7 +21,7 @@ class GetSavedTracksQuery private constructor(
 			"market" to market
 		)
 
-		val response = query("https://api.spotify.com/v1/me/tracks", accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson<Paging<SavedTrack>>(response.text, Paging::class.java)
 	}

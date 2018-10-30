@@ -1,13 +1,17 @@
 package me.chill.queries.follow
 
 import khttp.delete
+import me.chill.queries.AbstractQuery
+import me.chill.utility.request.Header
+import me.chill.utility.request.generateHeader
+import me.chill.utility.request.responseCheck
 
 class UnfollowPlaylistQuery private constructor(
 	private val id: String,
-	private val accessToken: String) : SpotifyFollowQuery() {
+	private val accessToken: String) : AbstractQuery("playlists", id, "followers") {
 
 	override fun execute(): Boolean {
-		val response = delete(followPlaylistEndpoint.format(id), generateHeaders(accessToken))
+		val response = delete(queryEndpoint, generateHeader(accessToken))
 		response.responseCheck()
 
 		return response.statusCode == 200

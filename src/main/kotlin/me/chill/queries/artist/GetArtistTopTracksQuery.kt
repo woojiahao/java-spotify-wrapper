@@ -1,20 +1,21 @@
 package me.chill.queries.artist
 
-import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Track
-import me.chill.queries.readFromJsonArray
+import me.chill.queries.AbstractQuery
+import me.chill.utility.request.query
+import me.chill.utility.request.readFromJsonArray
 
 class GetArtistTopTracksQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
-	private val market: String) : SpotifyArtistQuery() {
+	private val market: String) : AbstractQuery("artists", id, "top-tracks") {
 
 	override fun execute(): List<Track> {
 		val parameters = mapOf("market" to market)
 
-		val response = query(artistTopTracksEndpoint.format(id), accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.readFromJsonArray("tracks", response)
 	}

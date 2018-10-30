@@ -4,8 +4,10 @@ import com.google.gson.JsonObject
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Category
 import me.chill.models.Paging
-import me.chill.queries.checkLimit
-import me.chill.queries.checkOffset
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLimit
+import me.chill.utility.extensions.checkOffset
+import me.chill.utility.request.query
 import java.util.*
 
 class GetCategoryListQuery private constructor(
@@ -13,7 +15,7 @@ class GetCategoryListQuery private constructor(
 	private val limit: Int,
 	private val offset: Int,
 	private val locale: String?,
-	private val country: String?) : SpotifyBrowseQuery() {
+	private val country: String?) : AbstractQuery("browse", "categories") {
 
 	override fun execute(): Paging<Category> {
 		val parameters = mapOf(
@@ -23,7 +25,7 @@ class GetCategoryListQuery private constructor(
 			"country" to country
 		)
 
-		val response = query(categoriesEndpoint, accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson<Paging<Category>>(gson.fromJson(response.text, JsonObject::class.java)["categories"], Paging::class.java)
 	}

@@ -1,13 +1,17 @@
 package me.chill.queries.follow
 
 import khttp.delete
-import me.chill.queries.checkListSizeLimit
-import me.chill.queries.generateNullableString
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.generateNullableString
+import me.chill.utility.extensions.generateParameters
+import me.chill.utility.request.generateModificationHeader
+import me.chill.utility.request.responseCheck
 
 class UnfollowUserOrArtistQuery private constructor(
 	private val accessToken: String,
 	private val type: String,
-	private val ids: String?) : SpotifyFollowQuery() {
+	private val ids: String?) : AbstractQuery("me", "following") {
 
 	override fun execute(): Boolean {
 		val parameters = mapOf(
@@ -15,7 +19,7 @@ class UnfollowUserOrArtistQuery private constructor(
 			"ids" to ids
 		).generateParameters()
 
-		val response = delete(followEndpoint, generateModificationHeaders(accessToken), parameters)
+		val response = delete(queryEndpoint, generateModificationHeader(accessToken), parameters)
 		response.responseCheck()
 
 		return response.statusCode == 204

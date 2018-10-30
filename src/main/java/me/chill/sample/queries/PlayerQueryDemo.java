@@ -3,13 +3,14 @@ package me.chill.sample.queries;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import me.chill.SpotifyUser;
+import me.chill.exceptions.SpotifyQueryException;
 import me.chill.models.*;
 
 import java.util.List;
 
 class PlayerQueryDemo {
 	public static void main(String[] args) {
-		SpotifyUser user = new SpotifyUser("BQDpBgOb747cliiyV7MIx2F8jUuNkWg9ZcpK6h1PdZ-aelTxpPhRXBykSknCkzeXwvVLI1mEsvHwU7gmPqSLaOuQcqshCQp7XciQr-1HBoveQaOTUWsVaLFCtZl9KWtqG5sQwUPYag9pogokayFzTd6d8w2x12DjJsNokiAvIUoMIsUr3hVyKGjfGEtd9YH4ZIrItysRbTbYPRPdf64-Z-8KywzXhZUGAho2RFxA_mdBVkImSm6seWkZ9QhnkHDmjh6L4YI7pZXVYFyNgJ1XxA");
+		SpotifyUser user = new SpotifyUser("BQDqToxD0wqEtGLODiAmialTqpHL31110wNbWpHbieII-1KOp8IRa7QbWVDRrr2tyUdOEAMlaa5geuUyB-y5ZQfjvZFLgITovDz6Y9kznMw8afZzwoRaJkH9SQIl2d7WX44I7rvddrJKnz8iaahnALFgHYXaFxH-JtdtpWn_Q9r1X6-cgiFM92dxvCBNe_40YmpTwpwesoC-IuF_ide0WxuSz9AHd-1AIlub6dtrbhIPLNmElfVptHST2lhD-aCqwZCKZTIUAql4IQjEE4lxrg");
 
 //		List<Device> availableDevices = user.getAvailableDevices().build().execute();
 //		availableDevices.forEach(System.out::println);
@@ -26,14 +27,10 @@ class PlayerQueryDemo {
 
 //		user.pauseTrack().device("CHILLBOX").build().execute();
 
-		user.seekTrack().device("CHILLBOX").position(0).build().execute(statusCode -> {
-			if (statusCode == 204) {
-				System.out.println("Seeking");
-			} else {
-				System.out.println("Failed");
-			}
-
-			return null;
-		});
+		try {
+			user.seekTrack().device("CHILLBOX").position(0).build().execute();
+		} catch (SpotifyQueryException e) {
+			e.printStackTrace();
+		}
 	}
 }

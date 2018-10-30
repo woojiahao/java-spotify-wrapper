@@ -1,16 +1,13 @@
 package me.chill.queries.browse
 
-import com.google.gson.JsonObject
-import me.chill.queries.readFromJsonArray
+import me.chill.queries.AbstractQuery
+import me.chill.utility.request.query
+import me.chill.utility.request.readFromJsonArray
 
 class GetAvailableGenreSeedsQuery private constructor(
-	private val accessToken: String) : SpotifyBrowseQuery() {
+	private val accessToken: String) : AbstractQuery("recommendations", "available-genre-seeds") {
 
-	override fun execute(): List<String> {
-		val response = query(genreSeedsEndpoint, accessToken)
-
-		return gson.readFromJsonArray("genres", response)
-	}
+	override fun execute() = gson.readFromJsonArray<String>("genres", query(queryEndpoint, accessToken))
 
 	class Builder(private val accessToken: String) {
 		fun build() = GetAvailableGenreSeedsQuery(accessToken)

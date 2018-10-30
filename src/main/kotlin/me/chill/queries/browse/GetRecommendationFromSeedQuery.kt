@@ -3,10 +3,12 @@ package me.chill.queries.browse
 import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Recommendation
-import me.chill.queries.checkLimit
-import me.chill.queries.checkLower
-import me.chill.queries.checkRange
-import me.chill.queries.generateNullableString
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLimit
+import me.chill.utility.extensions.checkLower
+import me.chill.utility.extensions.checkRange
+import me.chill.utility.extensions.generateNullableString
+import me.chill.utility.request.query
 
 // TODO: Make an enumeration for the genre types
 class GetRecommendationFromSeedQuery private constructor(
@@ -16,7 +18,7 @@ class GetRecommendationFromSeedQuery private constructor(
 	private val seedArtists: String?,
 	private val seedGenres: String?,
 	private val seedTracks: String?,
-	private val market: String?) : SpotifyBrowseQuery() {
+	private val market: String?) : AbstractQuery("recommendations") {
 
 	enum class Flag { Max, Min, Target }
 
@@ -41,7 +43,7 @@ class GetRecommendationFromSeedQuery private constructor(
 			parameters["target_$key"] = attribute.target
 		}
 
-		val response = query(recommendationSeedEndpoint, accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson(response.text, Recommendation::class.java)
 	}

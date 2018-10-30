@@ -1,8 +1,10 @@
 package me.chill.queries.player
 
+import me.chill.queries.AbstractQuery
+
 class PauseTrackQuery private constructor(
 	private val accessToken: String,
-	private val deviceId: String?) : SpotifyPlayerQuery() {
+	private val deviceId: String?) : AbstractQuery("me", "player", "pause") {
 
 	override fun execute(): Any? {
 		val parameters = mapOf("device_id" to deviceId)
@@ -12,11 +14,11 @@ class PauseTrackQuery private constructor(
 		)
 
 		println("Pausing")
-		asyncRequest(Method.Put, "https://api.spotify.com/v1/me/player/pause", headers, parameters.generateParameters()) {
-			println(it.request.method)
-			println(it.text)
-//			it.responseCheck()
-		}
+//		asyncRequest(Method.Put, "https://api.spotify.com/v1/me/player/pause", headers, parameters.generateParameters()) {
+//			println(it.request.method)
+//			println(it.text)
+////			it.responseCheck()
+//		}
 
 		return emptyArray<String>()
 	}

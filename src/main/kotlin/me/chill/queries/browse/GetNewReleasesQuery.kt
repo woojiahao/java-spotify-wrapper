@@ -2,14 +2,16 @@ package me.chill.queries.browse
 
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.NewReleases
-import me.chill.queries.checkLimit
-import me.chill.queries.checkOffset
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLimit
+import me.chill.utility.extensions.checkOffset
+import me.chill.utility.request.query
 
 class GetNewReleasesQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val country: String?) : SpotifyBrowseQuery() {
+	private val country: String?) : AbstractQuery("browse", "new-releases") {
 
 	override fun execute(): NewReleases {
 		val parameters = mapOf(
@@ -18,7 +20,7 @@ class GetNewReleasesQuery private constructor(
 			"country" to country
 		)
 
-		val response = query(newReleaseEndpoint, accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson(response.text, NewReleases::class.java)
 	}

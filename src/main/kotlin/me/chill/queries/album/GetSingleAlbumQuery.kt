@@ -2,16 +2,18 @@ package me.chill.queries.album
 
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Album
+import me.chill.queries.AbstractQuery
+import me.chill.utility.request.query
 
 class GetSingleAlbumQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
-	private val market: String?) : SpotifyAlbumQuery() {
+	private val market: String?) : AbstractQuery("albums", id) {
 
 	override fun execute(): Album {
 		val parameters = mapOf("market" to market)
 
-		val response = query(singleAlbumEndpoint.format(id), accessToken, parameters)
+		val response = query(queryEndpoint, accessToken, parameters)
 
 		return gson.fromJson(response.text, Album::class.java)
 	}

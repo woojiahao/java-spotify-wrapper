@@ -1,14 +1,16 @@
 package me.chill.queries.follow
 
-import me.chill.queries.checkEmpty
-import me.chill.queries.checkListSizeLimit
-import me.chill.queries.createCheckMap
-import me.chill.queries.generateString
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkEmpty
+import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.generateString
+import me.chill.utility.request.createCheckMap
+import me.chill.utility.request.query
 
 class IsFollowingUserOrArtistQuery private constructor(
 	private val accessToken: String,
 	private val type: String,
-	private val ids: String) : SpotifyFollowQuery() {
+	private val ids: String) : AbstractQuery("me", "following", "contains") {
 
 	override fun execute(): Map<String, Boolean> {
 		val parameters = mapOf(
@@ -16,9 +18,7 @@ class IsFollowingUserOrArtistQuery private constructor(
 			"ids" to ids
 		)
 
-		val response = query(isFollowingArtistOrUserEndpoint, accessToken, parameters)
-
-		return response.createCheckMap(ids, gson)
+		return query(queryEndpoint, accessToken, parameters).createCheckMap(ids)
 	}
 
 	class Builder(private val accessToken: String, private val userType: UserType) {

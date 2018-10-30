@@ -1,19 +1,15 @@
 package me.chill.queries.library
 
-import me.chill.queries.checkListSizeLimit
-import me.chill.queries.generateNullableString
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.generateNullableString
+import me.chill.utility.request.put
 
 class SaveTracksQuery private constructor(
 	private val accessToken: String,
-	private val ids: String?) : SpotifyLibraryQuery() {
+	private val ids: String?) : AbstractQuery("me", "albums") {
 
-	override fun execute(): Any {
-		val parameters = mapOf("ids" to ids)
-
-		val response = put(libraryEndpoint, accessToken, parameters)
-
-		return response.statusCode == 200
-	}
+	override fun execute() = put(queryEndpoint, accessToken, mapOf("ids" to ids)).statusCode == 200
 
 	class Builder(private val accessToken: String) {
 		private val tracks = mutableListOf<String>()
