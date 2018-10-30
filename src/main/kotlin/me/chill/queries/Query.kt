@@ -4,11 +4,16 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import khttp.get
+import khttp.head
+import khttp.request
 import khttp.responses.Response
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.RegularError
+import kotlin.concurrent.thread
 
 abstract class Query {
+	protected enum class Method { Get, Put, Post, Delete; }
+
 	protected val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
 	protected val primaryEndpoint = "https://api.spotify.com/"
@@ -32,6 +37,21 @@ abstract class Query {
 		return response
 	}
 
+	/**
+	 * data has to be set to "_" by default because khttp does not actually allow you to set the content-length of a body
+	 */
+	protected fun asyncRequest(
+		method: Method,
+		url: String,
+		headers: Map<String, String> = mapOf(),
+		parameters: Map<String, String> = mapOf(),
+		data: String? = "_",
+		callback: (Response) -> Unit) {
+		thread {
+			callback(request(method.name.toUpperCase(), url, headers, parameters, data))
+		}
+	}
+
 	protected fun generateModificationHeaders(accessToken: String) =
 		mapOf(
 			"Authorization" to "Bearer $accessToken",
@@ -39,7 +59,8 @@ abstract class Query {
 		)
 
 	protected fun Response.responseCheck() {
-		if (statusCode >= 400) {
+		text.takeIf { it.isEmpty() }?.let { return }
+		statusCode.takeIf { it >= 400 }?.let {
 			val errorBody = gson.fromJson(gson.fromJson(text, JsonObject::class.java)["error"], RegularError::class.java)
 			throw SpotifyQueryException(errorBody.status, errorBody.message)
 		}
