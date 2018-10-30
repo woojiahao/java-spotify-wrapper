@@ -13,6 +13,7 @@ import me.chill.queries.personalization.GetUserTopArtistsQuery
 import me.chill.queries.personalization.GetUserTopTracksQuery
 import me.chill.queries.player.GetAvailableDevicesQuery
 import me.chill.queries.player.GetCurrentPlaybackInformationQuery
+import me.chill.queries.player.GetCurrentlyPlayingTrackQuery
 import me.chill.queries.player.GetRecentlyPlayedTracksQuery
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -155,4 +156,6 @@ class SpotifyUser(
 	fun getCurrentPlaybackInformation() = GetCurrentPlaybackInformationQuery.Builder(accessToken)
 
 	fun getRecentlyPlayedTracks() = GetRecentlyPlayedTracksQuery.Builder(accessToken)
+
+	fun getCurrentlyPlayingTrack() = GetCurrentlyPlayingTrackQuery.Builder(accessToken);
 }

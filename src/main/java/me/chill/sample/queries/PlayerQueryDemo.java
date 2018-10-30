@@ -1,16 +1,13 @@
 package me.chill.sample.queries;
 
 import me.chill.SpotifyUser;
-import me.chill.models.CurrentlyPlayingContext;
-import me.chill.models.CursorBasedPaging;
-import me.chill.models.Device;
-import me.chill.models.PlayHistory;
+import me.chill.models.*;
 
 import java.util.List;
 
 class PlayerQueryDemo {
 	public static void main(String[] args) {
-		SpotifyUser user = new SpotifyUser("BQBtVlAtzaNHAeD-6fhN0NIhSgRO8WlDt8mGurTX-YrLpjgij3CVLvU3Jq3KqEgjLmBmYEP2EShM0D2zgOtMMkoQSbvDiDTcD5RzXt2X93gbN7BLskRGWvFr61-8XXO_EnxparOxLHYsMf-d4cIoH-WwEa7aPcARGaPE3_GCK2VAKvvcyscs1KvAhO38kcjMef1i7yNAutZWsZVZrzF1tFrg2Xcsb7LPrChLqXAIDHdsZkMJa5YidCe5r7Ib-Rhaes3pbJEfCPrstH_qjZPf6g");
+		SpotifyUser user = new SpotifyUser("BQBe8tT_8FYGMvPjVJxNnejdYidHzIpkdzu_j44licxs_mhjbbdcjjJblCvbch3SiqOaI4agBAQEpdLR2ZQFN3zPQptVy6tuPkqmyJRRezup4zzs89x69yfXvxOIs3-L_MdzV7hd3ifQG3qo0rR9HWOPUgchkKjqCCWIa49h-1lR_3aUG0LW_0qcahZWZIbLDl-MqVQIIkBy6KupNCDR5z5UVolyxTTWtw4GzcsbFg0RqqQofTcB-Rf2-UkLfgMLx2kpZOuPq2nKHqA6gc9cqg");
 
 		List<Device> availableDevices = user.getAvailableDevices().build().execute();
 		availableDevices.forEach(System.out::println);
@@ -21,5 +18,8 @@ class PlayerQueryDemo {
 		// TODO: Make another account to test this
 		CursorBasedPaging<PlayHistory> recentlyPlayedTracks = user.getRecentlyPlayedTracks().limit(10).build().execute();
 		System.out.println(recentlyPlayedTracks);
+
+		CurrentlyPlaying currentlyPlaying = user.getCurrentlyPlayingTrack().build().execute();
+		System.out.println(currentlyPlaying);
 	}
 }
