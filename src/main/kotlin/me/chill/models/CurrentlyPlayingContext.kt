@@ -20,7 +20,7 @@ data class CurrentlyPlayingContext(
 	val repeatState: RepeatState,
 	val shuffleState: Boolean,
 	val context: Context,
-	val timestamp: Int,
+	val timestamp: Long,
 	@SerializedName("progress_ms") val progress: Int?,
 	val isPlaying: Boolean,
 	@SerializedName("item") val track: Track?,

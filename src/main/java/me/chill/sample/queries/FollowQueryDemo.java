@@ -6,17 +6,12 @@ import me.chill.queries.follow.UserType;
 
 import java.util.Map;
 
+// TODO: Create a secondary account to test this
 public class FollowQueryDemo {
 	public static void main(String[] args) {
-		SpotifyUser customUser = new SpotifyUser(
-			"cea6a21eeb874d1d91dbaaccce0996f3",
-			"14371e50d4c8423fa5d3804bd8f975b9",
-			"BQDRi-HmzJ5qQBU1Bas4eFIed5VLXcnqcedTnvpUNGI2kK4iXJcJxg2CZSj8-sZImsZ72QR-2l3mqmWqHbAGnT1gtJlrDEV77ZNPfON_rte4Ss4EhxsQTU2uSy4WNBKtllHAGARIjsAiF4kfa21JvlnFSZrN",
-			null,
-			null);
+		SpotifyUser user = new SpotifyUser("BQBtVlAtzaNHAeD-6fhN0NIhSgRO8WlDt8mGurTX-YrLpjgij3CVLvU3Jq3KqEgjLmBmYEP2EShM0D2zgOtMMkoQSbvDiDTcD5RzXt2X93gbN7BLskRGWvFr61-8XXO_EnxparOxLHYsMf-d4cIoH-WwEa7aPcARGaPE3_GCK2VAKvvcyscs1KvAhO38kcjMef1i7yNAutZWsZVZrzF1tFrg2Xcsb7LPrChLqXAIDHdsZkMJa5YidCe5r7Ib-Rhaes3pbJEfCPrstH_qjZPf6g");
 
-		customUser.disableTimer();
-		Map<String, Boolean> isFollowingMap = customUser
+		Map<String, Boolean> isFollowingMap = user
 			.isFollowingUserOrArtist(UserType.Artist)
 			.addId("74ASZWbe4lXaubB36ztrGX")
 			.addId("74ASZWbe4lXaubB36ztrGX")
@@ -26,11 +21,14 @@ public class FollowQueryDemo {
 			System.out.println("User is " + value + " user: " + key);
 		});
 
-		Map<String, Boolean> areUserFollowing = customUser.areUsersFollowingPlaylist("2v3iNvBX8Ay1Gt2uXtUKUT")
+		Map<String, Boolean> areUserFollowing = user.areUsersFollowingPlaylist("2v3iNvBX8Ay1Gt2uXtUKUT")
 			.addUser("_woojiahao_,_woojiahao_")
-			.build().execute();
+			.build()
+			.execute();
 		areUserFollowing.forEach((key, value) -> {
 			System.out.println("User " + key + " is " + value);
 		});
+
+
 	}
 }
