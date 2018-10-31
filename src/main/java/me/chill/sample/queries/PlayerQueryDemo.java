@@ -1,12 +1,7 @@
 package me.chill.sample.queries;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 import me.chill.SpotifyUser;
 import me.chill.exceptions.SpotifyQueryException;
-import me.chill.models.*;
-
-import java.util.List;
 
 class PlayerQueryDemo {
 	public static void main(String[] args) {
