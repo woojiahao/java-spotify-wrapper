@@ -3,9 +3,13 @@ package me.chill.sample.queries;
 import me.chill.SpotifyUser;
 import me.chill.exceptions.SpotifyQueryException;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.stream.IntStream;
+
 class PlayerQueryDemo {
 	public static void main(String[] args) {
-		SpotifyUser user = new SpotifyUser("BQDqToxD0wqEtGLODiAmialTqpHL31110wNbWpHbieII-1KOp8IRa7QbWVDRrr2tyUdOEAMlaa5geuUyB-y5ZQfjvZFLgITovDz6Y9kznMw8afZzwoRaJkH9SQIl2d7WX44I7rvddrJKnz8iaahnALFgHYXaFxH-JtdtpWn_Q9r1X6-cgiFM92dxvCBNe_40YmpTwpwesoC-IuF_ide0WxuSz9AHd-1AIlub6dtrbhIPLNmElfVptHST2lhD-aCqwZCKZTIUAql4IQjEE4lxrg");
+		SpotifyUser user = new SpotifyUser("BQBwvNaFNT6ms7lttR9uk68iF2vCjnjbuyci_d5J5f5SCjeaj-lKyXDaM9qSKB-Thg4bdsoXBfTtON5P2r52EVkqFrGTKVobfmXNAcxdEIdNfK5aVrrtaKI0oyBTEzbScP_Gk2syMdN_0s4ZwRiyK9TqUYI-ZA_Hf-C6qqN4O0F7zCeJs89dtQ69aSAFrxx23gvMmlnqfag4YVWKWCfeVOysbKIXhx886PkISRO0YF8kBxe4sty0-F-8tNyaHyArGWyFHNeoMuMIqfLWj3dupw");
 
 //		List<Device> availableDevices = user.getAvailableDevices().build().execute();
 //		availableDevices.forEach(System.out::println);
@@ -22,10 +26,7 @@ class PlayerQueryDemo {
 
 //		user.pauseTrack().device("CHILLBOX").build().execute();
 
-		try {
-			user.seekTrack().device("CHILLBOX").position(0).build().execute();
-		} catch (SpotifyQueryException e) {
-			e.printStackTrace();
-		}
+
+		IntStream.range(1, 10_000).forEach(i -> System.out.print("a"));
 	}
 }

@@ -7,6 +7,7 @@ import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
 import me.chill.utility.request.query
+import kotlin.concurrent.thread
 
 class GetAlbumTracksQuery private constructor(
 	private val id: String,

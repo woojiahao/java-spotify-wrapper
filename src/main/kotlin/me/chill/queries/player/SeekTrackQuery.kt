@@ -1,39 +1,31 @@
 package me.chill.queries.player
 
+import khttp.put
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.generateParameters
-import me.chill.utility.request.RequestMethod
-import me.chill.utility.request.asyncRequest
 import me.chill.utility.request.generateHeader
 import me.chill.utility.request.responseCheck
 
-/**
- * Contains 2 execute() methods, the second should be used as this endpoint is asynchronous
- */
 class SeekTrackQuery private constructor(
 	private val accessToken: String,
 	private val position: Int,
 	private val deviceId: String?) : AbstractQuery("me", "player", "seek") {
 
-	fun execute(callback: (Int) -> Unit) {
+	/**
+	 * Seeking a track returns the status of the seek
+	 *
+	 * See {@linktourl https://developer.spotify.com/documentation/web-api/reference/player/seek-to-position-in-currently-playing-track/}
+	 */
+	override fun execute(): Boolean {
 		val parameters = mapOf(
 			"position_ms" to position,
 			"device_id" to deviceId
 		).generateParameters()
 
-		asyncRequest(RequestMethod.Put, queryEndpoint, generateHeader(accessToken), parameters) { callback(it.statusCode) }
-	}
-
-	@Throws(SpotifyQueryException::class)
-	override fun execute(): Any? {
-		val parameters = mapOf(
-			"position_ms" to position,
-			"device_id" to deviceId
-		).generateParameters()
-
-		asyncRequest(RequestMethod.Put, queryEndpoint, generateHeader(accessToken), parameters) { it.responseCheck() }
-		return null
+		val response = put(queryEndpoint, generateHeader(accessToken), parameters, "_")
+		response.responseCheck()
+		return response.statusCode == 204
 	}
 
 	class Builder(private val accessToken: String) {
