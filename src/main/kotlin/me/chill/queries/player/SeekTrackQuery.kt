@@ -24,8 +24,14 @@ class SeekTrackQuery private constructor(
 		).generateParameters()
 
 		val response = put(queryEndpoint, generateHeader(accessToken), parameters, "_")
-		response.responseCheck()
+
+		response.statusCode.takeIf { it >= 400 && it != 403 }?.let { throw SpotifyQueryException("Something") }
 		return response.statusCode == 204
+	}
+
+	@Throws(SpotifyQueryException::class)
+	override fun executeAsync(callback: (Any?) -> Unit) {
+		super.executeAsync(callback)
 	}
 
 	class Builder(private val accessToken: String) {

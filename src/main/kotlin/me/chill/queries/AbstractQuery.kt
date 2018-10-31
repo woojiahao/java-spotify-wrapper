@@ -12,7 +12,7 @@ import kotlin.concurrent.thread
  *
  * Contains 2 forms of execution, a synchronous call and asynchronous call
  */
-// TODO: Fix the damn asynchronous calls
+// TODO: Fix the damn asynchronous calls, fix race cases
 abstract class AbstractQuery (private vararg val pathSegments: String) {
 	protected val gson: Gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 

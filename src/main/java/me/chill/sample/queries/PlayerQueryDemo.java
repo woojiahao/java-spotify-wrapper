@@ -2,6 +2,7 @@ package me.chill.sample.queries;
 
 import me.chill.SpotifyUser;
 import me.chill.exceptions.SpotifyQueryException;
+import me.chill.models.Album;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -9,7 +10,7 @@ import java.util.stream.IntStream;
 
 class PlayerQueryDemo {
 	public static void main(String[] args) {
-		SpotifyUser user = new SpotifyUser("BQBwvNaFNT6ms7lttR9uk68iF2vCjnjbuyci_d5J5f5SCjeaj-lKyXDaM9qSKB-Thg4bdsoXBfTtON5P2r52EVkqFrGTKVobfmXNAcxdEIdNfK5aVrrtaKI0oyBTEzbScP_Gk2syMdN_0s4ZwRiyK9TqUYI-ZA_Hf-C6qqN4O0F7zCeJs89dtQ69aSAFrxx23gvMmlnqfag4YVWKWCfeVOysbKIXhx886PkISRO0YF8kBxe4sty0-F-8tNyaHyArGWyFHNeoMuMIqfLWj3dupw");
+		SpotifyUser user = new SpotifyUser("BQCNsi-uubb-DhFazJ0doyAOfp67ivyxF6stj5DBYaDB1OdxbWgGrDavQl6GcQaBxpoOckHEe892B9d9mnhF_Mvzm_WyPLf4yZA8KhiMzfcBZs5NOFmGWlO2ZYgAaH9PqHA0zq4juZTjgAUrutAW_X7uBuzx58JEzUhgXGTHobyX40cFwL6ouh5iNfv3KgZ7H8S52GYJjCS5p0jpZhsp590HEwGdoJ74HUBtA7-IiOfSw8Xo4zFyu8M2BK57fqd-uH70GZ7GOth1oplpCm5Qjw");
 
 //		List<Device> availableDevices = user.getAvailableDevices().build().execute();
 //		availableDevices.forEach(System.out::println);
@@ -26,7 +27,19 @@ class PlayerQueryDemo {
 
 //		user.pauseTrack().device("CHILLBOX").build().execute();
 
+		try {
+			user.seekTrack().position(2500).build().executeAsync(obj -> {
+				boolean stat = (Boolean) obj;
+				if (!stat) System.out.println("Not premium");
 
-		IntStream.range(1, 10_000).forEach(i -> System.out.print("a"));
+				return null;
+			});
+		} catch (SpotifyQueryException e) {
+			if (e.getCode() == 403) {
+				System.out.println("sdkjfdsgfsjjdsvdsvkjs");
+			}
+			System.out.println(e.getCode());
+		}
+//		IntStream.range(1, 10_000).forEach(i -> System.out.print("a"));
 	}
 }
