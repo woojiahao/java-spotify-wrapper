@@ -15,9 +15,9 @@ public class ImplicitGrantFlowDemo {
 		String clientId = "cea6a21eeb874d1d91dbaaccce0996f3";
 
 		SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
-			.setClientId(clientId)
-			.setRedirectUrl(redirectUrl)
-			.setShowDialog(true)
+			.clientId(clientId)
+			.redirectUrl(redirectUrl)
+			.showDialog(true)
 			.build();
 
 		SpotifyImplicitGrantFlow flow = new SpotifyImplicitGrantFlow(helper);

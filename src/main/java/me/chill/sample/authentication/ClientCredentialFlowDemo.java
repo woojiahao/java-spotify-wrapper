@@ -14,8 +14,8 @@ public class ClientCredentialFlowDemo {
 		String clientSecret = "d4c86028bf4c4ac18938570c7fc9139f";
 
 		SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
-			.setClientId(clientId)
-			.setClientSecret(clientSecret)
+			.clientId(clientId)
+			.clientSecret(clientSecret)
 			.build();
 
 		SpotifyClientCredentialFlow flow = new SpotifyClientCredentialFlow(helper);

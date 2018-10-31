@@ -17,27 +17,27 @@ class SpotifyAuthenticationHelper private constructor(
 		private var showDialog = false
 		private val scopes = mutableListOf<SpotifyScope>()
 
-		fun setClientId(clientId: String): Builder {
+		fun clientId(clientId: String): Builder {
 			this.clientId = clientId
 			return this
 		}
 
-		fun setClientSecret(clientSecret: String): Builder {
+		fun clientSecret(clientSecret: String): Builder {
 			this.clientSecret = clientSecret
 			return this
 		}
 
-		fun setShowDialog(showDialog: Boolean): Builder {
+		fun showDialog(showDialog: Boolean): Builder {
 			this.showDialog = showDialog
 			return this
 		}
 
-		fun setRedirectUrl(url: String): Builder {
+		fun redirectUrl(url: String): Builder {
 			this.redirectUrl = url
 			return this
 		}
 
-		fun setState(state: String): Builder {
+		fun state(state: String): Builder {
 			this.state = state
 			return this
 		}

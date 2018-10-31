@@ -17,10 +17,10 @@ public class AuthorizationFlowDemo {
 		String clientSecret = "96729e5f290e496d8115d9e0bf27e515";
 
 		SpotifyAuthenticationHelper helper = new SpotifyAuthenticationHelper.Builder()
-			.setClientId(clientId)
-			.setClientSecret(clientSecret)
-			.setRedirectUrl(redirectUrl)
-			.setShowDialog(true)
+			.clientId(clientId)
+			.clientSecret(clientSecret)
+			.redirectUrl(redirectUrl)
+			.showDialog(true)
 			.addScope(SpotifyScope.PlaybackRead)
 			.build();
 
