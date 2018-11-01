@@ -31,7 +31,7 @@ class SpotifyAuthorizationFlow(
 
 		val accessTokenJson = Gson().fromJson(response.text, JsonObject::class.java)
 
-		if (response.statusCode >= 400) {
+		response.statusCode.takeIf { it >= 400 }?.let {
 			throw SpotifyAuthenticationException(
 				mapOf(
 					"Cause" to "Error when retrieving models token",
@@ -40,6 +40,7 @@ class SpotifyAuthorizationFlow(
 					"Error Description" to accessTokenJson["error_description"].asString
 				)
 			)
+
 		}
 
 		return mapOf(

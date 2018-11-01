@@ -43,7 +43,7 @@ class SpotifyClientCredentialFlow(
 
 		val accessTokenJson = Gson().fromJson(response.body()?.string(), JsonObject::class.java)
 
-		if (!response.isSuccessful) {
+		response.takeIf { !it.isSuccessful }?.let {
 			throw SpotifyAuthenticationException(
 				mapOf(
 					"Cause" to "Error when retrieving models token",

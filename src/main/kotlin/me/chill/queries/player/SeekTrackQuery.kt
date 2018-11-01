@@ -4,8 +4,8 @@ import khttp.put
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.generateParameters
+import me.chill.utility.request.displayErrorMessage
 import me.chill.utility.request.generateHeader
-import me.chill.utility.request.responseCheck
 
 class SeekTrackQuery private constructor(
 	private val accessToken: String,
@@ -25,13 +25,8 @@ class SeekTrackQuery private constructor(
 
 		val response = put(queryEndpoint, generateHeader(accessToken), parameters, "_")
 
-		response.statusCode.takeIf { it >= 400 && it != 403 }?.let { throw SpotifyQueryException("Something") }
+		response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
 		return response.statusCode == 204
-	}
-
-	@Throws(SpotifyQueryException::class)
-	override fun executeAsync(callback: (Any?) -> Unit) {
-		super.executeAsync(callback)
 	}
 
 	class Builder(private val accessToken: String) {

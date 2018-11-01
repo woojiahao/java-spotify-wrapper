@@ -1,12 +1,6 @@
 package me.chill.sample.queries;
 
 import me.chill.SpotifyUser;
-import me.chill.exceptions.SpotifyQueryException;
-import me.chill.models.Album;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.stream.IntStream;
 
 class PlayerQueryDemo {
 	public static void main(String[] args) {
@@ -27,19 +21,12 @@ class PlayerQueryDemo {
 
 //		user.pauseTrack().device("CHILLBOX").build().execute();
 
-		try {
-			user.seekTrack().position(2500).build().executeAsync(obj -> {
-				boolean stat = (Boolean) obj;
-				if (!stat) System.out.println("Not premium");
+		user.seekTrack().position(2500).build().executeAsync(obj -> {
+			boolean stat = (Boolean) obj;
+			if (!stat) System.out.println("Not premium");
 
-				return null;
-			});
-		} catch (SpotifyQueryException e) {
-			if (e.getCode() == 403) {
-				System.out.println("sdkjfdsgfsjjdsvdsvkjs");
-			}
-			System.out.println(e.getCode());
-		}
+			return null;
+		});
 //		IntStream.range(1, 10_000).forEach(i -> System.out.print("a"));
 	}
 }
