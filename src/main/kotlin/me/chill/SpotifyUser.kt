@@ -183,5 +183,13 @@ class SpotifyUser(
 
 	fun transferPlayback(targetDeviceId: String) = TransferPlaybackQuery.Builder(accessToken, targetDeviceId)
 
+	/**
+	 * Adds a list of tracks to a given playlist.
+	 *
+	 * If the target playlist has 10,000 tracks already, a Pair(false, null) is returned, otherwise, a Pair(true, <snapshot_id>)
+	 * is returned.
+	 *
+	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/">https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/</a>
+	 */
 	fun addTrackToPlaylist(playlistId: String) = AddTracksToPlaylistQuery.Builder(accessToken, playlistId)
 }
