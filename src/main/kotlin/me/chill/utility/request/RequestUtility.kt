@@ -25,14 +25,16 @@ inline fun <reified T> Gson.readFromJsonArray(arrayName: String, response: Respo
 		.map { fromJson(it, T::class.java) }
 
 fun Response.responseCheck() {
-	text.takeIf { it.isEmpty() }?.let { return }
+	text.takeIf { it.isBlank() }?.let { return }
 	statusCode.takeIf { it >= 400 }?.let { displayErrorMessage(this) }
 }
 
 fun extractError(response: Response): RegularError =
 	gson.fromJson(gson.fromJson(response.text, JsonObject::class.java)["error"], RegularError::class.java)
 
+
 fun displayErrorMessage(response: Response) {
+	response.text.takeIf { it.isBlank() }?.let { throw SpotifyQueryException(response.statusCode, null) }
 	val errorBody = extractError(response)
 	throw SpotifyQueryException(errorBody.status, errorBody.message)
 }

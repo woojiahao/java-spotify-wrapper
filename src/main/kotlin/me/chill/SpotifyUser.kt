@@ -161,5 +161,7 @@ class SpotifyUser(
 
 	fun seekTrack() = SeekTrackQuery.Builder(accessToken)
 
-	fun repeatTrack(state: RepeatState) = SetRepeatModeQuery.Builder(accessToken, state)
+	fun setRepeatMode(state: RepeatState) = SetRepeatModeQuery.Builder(accessToken, state)
+
+	fun setVolume(volume: Int) = SetVolumeQuery.Builder(accessToken, volume)
 }

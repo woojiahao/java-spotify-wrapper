@@ -22,6 +22,9 @@ class PlayerQueryDemo {
 		CurrentlyPlaying currentlyPlaying = user.getCurrentlyPlayingTrack().build().execute();
 		System.out.println(currentlyPlaying);
 
+		Boolean setVolumeStatus = user.setVolume(78).device("CHILLBOX").build().execute();
+		System.out.println("Volume status: " + setVolumeStatus);
+
 		user.pauseTrack().device("CHILLBOX").build().executeAsync(obj -> {
 			System.out.println("Pausing track");
 			boolean b = (Boolean) obj;
@@ -32,17 +35,19 @@ class PlayerQueryDemo {
 
 		user.seekTrack().position(2500).build().executeAsync(obj -> {
 			System.out.println("Seeking track");
-			boolean b = (Boolean) obj;
-			if (b) System.out.println("Premium");
-			else System.out.println("Not premium");
+			System.out.println((Boolean) obj ? "Premium" : "Not premium");
 			return null;
 		});
 
-		user.repeatTrack(RepeatState.Track).device("CHILLBOX").build().executeAsync(obj -> {
+		user.setRepeatMode(RepeatState.Track).device("CHILLBOX").build().executeAsync(obj -> {
 			System.out.println("Setting repeat");
-			boolean b = (Boolean) obj;
-			if (b) System.out.println("Premium");
-			else System.out.println("Not premium");
+			System.out.println((Boolean) obj ? "Premium" : "Not premium");
+			return null;
+		});
+
+		user.setVolume(100).device("CHILLBOX").build().executeAsync(obj -> {
+			System.out.println("Setting volume");
+			System.out.println((Boolean) obj ? "Premium" : "Not premium");
 			return null;
 		});
 	}
