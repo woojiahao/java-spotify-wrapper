@@ -14,7 +14,7 @@ class GetAlbumTracksQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val market: String?) : AbstractQuery("albums", id, "tracks") {
+	private val market: String?) : AbstractQuery<Paging<Track>>("albums", id, "tracks") {
 
 	override fun execute(): Paging<Track> {
 		val parameters = mapOf(

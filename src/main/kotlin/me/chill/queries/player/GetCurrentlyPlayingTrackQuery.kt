@@ -7,7 +7,7 @@ import me.chill.utility.request.query
 
 class GetCurrentlyPlayingTrackQuery private constructor(
 	private val accessToken: String,
-	private val market: String?) : AbstractQuery("me", "player", "currently-playing") {
+	private val market: String?) : AbstractQuery<CurrentlyPlaying?>("me", "player", "currently-playing") {
 
 	override fun execute(): CurrentlyPlaying? {
 		val parameters = mapOf("market" to market)

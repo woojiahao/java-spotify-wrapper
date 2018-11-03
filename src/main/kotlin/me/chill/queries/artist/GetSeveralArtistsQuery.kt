@@ -10,7 +10,7 @@ import me.chill.utility.request.readFromJsonArray
 
 class GetSeveralArtistsQuery private constructor(
 	private val accessToken: String,
-	private val ids: String) : AbstractQuery("artists") {
+	private val ids: String) : AbstractQuery<List<Artist>>("artists") {
 
 	override fun execute() = gson.readFromJsonArray<Artist>("artists", query(queryEndpoint, accessToken, mapOf("ids" to ids)))
 

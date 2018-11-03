@@ -8,7 +8,7 @@ import me.chill.utility.request.query
 class GetSingleAlbumQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
-	private val market: String?) : AbstractQuery("albums", id) {
+	private val market: String?) : AbstractQuery<Album>("albums", id) {
 
 	override fun execute(): Album {
 		val parameters = mapOf("market" to market)

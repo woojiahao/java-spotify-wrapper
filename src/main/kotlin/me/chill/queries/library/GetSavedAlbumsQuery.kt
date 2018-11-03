@@ -12,7 +12,7 @@ class GetSavedAlbumsQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val market: String?) : AbstractQuery("me", "albums") {
+	private val market: String?) : AbstractQuery<Paging<SavedAlbum>>("me", "albums") {
 
 	override fun execute(): Paging<SavedAlbum> {
 		val parameters = mapOf(

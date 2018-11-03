@@ -11,7 +11,7 @@ import me.chill.utility.request.responseCheck
 class UnfollowUserOrArtistQuery private constructor(
 	private val accessToken: String,
 	private val type: String,
-	private val ids: String?) : AbstractQuery("me", "following") {
+	private val ids: String?) : AbstractQuery<Boolean>("me", "following") {
 
 	override fun execute(): Boolean {
 		val parameters = mapOf(

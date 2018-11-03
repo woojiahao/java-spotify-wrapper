@@ -6,7 +6,7 @@ import me.chill.utility.request.query
 
 class GetSingleArtistQuery private constructor(
 	private val id: String,
-	private val accessToken: String) : AbstractQuery("artists", id) {
+	private val accessToken: String) : AbstractQuery<Artist>("artists", id) {
 
 	override fun execute(): Artist = gson.fromJson(query(queryEndpoint, accessToken).text, Artist::class.java)
 

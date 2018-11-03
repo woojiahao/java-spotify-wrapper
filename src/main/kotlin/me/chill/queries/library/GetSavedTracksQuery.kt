@@ -12,7 +12,7 @@ class GetSavedTracksQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val market: String?) : AbstractQuery("me", "tracks") {
+	private val market: String?) : AbstractQuery<Paging<SavedTrack>>("me", "tracks") {
 
 	override fun execute(): Paging<SavedTrack> {
 		val parameters = mapOf(

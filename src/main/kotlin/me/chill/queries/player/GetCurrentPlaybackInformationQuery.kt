@@ -7,7 +7,7 @@ import me.chill.utility.request.query
 
 class GetCurrentPlaybackInformationQuery private constructor(
 	private val accessToken: String,
-	private val market: String?) : AbstractQuery("me", "player") {
+	private val market: String?) : AbstractQuery<CurrentlyPlayingContext?>("me", "player") {
 
 	override fun execute(): CurrentlyPlayingContext? {
 		val parameters = mapOf("market" to market)

@@ -15,7 +15,7 @@ class GetCategoryListQuery private constructor(
 	private val limit: Int,
 	private val offset: Int,
 	private val locale: String?,
-	private val country: String?) : AbstractQuery("browse", "categories") {
+	private val country: String?) : AbstractQuery<Paging<Category>>("browse", "categories") {
 
 	override fun execute(): Paging<Category> {
 		val parameters = mapOf(

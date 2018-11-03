@@ -9,7 +9,7 @@ import me.chill.utility.request.query
 
 class CheckSavedTracksQuery private constructor(
 	private val accessToken: String,
-	private val ids: String) : AbstractQuery("me", "tracks", "contains") {
+	private val ids: String) : AbstractQuery<Map<String, Boolean>>("me", "tracks", "contains") {
 
 	override fun execute() = query(queryEndpoint, accessToken, mapOf("ids" to ids)).createCheckMap(ids)
 

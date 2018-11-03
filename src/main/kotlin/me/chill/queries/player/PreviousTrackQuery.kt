@@ -1,22 +1,17 @@
 package me.chill.queries.player
 
 import khttp.put
-import me.chill.models.RepeatState
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.generateParameters
 import me.chill.utility.request.displayErrorMessage
 import me.chill.utility.request.generateHeader
 
-class SetRepeatModeQuery private constructor(
+class PreviousTrackQuery private constructor(
 	private val accessToken: String,
-	private val state: RepeatState,
-	private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "repeat") {
+	private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "previous") {
 
 	override fun execute(): Boolean {
-		val parameters = mapOf(
-			"device_id" to deviceId,
-			"state" to state.name.toLowerCase()
-		).generateParameters()
+		val parameters = mapOf("device_id" to deviceId).generateParameters()
 
 		val response = put(queryEndpoint, generateHeader(accessToken), parameters, "-")
 
@@ -25,7 +20,7 @@ class SetRepeatModeQuery private constructor(
 		return response.statusCode == 204
 	}
 
-	class Builder(private val accessToken: String, private val state: RepeatState) {
+	class Builder(private val accessToken: String) {
 		private var device: String? = null
 
 		fun device(device: String): Builder {
@@ -33,6 +28,7 @@ class SetRepeatModeQuery private constructor(
 			return this
 		}
 
-		fun build() = SetRepeatModeQuery(accessToken, state, device)
+		fun build() = PreviousTrackQuery(accessToken, device)
+
 	}
 }

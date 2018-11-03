@@ -11,7 +11,7 @@ class GetUserTopTracksQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val timeRange: String) : AbstractQuery("me", "top", "tracks") {
+	private val timeRange: String) : AbstractQuery<Paging<Track>>("me", "top", "tracks") {
 
 	override fun execute(): Paging<Track> {
 		val parameters = mapOf(

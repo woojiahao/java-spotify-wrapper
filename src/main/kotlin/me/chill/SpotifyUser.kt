@@ -166,4 +166,6 @@ class SpotifyUser(
 	fun setVolume(volume: Int) = SetVolumeQuery.Builder(accessToken, volume)
 
 	fun nextTrack() = NextTrackQuery.Builder(accessToken)
+
+	fun previousTrack() = PreviousTrackQuery.Builder(accessToken)
 }

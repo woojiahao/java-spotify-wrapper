@@ -9,7 +9,7 @@ import me.chill.utility.request.put
 class FollowUserOrArtistQuery private constructor(
 	private val accessToken: String,
 	private val userType: String,
-	private val ids: String?) : AbstractQuery("me", "following") {
+	private val ids: String?) : AbstractQuery<Boolean>("me", "following") {
 
 	override fun execute(): Boolean {
 		val parameters = mapOf(

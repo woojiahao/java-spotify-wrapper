@@ -13,7 +13,7 @@ TODO: Optionally, override the executeAsync() method to invoke the threading and
 class SeekTrackQuery private constructor(
 	private val accessToken: String,
 	private val position: Int,
-	private val deviceId: String?) : AbstractQuery("me", "player", "seek") {
+	private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "seek") {
 
 	/**
 	 * Seeking a track returns the status of the seek

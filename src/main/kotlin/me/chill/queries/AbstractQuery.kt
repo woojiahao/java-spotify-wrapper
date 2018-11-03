@@ -13,14 +13,14 @@ import kotlin.concurrent.thread
  * Contains 2 forms of execution, a synchronous call and asynchronous call
  */
 // TODO: Fix the damn asynchronous calls, fix race cases
-abstract class AbstractQuery (private vararg val pathSegments: String) {
+abstract class AbstractQuery<T> (private vararg val pathSegments: String) {
 	protected val gson: Gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
 	protected val queryEndpoint = "https://api.spotify.com/v1/${pathSegments.joinToString("/") { it.replace("/", "") }}"
 
-	abstract fun execute(): Any?
+	abstract fun execute(): T
 
-	open fun executeAsync(callback: (Any?) -> Unit)  {
+	open fun executeAsync(callback: (T?) -> Unit)  {
 		thread { callback(execute()) }
 	}
 }

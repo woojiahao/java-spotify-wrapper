@@ -11,7 +11,7 @@ class GetUserTopArtistsQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val timeRange: String) : AbstractQuery("me", "top", "artists") {
+	private val timeRange: String) : AbstractQuery<Paging<Artist>>("me", "top", "artists") {
 
 	override fun execute(): Paging<Artist> {
 		val parameters = mapOf(

@@ -8,7 +8,7 @@ import me.chill.utility.request.generateHeader
 
 class PauseTrackQuery private constructor(
 	private val accessToken: String,
-	private val deviceId: String?) : AbstractQuery("me", "player", "pause") {
+	private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "pause") {
 
 	override fun execute(): Boolean {
 		val parameters = mapOf("device_id" to deviceId).generateParameters()

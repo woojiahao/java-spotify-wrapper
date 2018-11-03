@@ -10,7 +10,7 @@ import me.chill.utility.request.responseCheck
 
 class RemoveSavedAlbumsQuery private constructor(
 	private val accessToken: String,
-	private val ids: String?) : AbstractQuery("me", "albums") {
+	private val ids: String?) : AbstractQuery<Boolean>("me", "albums") {
 
 	override fun execute(): Boolean {
 		val parameters = mapOf("ids" to ids).generateParameters()

@@ -16,7 +16,7 @@ class GetArtistAlbumsQuery private constructor(
 	private val includeGroups: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val market: String?) : AbstractQuery("artists", id, "albums") {
+	private val market: String?) : AbstractQuery<Paging<Album>>("artists", id, "albums") {
 
 	enum class ArtistAlbumIncludeGroup(val queryValue: String) {
 		Album("album"), Single("single"), AppearsOn("appears_on"), Compilation("compilation")

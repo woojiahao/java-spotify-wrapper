@@ -10,7 +10,7 @@ import me.chill.utility.request.query
 class AreUsersFollowingPlaylistQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
-	private val ids: String) : AbstractQuery("playlists", id, "followers", "contains") {
+	private val ids: String) : AbstractQuery<Map<String, Boolean>>("playlists", id, "followers", "contains") {
 
 	override fun execute() = query(queryEndpoint, accessToken, mapOf("ids" to ids)).createCheckMap(ids)
 

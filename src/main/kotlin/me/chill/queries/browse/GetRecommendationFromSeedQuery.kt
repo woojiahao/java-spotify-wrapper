@@ -18,7 +18,7 @@ class GetRecommendationFromSeedQuery private constructor(
 	private val seedArtists: String?,
 	private val seedGenres: String?,
 	private val seedTracks: String?,
-	private val market: String?) : AbstractQuery("recommendations") {
+	private val market: String?) : AbstractQuery<Recommendation>("recommendations") {
 
 	enum class Flag { Max, Min, Target }
 

@@ -6,7 +6,7 @@ import me.chill.utility.request.query
 import me.chill.utility.request.readFromJsonArray
 
 class GetAvailableDevicesQuery private constructor(
-	private val accessToken: String) : AbstractQuery("me", "player", "devices") {
+	private val accessToken: String) : AbstractQuery<List<Device>>("me", "player", "devices") {
 
 	override fun execute() = gson.readFromJsonArray<Device>("devices", query(queryEndpoint, accessToken))
 

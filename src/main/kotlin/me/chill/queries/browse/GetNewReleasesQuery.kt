@@ -11,7 +11,7 @@ class GetNewReleasesQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val country: String?) : AbstractQuery("browse", "new-releases") {
+	private val country: String?) : AbstractQuery<NewReleases>("browse", "new-releases") {
 
 	override fun execute(): NewReleases {
 		val parameters = mapOf(

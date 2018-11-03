@@ -8,7 +8,7 @@ import me.chill.utility.request.responseCheck
 class FollowPlaylistQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
-	private val public: Boolean) : AbstractQuery("playlists", id, "followers") {
+	private val public: Boolean) : AbstractQuery<Boolean>("playlists", id, "followers") {
 
 	override fun execute(): Boolean {
 		val body = mapOf(

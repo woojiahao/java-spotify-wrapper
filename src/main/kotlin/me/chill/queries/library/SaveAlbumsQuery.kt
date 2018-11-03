@@ -7,7 +7,7 @@ import me.chill.utility.request.put
 
 class SaveAlbumsQuery private constructor(
 	private val accessToken: String,
-	private val ids: String?) : AbstractQuery("me", "albums") {
+	private val ids: String?) : AbstractQuery<Boolean>("me", "albums") {
 
 	override fun execute() = put(queryEndpoint, accessToken, mapOf("ids" to ids)).statusCode == 201
 

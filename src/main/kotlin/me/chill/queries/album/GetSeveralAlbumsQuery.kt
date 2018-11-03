@@ -12,7 +12,7 @@ import me.chill.utility.request.readFromJsonArray
 class GetSeveralAlbumsQuery private constructor(
 	private val accessToken: String,
 	private val ids: String,
-	private val market: String?) : AbstractQuery("albums") {
+	private val market: String?) : AbstractQuery<List<Album?>>("albums") {
 
 	override fun execute(): List<Album?> {
 		val parameters = mapOf(

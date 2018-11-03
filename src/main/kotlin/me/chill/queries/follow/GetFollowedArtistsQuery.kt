@@ -9,9 +9,9 @@ import me.chill.utility.request.query
 class GetFollowedArtistsQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
-	private val after: String?) : AbstractQuery("me", "following") {
+	private val after: String?) : AbstractQuery<CursorBasedPaging<Artist>>("me", "following") {
 
-	override fun execute(): Any {
+	override fun execute(): CursorBasedPaging<Artist> {
 		val parameters = mapOf(
 			"type" to "artist",
 			"limit" to limit,

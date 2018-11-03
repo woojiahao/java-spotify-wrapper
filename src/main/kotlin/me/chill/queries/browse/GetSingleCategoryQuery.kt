@@ -10,7 +10,7 @@ class GetSingleCategoryQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
 	private val country: String?,
-	private val locale: String?) : AbstractQuery("browse", "categories", id) {
+	private val locale: String?) : AbstractQuery<Category>("browse", "categories", id) {
 
 	override fun execute(): Category {
 		val parameters = mapOf(

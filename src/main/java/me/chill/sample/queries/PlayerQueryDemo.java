@@ -7,7 +7,7 @@ import java.util.List;
 
 class PlayerQueryDemo {
 	public static void main(String[] args) {
-		SpotifyUser user = new SpotifyUser("BQASM4lrjaJmXUwZn1WXVEkENEws2WcuwoVVG6SlH3yB0rnAO4wCmBobiO5y0_E7XD5RdqhPeQ_Y29kE1gKEJkfpxkc9-mVcSoXc7IBfi0pb5elDXMQu1AfDd6JEV2k1jUc7ekXOU6deFoHc0_yehsvwWeIagmIQR9B2WWZg6w4QrboeRAZPaybhwlnq1EKK0hMIZzny8yWzsSknaegrG_XERe2AjZwW51tXmgHa61jybpx8DV-a3M8Sic8SV5qz2K9xpuiyLDOQ2gfA2UE_SQ");
+		SpotifyUser user = new SpotifyUser("BQASPh3daItDW4-RhVBjwxqFzDXr2kDWUVe_41Prxlu-QBF0OyYnTHvIcZn7dcgQJK5cdOLsjekOLiF2Ge1qex-HKMyvKAy5ZwKNy4Byrfsf2q17QobT9NDT8PoNoqoaDkE7vYRYMKv6ZLr_v6bDVPcABfVPkDsF3uPrCzUXIJ3Pe5iTbyhmnXR5ciW12xVocjzUVblIPwV_U6h5JGPtW_UNBV5DRlU1ko7dAYNWXMcUP_tUeKNK9X9FTiDnZ5sQrrfIgvcHRUVPiQTKbolkiw");
 
 		List<Device> availableDevices = user.getAvailableDevices().build().execute();
 		availableDevices.forEach(System.out::println);
@@ -22,32 +22,40 @@ class PlayerQueryDemo {
 		CurrentlyPlaying currentlyPlaying = user.getCurrentlyPlayingTrack().build().execute();
 		System.out.println(currentlyPlaying);
 
-		user.pauseTrack().device("CHILLBOX").build().executeAsync(obj -> {
+		user.pauseTrack().device("CHILLBOX").build().executeAsync(status -> {
 			System.out.println("Pausing track");
-			boolean b = (Boolean) obj;
-			if (b) System.out.println("Premium");
-			else System.out.println("Not premium");
+			System.out.println(status ? "Success" : "Failed");
 			return null;
 		});
 
-		user.seekTrack().position(2500).build().executeAsync(obj -> {
+		user.seekTrack().position(2500).build().executeAsync(status -> {
 			System.out.println("Seeking track");
-			System.out.println((Boolean) obj ? "Premium" : "Not premium");
+			System.out.println(status ? "Success" : "Failed");
 			return null;
 		});
 
-		user.setRepeatMode(RepeatState.Track).device("CHILLBOX").build().executeAsync(obj -> {
+		user.setRepeatMode(RepeatState.Track).device("CHILLBOX").build().executeAsync(status -> {
 			System.out.println("Setting repeat");
-			System.out.println((Boolean) obj ? "Premium" : "Not premium");
+			System.out.println(status ? "Success" : "Failed");
 			return null;
 		});
 
-		user.setVolume(100).device("CHILLBOX").build().executeAsync(obj -> {
+		user.setVolume(100).device("CHILLBOX").build().executeAsync(status -> {
 			System.out.println("Setting volume");
-			System.out.println((Boolean) obj ? "Premium" : "Not premium");
+			System.out.println(status ? "Success" : "Failed");
 			return null;
 		});
 
-		user.nextTrack().device("CHILLBOX").build().execute();
+		user.nextTrack().device("CHILLBOX").build().executeAsync(status -> {
+			System.out.println("Next track");
+			System.out.println(status ? "Success" : "Failed");
+			return null;
+		});
+
+		user.previousTrack().build().executeAsync(status -> {
+			System.out.println("Previous track");
+			System.out.println(status ? "Success" : "Failed");
+			return null;
+		});
 	}
 }

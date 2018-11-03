@@ -17,7 +17,7 @@ class GetFeaturedPlaylistsQuery private constructor(
 	private val offset: Int,
 	private val locale: String?,
 	private val country: String?,
-	private val timestamp: String?) : AbstractQuery("browse", "featured-playlists") {
+	private val timestamp: String?) : AbstractQuery<FeaturedPlaylists>("browse", "featured-playlists") {
 
 	override fun execute(): FeaturedPlaylists {
 		val parameters = mapOf(

@@ -14,7 +14,7 @@ class GetCategoryPlaylistsQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val offset: Int,
-	private val country: String?) : AbstractQuery("browse", "categories", id, "playlists") {
+	private val country: String?) : AbstractQuery<Paging<Playlist>>("browse", "categories", id, "playlists") {
 
 	override fun execute(): Paging<Playlist> {
 		val parameters = mutableMapOf(

@@ -10,7 +10,7 @@ import me.chill.utility.request.generateHeader
 class SetVolumeQuery private constructor(
 	private val accessToken: String,
 	private val volumePercentage: Int,
-	private val deviceId: String?) : AbstractQuery("me", "player", "volume") {
+	private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "volume") {
 
 	override fun execute(): Boolean {
 		val parameters = mapOf(

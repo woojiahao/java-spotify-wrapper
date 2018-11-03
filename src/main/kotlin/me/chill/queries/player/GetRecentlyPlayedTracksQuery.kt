@@ -12,7 +12,7 @@ class GetRecentlyPlayedTracksQuery private constructor(
 	private val accessToken: String,
 	private val limit: Int,
 	private val after: Int?,
-	private val before: Int?) : AbstractQuery("me", "player", "recently-played") {
+	private val before: Int?) : AbstractQuery<CursorBasedPaging<PlayHistory>?>("me", "player", "recently-played") {
 
 	override fun execute(): CursorBasedPaging<PlayHistory>? {
 		val parameters = mapOf(

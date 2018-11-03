@@ -8,7 +8,7 @@ import me.chill.utility.request.responseCheck
 
 class UnfollowPlaylistQuery private constructor(
 	private val id: String,
-	private val accessToken: String) : AbstractQuery("playlists", id, "followers") {
+	private val accessToken: String) : AbstractQuery<Boolean>("playlists", id, "followers") {
 
 	override fun execute(): Boolean {
 		val response = delete(queryEndpoint, generateHeader(accessToken))

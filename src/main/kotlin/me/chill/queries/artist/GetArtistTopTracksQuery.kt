@@ -10,7 +10,7 @@ import me.chill.utility.request.readFromJsonArray
 class GetArtistTopTracksQuery private constructor(
 	private val id: String,
 	private val accessToken: String,
-	private val market: String) : AbstractQuery("artists", id, "top-tracks") {
+	private val market: String) : AbstractQuery<List<Track>>("artists", id, "top-tracks") {
 
 	override fun execute(): List<Track> {
 		val parameters = mapOf("market" to market)
