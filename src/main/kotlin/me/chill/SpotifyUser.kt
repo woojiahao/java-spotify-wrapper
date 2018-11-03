@@ -170,4 +170,13 @@ class SpotifyUser(
 	fun previousTrack() = PreviousTrackQuery.Builder(accessToken)
 
 	fun playTrack() = PlayTrackQuery.Builder(accessToken)
+
+	/**
+	 * state:
+	 *
+	 * 	true 	-> Shuffle
+	 *
+	 * 	false -> Don't shuffle
+	 */
+	fun toggleShuffle(state: Boolean) = ToggleShuffleQuery.Builder(accessToken, state)
 }

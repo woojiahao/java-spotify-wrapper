@@ -64,5 +64,13 @@ class PlayerQueryDemo {
 				System.out.println(status);
 				return null;
 			});
+
+		user.toggleShuffle(false)
+			.build()
+			.executeAsync(status -> {
+				System.out.println("Toggling shuffle");
+				System.out.println(status);
+				return null;
+			});
 	}
 }
