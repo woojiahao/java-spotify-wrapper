@@ -24,4 +24,4 @@ src/main/kotlin/me/chill/sandbox
 .settings/
 
 # Temporary removals
-src/test/kotlin
+src/test/kotlin/me/chill/authentication
