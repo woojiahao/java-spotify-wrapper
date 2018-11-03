@@ -54,23 +54,28 @@ class PlayerQueryDemo {
 //			System.out.println(status ? "Success" : "Failed");
 //			return null;
 //		});
+//
+//		user.playTrack()
+//			.contextUri("spotify:album:1Je1IMUlBXcx1Fz0WE7oPT")
+//			.offsetPosition(10)
+//			.build()
+//			.executeAsync(status -> {
+//				System.out.println("Playing track");
+//				System.out.println(status);
+//				return null;
+//			});
+//
+//		user.toggleShuffle(false)
+//			.build()
+//			.executeAsync(status -> {
+//				System.out.println("Toggling shuffle");
+//				System.out.println(status);
+//				return null;
+//			});
 
-		user.playTrack()
-			.contextUri("spotify:album:1Je1IMUlBXcx1Fz0WE7oPT")
-			.offsetPosition(10)
-			.build()
-			.executeAsync(status -> {
-				System.out.println("Playing track");
-				System.out.println(status);
-				return null;
-			});
-
-		user.toggleShuffle(false)
-			.build()
-			.executeAsync(status -> {
-				System.out.println("Toggling shuffle");
-				System.out.println(status);
-				return null;
-			});
+		user.transferPlayback("CHILLBOX").build().executeAsync(status -> {
+			System.out.println("Transfering playback");
+			return null;
+		});
 	}
 }

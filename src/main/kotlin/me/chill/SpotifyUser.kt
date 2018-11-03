@@ -179,4 +179,6 @@ class SpotifyUser(
 	 * 	false -> Don't shuffle
 	 */
 	fun toggleShuffle(state: Boolean) = ToggleShuffleQuery.Builder(accessToken, state)
+
+	fun transferPlayback(targetDeviceId: String) = TransferPlaybackQuery.Builder(accessToken, targetDeviceId)
 }
