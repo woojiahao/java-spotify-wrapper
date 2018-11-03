@@ -1,9 +1,14 @@
 package me.chill.queries.player
 
+import com.google.gson.GsonBuilder
+import com.google.gson.annotations.SerializedName
+import khttp.put
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLower
 import me.chill.utility.extensions.generateParameters
+import me.chill.utility.request.displayErrorMessage
+import me.chill.utility.request.generateHeader
 
 class PlayTrackQuery private constructor(
 	private val accessToken: String,
@@ -14,21 +19,28 @@ class PlayTrackQuery private constructor(
 	private val offsetUri: String?,
 	private val position: Int?) : AbstractQuery<Boolean>("me", "player", "play") {
 
+	private data class Offset(
+		val position: Int?,
+		val uri: String?
+	)
+
+	private data class Body(
+		val contextUri: String?,
+		val uris: List<String>?,
+		val offset: Offset?,
+		@SerializedName("position_ms") val position: Int?
+	)
+
 	override fun execute(): Boolean {
 		val parameters = mapOf("device_id" to deviceId).generateParameters()
 
-		val body = gson.toJson(mapOf(
-			"context_uri" to contextUri,
-			"uris" to uris,
-			"offset" to mapOf(
-				"position" to offsetPosition,
-				"uri" to offsetUri
-			).generateParameters(),
-			"position_ms" to position
-		).generateParameters())
+		val body = gson.toJson(Body(contextUri, uris, Offset(offsetPosition, offsetUri), position))
 
-		println(body)
-		return false
+		val response = put(queryEndpoint, generateHeader(accessToken), parameters, body)
+
+		response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
+
+		return response.statusCode == 204
 	}
 
 	class Builder(private val accessToken: String) {

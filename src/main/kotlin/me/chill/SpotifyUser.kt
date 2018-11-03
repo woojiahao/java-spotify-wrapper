@@ -168,4 +168,6 @@ class SpotifyUser(
 	fun nextTrack() = NextTrackQuery.Builder(accessToken)
 
 	fun previousTrack() = PreviousTrackQuery.Builder(accessToken)
+
+	fun playTrack() = PlayTrackQuery.Builder(accessToken)
 }

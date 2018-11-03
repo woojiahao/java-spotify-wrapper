@@ -20,7 +20,7 @@ abstract class AbstractQuery<T> (private vararg val pathSegments: String) {
 
 	abstract fun execute(): T
 
-	open fun executeAsync(callback: (T?) -> Unit)  {
+	open fun executeAsync(callback: (T) -> Unit)  {
 		thread { callback(execute()) }
 	}
 }
