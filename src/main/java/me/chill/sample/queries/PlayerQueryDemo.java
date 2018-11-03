@@ -22,9 +22,6 @@ class PlayerQueryDemo {
 		CurrentlyPlaying currentlyPlaying = user.getCurrentlyPlayingTrack().build().execute();
 		System.out.println(currentlyPlaying);
 
-		Boolean setVolumeStatus = user.setVolume(78).device("CHILLBOX").build().execute();
-		System.out.println("Volume status: " + setVolumeStatus);
-
 		user.pauseTrack().device("CHILLBOX").build().executeAsync(obj -> {
 			System.out.println("Pausing track");
 			boolean b = (Boolean) obj;
@@ -50,5 +47,7 @@ class PlayerQueryDemo {
 			System.out.println((Boolean) obj ? "Premium" : "Not premium");
 			return null;
 		});
+
+		user.nextTrack().device("CHILLBOX").build().execute();
 	}
 }
