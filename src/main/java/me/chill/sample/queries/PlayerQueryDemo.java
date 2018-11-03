@@ -1,14 +1,13 @@
 package me.chill.sample.queries;
 
-import me.chill.SpotifyUser;
 import me.chill.models.*;
 
 import java.util.List;
 
+import static me.chill.sample.queries.UserStore.user;
+
 class PlayerQueryDemo {
 	public static void main(String[] args) {
-		SpotifyUser user = new SpotifyUser("BQAllufFBks4LQ98rqzb_02BS4IwCczdCKJbGW_pPQZvmAs0IpEecQsdgcbQWA6Qd3JlJNLBB2gii8G6uWrhCskmLeZgLDawoxmV2VaXHV2-AhH6gbpxmscJjDk8A6lQ3ITQCUml3L2_FjHHP8GWvh-hx0PyiRGLOqURSj6W2AV5vNCl947PbhE6MGD2HyveJmDO0Qgl-dTTfZdUUUysEg2TI488rJWytQhzmV_G8EQvnnR_n7fl5hSh038_tbjwubJHcieIKRXsW6wsJoiYLQ");
-
 		List<Device> availableDevices = user.getAvailableDevices().build().execute();
 		availableDevices.forEach(System.out::println);
 

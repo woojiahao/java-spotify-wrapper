@@ -13,6 +13,7 @@ import me.chill.queries.library.*
 import me.chill.queries.personalization.GetUserTopArtistsQuery
 import me.chill.queries.personalization.GetUserTopTracksQuery
 import me.chill.queries.player.*
+import me.chill.queries.playlist.AddTracksToPlaylistQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -181,4 +182,6 @@ class SpotifyUser(
 	fun toggleShuffle(state: Boolean) = ToggleShuffleQuery.Builder(accessToken, state)
 
 	fun transferPlayback(targetDeviceId: String) = TransferPlaybackQuery.Builder(accessToken, targetDeviceId)
+
+	fun addTrackToPlaylist(playlistId: String) = AddTracksToPlaylistQuery.Builder(accessToken, playlistId)
 }

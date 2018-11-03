@@ -11,11 +11,10 @@ completed.
    * [Authorization Flow](https://github.com/woojiahao/java-spotify-wrapper#authorization-flow)
    * [Implicit Grant](https://github.com/woojiahao/java-spotify-wrapper#implicit-grant)
    * [Credit Credentials Flow](https://github.com/woojiahao/java-spotify-wrapper#client-credentials-flow)
-4. [Code Structure](https://github.com/woojiahao/java-spotify-wrapper#code-structure)
-5. [Examples](https://github.com/woojiahao/java-spotify-wrapper#examples)
-6. [Contributing](https://github.com/woojiahao/java-spotify-wrapper#contributing)
-7. [License](https://github.com/woojiahao/java-spotify-wrapper#license)
-8. [Checklist](https://github.com/woojiahao/java-spotify-wrapper#checklist)
+4. [Examples](https://github.com/woojiahao/java-spotify-wrapper#examples)
+5. [Contributing](https://github.com/woojiahao/java-spotify-wrapper#contributing)
+6. [License](https://github.com/woojiahao/java-spotify-wrapper#license)
+7. [Checklist](https://github.com/woojiahao/java-spotify-wrapper#checklist)
 
 ## Anonymous Access
 Some of Spotify's Web API is available to users even without an access token or performing any form of user authentication,
@@ -88,42 +87,6 @@ However, because of that, there is no refresh token provided.
 [Example implementation of the client credential flow using the library](https://github.com/woojiahao/java-spotify-wrapper/blob/master/examples/ClientCredentialFlowDemo.java)
 
 [More information about the process steps](https://woojiahao.github.io/java-spotify-wrapper/#/authentication_guide?id=client-credential-flow)
-
-## Code Structure
-### Folder Structure
-```
-(/)
-|
-|_____(docs) - Library's documentation
-|
-|_____(src/main) - Source code and examples
-|     |
-|     |_____(java/me/chill/sample) - Example usage  
-|     |
-|     |_____(kotlin/me/chill) - Library root
-|           |
-|           |_____(authentication) - Code for authentication method
-|           |
-|           |_____(models) - Every data model used
-|           |
-|           |_____(queries) - Contains sub-folders for each endpoint
-|           |
-|           |_____(utility) - General utility functions
-|           |
-|           |_____[SpotifyUser.kt] - Authenticated user type
-|  
-|_____[.gitignore]
-|
-|_____[CODE_OF_CONDUCT.md] 
-|
-|_____[CONTRIBUTING.md] 
-|
-|_____[LICENSE.md] 
-|
-|_____[README.md] 
-|
-|_____[pom.xml] 
-```
 
 ## Contributing
 The project's code of conduct can be found [here.](https://github.com/woojiahao/java-spotify-wrapper/blob/master/CODE_OF_CONDUCT.md)
