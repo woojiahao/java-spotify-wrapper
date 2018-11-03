@@ -2,6 +2,7 @@ package me.chill
 
 import khttp.post
 import me.chill.exceptions.SpotifyAuthenticationException
+import me.chill.models.RepeatState
 import me.chill.queries.album.GetAlbumTracksQuery
 import me.chill.queries.album.GetSeveralAlbumsQuery
 import me.chill.queries.album.GetSingleAlbumQuery
@@ -159,4 +160,6 @@ class SpotifyUser(
 	fun pauseTrack() = PauseTrackQuery.Builder(accessToken)
 
 	fun seekTrack() = SeekTrackQuery.Builder(accessToken)
+
+	fun repeatTrack(state: RepeatState) = SetRepeatModeQuery.Builder(accessToken, state)
 }
