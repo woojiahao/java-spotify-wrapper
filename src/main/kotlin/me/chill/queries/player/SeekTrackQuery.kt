@@ -7,6 +7,9 @@ import me.chill.utility.extensions.generateParameters
 import me.chill.utility.request.displayErrorMessage
 import me.chill.utility.request.generateHeader
 
+/*
+TODO: Optionally, override the executeAsync() method to invoke the threading and after the system has been returned, perform checking if the track was actually modified by re-querying some other endpoint
+ */
 class SeekTrackQuery private constructor(
 	private val accessToken: String,
 	private val position: Int,
@@ -23,7 +26,7 @@ class SeekTrackQuery private constructor(
 			"device_id" to deviceId
 		).generateParameters()
 
-		val response = put(queryEndpoint, generateHeader(accessToken), parameters, "_")
+		val response = put(queryEndpoint, generateHeader(accessToken), parameters, "-")
 
 		response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
 		return response.statusCode == 204

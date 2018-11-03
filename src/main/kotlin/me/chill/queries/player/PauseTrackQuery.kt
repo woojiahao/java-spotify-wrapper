@@ -1,26 +1,23 @@
 package me.chill.queries.player
 
+import khttp.put
 import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.generateParameters
+import me.chill.utility.request.displayErrorMessage
+import me.chill.utility.request.generateHeader
 
 class PauseTrackQuery private constructor(
 	private val accessToken: String,
 	private val deviceId: String?) : AbstractQuery("me", "player", "pause") {
 
-	override fun execute(): Any? {
-		val parameters = mapOf("device_id" to deviceId)
-		val headers = mapOf(
-			"Authorization" to "Bearer $accessToken",
-			"Content-Length" to "0"
-		)
+	override fun execute(): Boolean {
+		val parameters = mapOf("device_id" to deviceId).generateParameters()
 
-		println("Pausing")
-//		asyncRequest(Method.Put, "https://api.spotify.com/v1/me/player/pause", headers, parameters.generateParameters()) {
-//			println(it.request.method)
-//			println(it.text)
-////			it.responseCheck()
-//		}
+		val response = put(queryEndpoint, generateHeader(accessToken), parameters, "-")
 
-		return emptyArray<String>()
+		response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
+
+		return response.statusCode == 204
 	}
 
 	class Builder(private val accessToken: String) {

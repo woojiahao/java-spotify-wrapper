@@ -7,6 +7,8 @@ import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.RegularError
 import me.chill.utility.extensions.generateParameters
 
+// TODO: Add a method to handle empty put body requests
+
 private val gson: Gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
 fun generateHeader(accessToken: String) = Header.Builder().accessToken(accessToken).build().generate()
