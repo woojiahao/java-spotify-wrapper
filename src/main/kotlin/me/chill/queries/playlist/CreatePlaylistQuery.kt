@@ -4,6 +4,8 @@ import khttp.post
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Playlist
 import me.chill.queries.AbstractQuery
+import me.chill.queries.profiles.GetCurrentUserProfileQuery
+import me.chill.utility.extensions.read
 import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
 
@@ -12,11 +14,10 @@ import me.chill.utility.request.responseCheck
  */
 class CreatePlaylistQuery private constructor(
 	private val accessToken: String,
-	private val userId: String,
 	private val name: String,
 	private val public: Boolean?,
 	private val collaborative: Boolean?,
-	private val description: String?) : AbstractQuery<Playlist>("users", userId, "playlists") {
+	private val description: String?) : AbstractQuery<Playlist>("users", "%s", "playlists") {
 
 	/**
 	 * @throws SpotifyQueryException If the target playlist is already public and the user attempts to set the playlist
@@ -32,13 +33,14 @@ class CreatePlaylistQuery private constructor(
 			"description" to description
 		))
 
-		val response = post(queryEndpoint, generateModificationHeader(accessToken), data = body)
+		val currentUserId = GetCurrentUserProfileQuery.Builder(accessToken).build().execute().id
+		val response = post(queryEndpoint.format(currentUserId), generateModificationHeader(accessToken), data = body)
 		response.responseCheck()
 
-		return gson.fromJson(response.text, Playlist::class.java)
+		return gson.read(response.text)
 	}
 
-	class Builder(private val accessToken: String, private val userId: String, private val name: String) {
+	class Builder(private val accessToken: String, private val name: String) {
 		private var public: Boolean? = null
 		private var collaborative: Boolean? = null
 		private var description: String? = null
@@ -80,7 +82,7 @@ class CreatePlaylistQuery private constructor(
 				throw SpotifyQueryException("You cannot enable a playlist to be collaborative if it is public")
 			}
 
-			return CreatePlaylistQuery(accessToken, userId, name, public, collaborative, description)
+			return CreatePlaylistQuery(accessToken, name, public, collaborative, description)
 		}
 	}
 }

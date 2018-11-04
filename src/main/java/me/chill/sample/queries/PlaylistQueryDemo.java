@@ -20,6 +20,6 @@ public class PlaylistQueryDemo {
 //			.build()
 //			.execute();
 
-		user.createPlaylist("Chill", "Test").build().execute();
+		user.createPlaylist("Test").build().execute();
 	}
 }
