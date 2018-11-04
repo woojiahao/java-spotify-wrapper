@@ -6,29 +6,29 @@ import me.chill.utility.extensions.generateNullableString
 import me.chill.utility.request.put
 
 class SaveAlbumsQuery private constructor(
-	private val accessToken: String,
-	private val ids: String?) : AbstractQuery<Boolean>("me", "albums") {
+  private val accessToken: String,
+  private val ids: String?) : AbstractQuery<Boolean>("me", "albums") {
 
-	override fun execute() = put(queryEndpoint, accessToken, mapOf("ids" to ids)).statusCode == 201
+  override fun execute() = put(queryEndpoint, accessToken, mapOf("ids" to ids)).statusCode == 201
 
-	class Builder(private val accessToken: String) {
-		private val albums = mutableListOf<String>()
+  class Builder(private val accessToken: String) {
+    private val albums = mutableListOf<String>()
 
-		fun addAlbum(album: String): Builder {
-			albums.add(album)
-			return this
-		}
+    fun addAlbum(album: String): Builder {
+      albums.add(album)
+      return this
+    }
 
-		fun setAlbums(albums: List<String>): Builder {
-			this.albums.clear()
-			this.albums.addAll(albums)
-			return this
-		}
+    fun setAlbums(albums: List<String>): Builder {
+      this.albums.clear()
+      this.albums.addAll(albums)
+      return this
+    }
 
-		fun build(): SaveAlbumsQuery {
-			albums.checkListSizeLimit("Albums", 50)
+    fun build(): SaveAlbumsQuery {
+      albums.checkListSizeLimit("Albums", 50)
 
-			return SaveAlbumsQuery(accessToken, albums.generateNullableString())
-		}
-	}
+      return SaveAlbumsQuery(accessToken, albums.generateNullableString())
+    }
+  }
 }

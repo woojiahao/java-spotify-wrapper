@@ -11,56 +11,56 @@ import me.chill.utility.request.query
 import java.util.*
 
 class GetCategoryListQuery private constructor(
-	private val accessToken: String,
-	private val limit: Int,
-	private val offset: Int,
-	private val locale: String?,
-	private val country: String?) : AbstractQuery<Paging<Category>>("browse", "categories") {
+  private val accessToken: String,
+  private val limit: Int,
+  private val offset: Int,
+  private val locale: String?,
+  private val country: String?) : AbstractQuery<Paging<Category>>("browse", "categories") {
 
-	override fun execute(): Paging<Category> {
-		val parameters = mapOf(
-			"limit" to limit,
-			"offset" to offset,
-			"locale" to locale,
-			"country" to country
-		)
+  override fun execute(): Paging<Category> {
+    val parameters = mapOf(
+      "limit" to limit,
+      "offset" to offset,
+      "locale" to locale,
+      "country" to country
+    )
 
-		val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(queryEndpoint, accessToken, parameters)
 
-		return gson.fromJson<Paging<Category>>(gson.fromJson(response.text, JsonObject::class.java)["categories"], Paging::class.java)
-	}
+    return gson.fromJson<Paging<Category>>(gson.fromJson(response.text, JsonObject::class.java)["categories"], Paging::class.java)
+  }
 
-	class Builder(private val accessToken: String) {
-		private var country: CountryCode? = null
-		private var locale: String? = null
-		private var limit = 20
-		private var offset = 0
+  class Builder(private val accessToken: String) {
+    private var country: CountryCode? = null
+    private var locale: String? = null
+    private var limit = 20
+    private var offset = 0
 
-		fun country(country: CountryCode): Builder {
-			this.country = country
-			return this
-		}
+    fun country(country: CountryCode): Builder {
+      this.country = country
+      return this
+    }
 
-		fun limit(limit: Int): Builder {
-			this.limit = limit
-			return this
-		}
+    fun limit(limit: Int): Builder {
+      this.limit = limit
+      return this
+    }
 
-		fun offset(offset: Int): Builder {
-			this.offset = offset
-			return this
-		}
+    fun offset(offset: Int): Builder {
+      this.offset = offset
+      return this
+    }
 
-		fun locale(language: Locale, countryCode: CountryCode): Builder {
-			this.locale = "${language.language}_${countryCode.alpha2}"
-			return this
-		}
+    fun locale(language: Locale, countryCode: CountryCode): Builder {
+      this.locale = "${language.language}_${countryCode.alpha2}"
+      return this
+    }
 
-		fun build(): GetCategoryListQuery {
-			limit.checkLimit()
-			offset.checkOffset()
+    fun build(): GetCategoryListQuery {
+      limit.checkLimit()
+      offset.checkOffset()
 
-			return GetCategoryListQuery(accessToken, limit, offset, locale, country?.alpha2)
-		}
-	}
+      return GetCategoryListQuery(accessToken, limit, offset, locale, country?.alpha2)
+    }
+  }
 }

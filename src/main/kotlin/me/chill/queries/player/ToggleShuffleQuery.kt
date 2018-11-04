@@ -7,31 +7,31 @@ import me.chill.utility.request.displayErrorMessage
 import me.chill.utility.request.generateHeader
 
 class ToggleShuffleQuery private constructor(
-	private val accessToken: String,
-	private val state: Boolean,
-	private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "shuffle") {
+  private val accessToken: String,
+  private val state: Boolean,
+  private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "shuffle") {
 
-	override fun execute(): Boolean {
-		val parameters = mapOf(
-			"state" to state,
-			"device_id" to deviceId
-		).generateParameters()
+  override fun execute(): Boolean {
+    val parameters = mapOf(
+      "state" to state,
+      "device_id" to deviceId
+    ).generateParameters()
 
-		val response = put(queryEndpoint, generateHeader(accessToken), parameters, "-")
+    val response = put(queryEndpoint, generateHeader(accessToken), parameters, "-")
 
-		response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
+    response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
 
-		return response.statusCode == 204
-	}
+    return response.statusCode == 204
+  }
 
-	class Builder(private val accessToken: String, private val state: Boolean) {
-		private var device: String? = null
+  class Builder(private val accessToken: String, private val state: Boolean) {
+    private var device: String? = null
 
-		fun device(device: String): Builder {
-			this.device = device
-			return this
-		}
+    fun device(device: String): Builder {
+      this.device = device
+      return this
+    }
 
-		fun build() = ToggleShuffleQuery(accessToken, state, device)
-	}
+    fun build() = ToggleShuffleQuery(accessToken, state, device)
+  }
 }

@@ -7,47 +7,47 @@ import me.chill.utility.extensions.generateNullableString
 import me.chill.utility.request.put
 
 class FollowUserOrArtistQuery private constructor(
-	private val accessToken: String,
-	private val userType: String,
-	private val ids: String?) : AbstractQuery<Boolean>("me", "following") {
+  private val accessToken: String,
+  private val userType: String,
+  private val ids: String?) : AbstractQuery<Boolean>("me", "following") {
 
-	override fun execute(): Boolean {
-		val parameters = mapOf(
-			"type" to userType,
-			"ids" to ids
-		)
+  override fun execute(): Boolean {
+    val parameters = mapOf(
+      "type" to userType,
+      "ids" to ids
+    )
 
-		val response = put(queryEndpoint, accessToken, parameters)
+    val response = put(queryEndpoint, accessToken, parameters)
 
-		return response.statusCode == 204
-	}
+    return response.statusCode == 204
+  }
 
-	class Builder(private val accessToken: String) {
-		private var type: UserType? = null
-		private val users = mutableListOf<String>()
+  class Builder(private val accessToken: String) {
+    private var type: UserType? = null
+    private val users = mutableListOf<String>()
 
-		fun type(type: UserType): Builder {
-			this.type = type
-			return this
-		}
+    fun type(type: UserType): Builder {
+      this.type = type
+      return this
+    }
 
-		fun addUser(user: String): Builder {
-			users.add(user)
-			return this
-		}
+    fun addUser(user: String): Builder {
+      users.add(user)
+      return this
+    }
 
-		fun setUsers(users: List<String>): Builder {
-			this.users.clear()
-			this.users.addAll(users)
-			return this
-		}
+    fun setUsers(users: List<String>): Builder {
+      this.users.clear()
+      this.users.addAll(users)
+      return this
+    }
 
-		fun build(): FollowUserOrArtistQuery {
-			users.checkListSizeLimit("Users", 50)
+    fun build(): FollowUserOrArtistQuery {
+      users.checkListSizeLimit("Users", 50)
 
-			type ?: throw SpotifyQueryException("User Type must be specified")
+      type ?: throw SpotifyQueryException("User Type must be specified")
 
-			return FollowUserOrArtistQuery(accessToken, type!!.name, users.generateNullableString())
-		}
-	}
+      return FollowUserOrArtistQuery(accessToken, type!!.name, users.generateNullableString())
+    }
+  }
 }

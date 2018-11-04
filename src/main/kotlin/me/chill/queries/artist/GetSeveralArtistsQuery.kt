@@ -9,30 +9,30 @@ import me.chill.utility.request.query
 import me.chill.utility.request.readFromJsonArray
 
 class GetSeveralArtistsQuery private constructor(
-	private val accessToken: String,
-	private val ids: String) : AbstractQuery<List<Artist>>("artists") {
+  private val accessToken: String,
+  private val ids: String) : AbstractQuery<List<Artist>>("artists") {
 
-	override fun execute() = gson.readFromJsonArray<Artist>("artists", query(queryEndpoint, accessToken, mapOf("ids" to ids)))
+  override fun execute() = gson.readFromJsonArray<Artist>("artists", query(queryEndpoint, accessToken, mapOf("ids" to ids)))
 
-	class Builder(private val accessToken: String) {
-		private val artists = mutableListOf<String>()
+  class Builder(private val accessToken: String) {
+    private val artists = mutableListOf<String>()
 
-		fun addId(artist: String): Builder {
-			artists.add(artist)
-			return this
-		}
+    fun addId(artist: String): Builder {
+      artists.add(artist)
+      return this
+    }
 
-		fun setIds(artists: List<String>): Builder {
-			this.artists.clear()
-			this.artists.addAll(artists)
-			return this
-		}
+    fun setIds(artists: List<String>): Builder {
+      this.artists.clear()
+      this.artists.addAll(artists)
+      return this
+    }
 
-		fun build(): GetSeveralArtistsQuery {
-			artists.checkEmpty("Artists")
-			artists.checkListSizeLimit("Artists", 50)
+    fun build(): GetSeveralArtistsQuery {
+      artists.checkEmpty("Artists")
+      artists.checkListSizeLimit("Artists", 50)
 
-			return GetSeveralArtistsQuery(accessToken, artists.generateString())
-		}
-	}
+      return GetSeveralArtistsQuery(accessToken, artists.generateString())
+    }
+  }
 }

@@ -6,35 +6,35 @@ import me.chill.utility.request.Header
 import me.chill.utility.request.responseCheck
 
 class FollowPlaylistQuery private constructor(
-	private val id: String,
-	private val accessToken: String,
-	private val public: Boolean) : AbstractQuery<Boolean>("playlists", id, "followers") {
+  private val id: String,
+  private val accessToken: String,
+  private val public: Boolean) : AbstractQuery<Boolean>("playlists", id, "followers") {
 
-	override fun execute(): Boolean {
-		val body = mapOf(
-			"public" to public
-		).generateParameters()
+  override fun execute(): Boolean {
+    val body = mapOf(
+      "public" to public
+    ).generateParameters()
 
-		val headers = Header.Builder()
-			.accessToken(accessToken)
-			.contentType(Header.Builder.ContentType.Json)
-			.build()
-			.generate()
+    val headers = Header.Builder()
+      .accessToken(accessToken)
+      .contentType(Header.Builder.ContentType.Json)
+      .build()
+      .generate()
 
-		val response = khttp.put(queryEndpoint, headers, data = body)
-		response.responseCheck()
+    val response = khttp.put(queryEndpoint, headers, data = body)
+    response.responseCheck()
 
-		return response.statusCode == 200
-	}
+    return response.statusCode == 200
+  }
 
-	class Builder(private val id: String, private val accessToken: String) {
-		private var public = true
+  class Builder(private val id: String, private val accessToken: String) {
+    private var public = true
 
-		fun public(public: Boolean): Builder {
-			this.public = public
-			return this
-		}
+    fun public(public: Boolean): Builder {
+      this.public = public
+      return this
+    }
 
-		fun build() = FollowPlaylistQuery(id, accessToken, public)
-	}
+    fun build() = FollowPlaylistQuery(id, accessToken, public)
+  }
 }

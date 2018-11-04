@@ -8,48 +8,48 @@ import me.chill.utility.extensions.checkOffset
 import me.chill.utility.request.query
 
 class GetUserTopArtistsQuery private constructor(
-	private val accessToken: String,
-	private val limit: Int,
-	private val offset: Int,
-	private val timeRange: String) : AbstractQuery<Paging<Artist>>("me", "top", "artists") {
+  private val accessToken: String,
+  private val limit: Int,
+  private val offset: Int,
+  private val timeRange: String) : AbstractQuery<Paging<Artist>>("me", "top", "artists") {
 
-	override fun execute(): Paging<Artist> {
-		val parameters = mapOf(
-			"limit" to limit,
-			"offset" to offset,
-			"time_range" to timeRange
-		)
+  override fun execute(): Paging<Artist> {
+    val parameters = mapOf(
+      "limit" to limit,
+      "offset" to offset,
+      "time_range" to timeRange
+    )
 
-		val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(queryEndpoint, accessToken, parameters)
 
-		return gson.fromJson<Paging<Artist>>(response.text, Paging::class.java)
-	}
+    return gson.fromJson<Paging<Artist>>(response.text, Paging::class.java)
+  }
 
-	class Builder(private val accessToken: String) {
-		private var limit = 20
-		private var offset = 0
-		private var timeRange = TimeRange.Medium
+  class Builder(private val accessToken: String) {
+    private var limit = 20
+    private var offset = 0
+    private var timeRange = TimeRange.Medium
 
-		fun limit(limit: Int): Builder {
-			this.limit = limit
-			return this
-		}
+    fun limit(limit: Int): Builder {
+      this.limit = limit
+      return this
+    }
 
-		fun offset(offset: Int): Builder {
-			this.offset = offset
-			return this
-		}
+    fun offset(offset: Int): Builder {
+      this.offset = offset
+      return this
+    }
 
-		fun timeRange(timeRange: TimeRange): Builder {
-			this.timeRange = timeRange
-			return this
-		}
+    fun timeRange(timeRange: TimeRange): Builder {
+      this.timeRange = timeRange
+      return this
+    }
 
-		fun build(): GetUserTopArtistsQuery {
-			limit.checkLimit()
-			offset.checkOffset()
+    fun build(): GetUserTopArtistsQuery {
+      limit.checkLimit()
+      offset.checkOffset()
 
-			return GetUserTopArtistsQuery(accessToken, limit, offset, timeRange.getValue())
-		}
-	}
+      return GetUserTopArtistsQuery(accessToken, limit, offset, timeRange.getValue())
+    }
+  }
 }

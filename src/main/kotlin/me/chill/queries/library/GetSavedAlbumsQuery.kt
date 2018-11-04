@@ -9,48 +9,48 @@ import me.chill.utility.extensions.checkOffset
 import me.chill.utility.request.query
 
 class GetSavedAlbumsQuery private constructor(
-	private val accessToken: String,
-	private val limit: Int,
-	private val offset: Int,
-	private val market: String?) : AbstractQuery<Paging<SavedAlbum>>("me", "albums") {
+  private val accessToken: String,
+  private val limit: Int,
+  private val offset: Int,
+  private val market: String?) : AbstractQuery<Paging<SavedAlbum>>("me", "albums") {
 
-	override fun execute(): Paging<SavedAlbum> {
-		val parameters = mapOf(
-			"limit" to limit,
-			"offset" to offset,
-			"market" to market
-		)
+  override fun execute(): Paging<SavedAlbum> {
+    val parameters = mapOf(
+      "limit" to limit,
+      "offset" to offset,
+      "market" to market
+    )
 
-		val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(queryEndpoint, accessToken, parameters)
 
-		return gson.fromJson<Paging<SavedAlbum>>(response.text, Paging::class.java)
-	}
+    return gson.fromJson<Paging<SavedAlbum>>(response.text, Paging::class.java)
+  }
 
-	class Builder(private val accessToken: String) {
-		private var limit = 20
-		private var offset = 0
-		private var market: CountryCode? = null
+  class Builder(private val accessToken: String) {
+    private var limit = 20
+    private var offset = 0
+    private var market: CountryCode? = null
 
-		fun limit(limit: Int): Builder {
-			this.limit = limit
-			return this
-		}
+    fun limit(limit: Int): Builder {
+      this.limit = limit
+      return this
+    }
 
-		fun offset(offset: Int): Builder {
-			this.offset = offset
-			return this
-		}
+    fun offset(offset: Int): Builder {
+      this.offset = offset
+      return this
+    }
 
-		fun market(market: CountryCode): Builder {
-			this.market = market
-			return this
-		}
+    fun market(market: CountryCode): Builder {
+      this.market = market
+      return this
+    }
 
-		fun build(): GetSavedAlbumsQuery {
-			limit.checkLimit()
-			offset.checkOffset()
+    fun build(): GetSavedAlbumsQuery {
+      limit.checkLimit()
+      offset.checkOffset()
 
-			return GetSavedAlbumsQuery(accessToken, limit, offset, market?.alpha2)
-		}
-	}
+      return GetSavedAlbumsQuery(accessToken, limit, offset, market?.alpha2)
+    }
+  }
 }

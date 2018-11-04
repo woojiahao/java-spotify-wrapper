@@ -7,27 +7,27 @@ import me.chill.utility.request.displayErrorMessage
 import me.chill.utility.request.generateHeader
 
 class PauseTrackQuery private constructor(
-	private val accessToken: String,
-	private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "pause") {
+  private val accessToken: String,
+  private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "pause") {
 
-	override fun execute(): Boolean {
-		val parameters = mapOf("device_id" to deviceId).generateParameters()
+  override fun execute(): Boolean {
+    val parameters = mapOf("device_id" to deviceId).generateParameters()
 
-		val response = put(queryEndpoint, generateHeader(accessToken), parameters, "-")
+    val response = put(queryEndpoint, generateHeader(accessToken), parameters, "-")
 
-		response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
+    response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
 
-		return response.statusCode == 204
-	}
+    return response.statusCode == 204
+  }
 
-	class Builder(private val accessToken: String) {
-		private var device: String? = null
+  class Builder(private val accessToken: String) {
+    private var device: String? = null
 
-		fun device(device: String): Builder {
-			this.device = device
-			return this
-		}
+    fun device(device: String): Builder {
+      this.device = device
+      return this
+    }
 
-		fun build() = PauseTrackQuery(accessToken, device)
-	}
+    fun build() = PauseTrackQuery(accessToken, device)
+  }
 }
