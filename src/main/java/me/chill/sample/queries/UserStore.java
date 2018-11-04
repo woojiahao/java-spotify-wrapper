@@ -3,7 +3,7 @@ package me.chill.sample.queries;
 import me.chill.SpotifyUser;
 
 public class UserStore {
-	private static String accessToken = "BQCsjnH29w9iFmKdDA2zMCA_54ZbnDTdpMk-MTbS8HJGlxbn3rU6kVUjAZgW2Le8RGFE5LKTIy0etVsypmlW0Vys0jtctAoj3fVpBj08i42oIbnoeOZda0-FL3ERXV2GdxyVtbLs2jiPpcF6b_GeF4ees99mB4KKrx6IjhNtDZ-586BqIslAq2UYP8pUxm8NjivWFLGVraiNogWJvWz_LIo6B4VtqUHzMEg463TYzArwJgjGO7z3wtCkb8uUtb-CuVfrJ4fOnz3jaDhvwx5tXg";
+	private static String accessToken = "BQCfO5Qras-cunrlmsvugnyKHZS48mGdmS64H211cWTh-eAS-19COEheV7wVE-KmIrhIWG83Zyc07fuMOOWR6f9Tf3OOVUw-X9xVVnM7fjdPm57MEEu0L6HtcWrwVF3BfSkAyQaWvr7TXIzWgbQj6sLFeVC_Um59z042F7EdoZN12tLHfSuhldLBOnYet-OCS7nEqoevClPP6zbtuglaD-jyQFP2Bg1Dkb4PwZZJ8w7gWjDjxko2319JPBLhGd585lvfehuM_TiPX4UyYdcw_A";
 
 	public static SpotifyUser user = new SpotifyUser(accessToken);
 }

@@ -15,6 +15,7 @@ import me.chill.queries.personalization.GetUserTopTracksQuery
 import me.chill.queries.player.*
 import me.chill.queries.playlist.AddTracksToPlaylistQuery
 import me.chill.queries.playlist.ChangePlaylistDetailsQuery
+import me.chill.queries.playlist.CreatePlaylistQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -203,4 +204,14 @@ class SpotifyUser(
 	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/">https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/</a>
 	 */
 	fun changePlaylistDetails(playlistId: String) = ChangePlaylistDetailsQuery.Builder(accessToken, playlistId)
+
+	/**
+	 * Create an empty playlist for a Spotify user
+	 *
+	 * @param userId The id of the user to create the playlist for
+	 * @param playlistName The name of the new playlist
+	 * @return CreatePlaylistQuery.Builder to tweak the properties of the query
+	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/">https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/</a>
+	 */
+	fun createPlaylist(userId: String, playlistName: String) = CreatePlaylistQuery.Builder(accessToken, userId, playlistName)
 }

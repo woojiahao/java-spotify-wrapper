@@ -15,10 +15,11 @@ public class PlaylistQueryDemo {
 //		System.out.println(result.getFirst());
 //		System.out.println(result.getSecond());
 
-		user.changePlaylistDetails("7Ga1gkkVHTTX5LJlTcGPKs")
-			.description("Some catchy tunes from our past!")
-			.build()
-			.execute();
+//		user.changePlaylistDetails("7Ga1gkkVHTTX5LJlTcGPKs")
+//			.description("Some catchy tunes from our past!")
+//			.build()
+//			.execute();
 
+		user.createPlaylist("Chill", "Test").build().execute();
 	}
 }

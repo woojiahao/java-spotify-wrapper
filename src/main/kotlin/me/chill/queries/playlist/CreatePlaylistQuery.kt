@@ -1,28 +1,30 @@
 package me.chill.queries.playlist
 
-import khttp.put
+import khttp.post
 import me.chill.exceptions.SpotifyQueryException
+import me.chill.models.Playlist
 import me.chill.queries.AbstractQuery
 import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
 
 /**
- * Change a user-owned playlist’s name and public/private state.
+ * Create an empty playlist for a Spotify user
  */
-class ChangePlaylistDetailsQuery private constructor(
+class CreatePlaylistQuery private constructor(
 	private val accessToken: String,
-	private val playlistId: String,
-	private val name: String?,
+	private val userId: String,
+	private val name: String,
 	private val public: Boolean?,
 	private val collaborative: Boolean?,
-	private val description: String?) : AbstractQuery<Boolean>("playlists", playlistId) {
+	private val description: String?) : AbstractQuery<Playlist>("users", userId, "playlists") {
 
 	/**
-	 * @throws SpotifyQueryException If the target playlist is already public, and the user attempts to set the playlist
+	 * @throws SpotifyQueryException If the target playlist is already public and the user attempts to set the playlist
 	 * to collaborative
-	 * @return Boolean status to indicate if the operation was successful (true) or not (false)
+	 * @throws SpotifyQueryException If the user id supplied is not the user that authorized the application
+	 * @return Playlist of the newly created playlist
 	 */
-	override fun execute(): Boolean {
+	override fun execute(): Playlist {
 		val body = gson.toJson(mapOf(
 			"name" to name,
 			"public" to public,
@@ -30,25 +32,16 @@ class ChangePlaylistDetailsQuery private constructor(
 			"description" to description
 		))
 
-		val response = put(queryEndpoint, generateModificationHeader(accessToken), data = body)
+		val response = post(queryEndpoint, generateModificationHeader(accessToken), data = body)
 		response.responseCheck()
 
-		return response.statusCode == 200
+		return gson.fromJson(response.text, Playlist::class.java)
 	}
 
-	class Builder(private val accessToken: String, private val playlistId: String) {
-		private var name: String? = null
+	class Builder(private val accessToken: String, private val userId: String, private val name: String) {
 		private var public: Boolean? = null
 		private var collaborative: Boolean? = null
 		private var description: String? = null
-
-		/**
-		 * @param name New name for the playlist
-		 */
-		fun name(name: String): Builder {
-			this.name = name
-			return this
-		}
 
 		/**
 		 * @param description Playlist description as displayed in Spotify clients and web API
@@ -80,14 +73,14 @@ class ChangePlaylistDetailsQuery private constructor(
 		 * exception is raised since a collaborative playlist cannot be public; If the playlist if public before this
 		 * operation and the collaborative flag is set to true during the operation, this exception is not thrown and will
 		 * only be caught when the code is executed.
-		 * @return ChangePlaylistDetailsQuery to execute the following operations with the set arguments
+		 * @return CreatePlaylistQuery to execute the following operation with set arguments
 		 */
-		fun build(): ChangePlaylistDetailsQuery {
+		fun build(): CreatePlaylistQuery {
 			if (collaborative == true && public == true) {
 				throw SpotifyQueryException("You cannot enable a playlist to be collaborative if it is public")
 			}
 
-			return ChangePlaylistDetailsQuery(accessToken, playlistId, name, public, collaborative, description)
+			return CreatePlaylistQuery(accessToken, userId, name, public, collaborative, description)
 		}
 	}
 }
