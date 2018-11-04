@@ -1,11 +1,9 @@
 package me.chill.sample.queries;
 
-import kotlin.Pair;
-
 import static me.chill.sample.queries.UserStore.user;
 
 public class PlaylistQueryDemo {
-	public static void main(String[] args) {
+  public static void main(String[] args) {
 //		Pair<Boolean, String> result = user
 //			.addTrackToPlaylist("7Ga1gkkVHTTX5LJlTcGPKs")
 //			.addUri("spotify:track:2iUmqdfGZcHIhS3b9E9EWq")
@@ -21,9 +19,9 @@ public class PlaylistQueryDemo {
 //			.execute();
 
 //		user.createPlaylist("Test").build().execute();
-		user.getCurrentUserPlaylists().limit(2).build().executeAsync(playlists -> {
-			System.out.println(playlists);
-			return null;
-		});
-	}
+    user.getCurrentUserPlaylists().limit(2).build().executeAsync(playlists -> {
+      System.out.println(playlists);
+      return null;
+    });
+  }
 }
