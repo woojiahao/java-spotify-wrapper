@@ -14,6 +14,7 @@ import me.chill.queries.personalization.GetUserTopArtistsQuery
 import me.chill.queries.personalization.GetUserTopTracksQuery
 import me.chill.queries.player.*
 import me.chill.queries.playlist.AddTracksToPlaylistQuery
+import me.chill.queries.playlist.ChangePlaylistDetailsQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -173,11 +174,12 @@ class SpotifyUser(
 	fun playTrack() = PlayTrackQuery.Builder(accessToken)
 
 	/**
-	 * state:
+	 * Toggle shuffle on or off for user’s playback.
 	 *
-	 * 	true 	-> Shuffle
-	 *
-	 * 	false -> Don't shuffle
+	 * @param state The state of the shuffle mode, **true** to shuffle the playback, **false** to stop shuffling the
+	 * playback
+	 * @return ToggleShuffleQuery.Builder to tweak the properties of the query
+	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/player/toggle-shuffle-for-users-playback/">https://developer.spotify.com/documentation/web-api/reference/player/toggle-shuffle-for-users-playback/</a>
 	 */
 	fun toggleShuffle(state: Boolean) = ToggleShuffleQuery.Builder(accessToken, state)
 
@@ -192,4 +194,13 @@ class SpotifyUser(
 	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/">https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/</a>
 	 */
 	fun addTrackToPlaylist(playlistId: String) = AddTracksToPlaylistQuery.Builder(accessToken, playlistId)
+
+	/**
+	 * Change a user owned playlist’s name and public/private state.
+	 *
+	 * @param playlistId The id of the playlist you wish to edit
+	 * @return ChangePlaylistDetailsQuery.Builder to tweak the properties of the query
+	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/">https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/</a>
+	 */
+	fun changePlaylistDetails(playlistId: String) = ChangePlaylistDetailsQuery.Builder(accessToken, playlistId)
 }
