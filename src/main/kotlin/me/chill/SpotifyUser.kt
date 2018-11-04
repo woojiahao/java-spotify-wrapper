@@ -91,10 +91,27 @@ class SpotifyUser(
 
 	fun getExpiryDuration() = expiryDuration
 
+	/**
+	 * Get Spotify catalog information for a single album
+	 *
+	 * @param albumId ID of the album to retrieve
+	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/albums/get-album/">https://developer.spotify.com/documentation/web-api/reference/albums/get-album/</a>
+	 */
 	fun getSingleAlbum(albumId: String) = GetSingleAlbumQuery.Builder(albumId, accessToken)
 
+	/**
+	 * Get Spotify catalog information about an album’s tracks
+	 *
+	 * @param albumId ID of the album to retrieve
+	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/">https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/</a>
+	 */
 	fun getAlbumTracks(albumId: String) = GetAlbumTracksQuery.Builder(albumId, accessToken)
 
+	/**
+	 * Get Spotify catalog information for multiple albums identified by their Spotify IDs
+	 *
+	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/albums/get-several-albums/">https://developer.spotify.com/documentation/web-api/reference/albums/get-several-albums/</a>
+	 */
 	fun getSeveralAlbums() = GetSeveralAlbumsQuery.Builder(accessToken)
 
 	fun getSingleArtist(artistId: String) = GetSingleArtistQuery.Builder(artistId, accessToken)
@@ -182,7 +199,6 @@ class SpotifyUser(
 	 *
 	 * @param state The state of the shuffle mode, **true** to shuffle the playback, **false** to stop shuffling the
 	 * playback
-	 * @return ToggleShuffleQuery.Builder to tweak the properties of the query
 	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/player/toggle-shuffle-for-users-playback/">https://developer.spotify.com/documentation/web-api/reference/player/toggle-shuffle-for-users-playback/</a>
 	 */
 	fun toggleShuffle(state: Boolean) = ToggleShuffleQuery.Builder(accessToken, state)
@@ -203,7 +219,6 @@ class SpotifyUser(
 	 * Change a user owned playlist’s name and public/private state.
 	 *
 	 * @param playlistId The id of the playlist you wish to edit
-	 * @return ChangePlaylistDetailsQuery.Builder to tweak the properties of the query
 	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/">https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/</a>
 	 */
 	fun changePlaylistDetails(playlistId: String) = ChangePlaylistDetailsQuery.Builder(accessToken, playlistId)
@@ -212,7 +227,6 @@ class SpotifyUser(
 	 * Create an empty playlist for the current Spotify user
 	 *
 	 * @param playlistName The name of the new playlist
-	 * @return CreatePlaylistQuery.Builder to tweak the properties of the query
 	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/">https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/</a>
 	 */
 	fun createPlaylist(playlistName: String) = CreatePlaylistQuery.Builder(accessToken, playlistName)
@@ -227,7 +241,6 @@ class SpotifyUser(
 	/**
 	 * Get detailed profile information about the current user
 	 *
-	 * @return GetCurrentUserProfileQuery.Builder to tweak the properties of the query
 	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/users-profile/get-current-users-profile/>https://developer.spotify.com/documentation/web-api/reference/users-profile/get-current-users-profile/</a>
 	 */
 	fun getCurrentUserProfile() = GetCurrentUserProfileQuery.Builder(accessToken)
@@ -236,7 +249,6 @@ class SpotifyUser(
 	 * Get public profile information about a Spotify user
 	 *
 	 * @param userId The user id of the target user
-	 * @return GetUserProfileQuery.Builder to tweak the properties of the query
 	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/users-profile/get-users-profile/">https://developer.spotify.com/documentation/web-api/reference/users-profile/get-users-profile/</a>
 	 */
 	fun getUserProfile(userId: String) = GetUserProfileQuery.Builder(accessToken, userId)

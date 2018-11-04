@@ -9,11 +9,18 @@ import me.chill.utility.extensions.generateString
 import me.chill.utility.request.query
 import me.chill.utility.request.readFromJsonArray
 
+/**
+ * Get Spotify catalog information for multiple albums identified by their Spotify IDs
+ */
 class GetSeveralAlbumsQuery private constructor(
 	private val accessToken: String,
 	private val ids: String,
 	private val market: String?) : AbstractQuery<List<Album?>>("albums") {
 
+	/**
+	 * @throws SpotifyQueryException if an error with the operation occurs
+	 * @return List of possibly null Albums
+	 */
 	override fun execute(): List<Album?> {
 		val parameters = mapOf(
 			"ids" to ids,
@@ -30,22 +37,39 @@ class GetSeveralAlbumsQuery private constructor(
 		private val albums = mutableListOf<String>()
 		private var market: String? = null
 
+		/**
+		 * @param market CountryCode constant
+		 */
 		fun market(market: CountryCode): Builder {
 			this.market = market.alpha2
 			return this
 		}
 
-		fun addId(album: String): Builder {
+		/**
+		 * Adds a single album ID to the albums list
+		 *
+		 * @param album Album ID
+		 */
+		fun addAlbum(album: String): Builder {
 			albums.add(album)
 			return this
 		}
 
-		fun setIds(albums: List<String>): Builder {
+		/**
+		 * Clears any pre-existing album ids and re-populates the albums list with the input
+		 *
+		 * @param albums List of album IDs to be supplied
+		 */
+		fun setAlbums(albums: List<String>): Builder {
 			this.albums.clear()
 			this.albums.addAll(albums)
 			return this
 		}
 
+		/**
+		 * @throws SpotifyQueryException when the albums list is empty
+		 * @throws SpotifyQueryException when the albums list exceeds 20 ids
+		 */
 		fun build(): GetSeveralAlbumsQuery {
 			albums.checkEmpty("Albums")
 			albums.checkListSizeLimit("Albums")

@@ -4,11 +4,6 @@ import me.chill.exceptions.SpotifyQueryException
 import org.junit.Test
 import kotlin.test.BeforeTest
 
-/**
- * Unit tests to test the edge cases the PlayTrackQuery builder has to cover
- *
- * Because of the scenario, the access token set is not important
- */
 class PlayTrackQueryBuilderTest {
 	private var builder: PlayTrackQuery.Builder? = null
 
