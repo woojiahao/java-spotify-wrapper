@@ -12,7 +12,7 @@ class AreUsersFollowingPlaylistQuery private constructor(
   private val accessToken: String,
   private val ids: String) : AbstractQuery<Map<String, Boolean>>("playlists", id, "followers", "contains") {
 
-  override fun execute() = query(queryEndpoint, accessToken, mapOf("ids" to ids)).createCheckMap(ids)
+  override fun execute() = query(endpoint, accessToken, mapOf("ids" to ids)).createCheckMap(ids)
 
   class Builder(private val id: String, private val accessToken: String) {
     private val users = mutableListOf<String>()

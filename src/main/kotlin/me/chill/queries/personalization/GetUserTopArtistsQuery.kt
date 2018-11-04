@@ -20,7 +20,7 @@ class GetUserTopArtistsQuery private constructor(
       "time_range" to timeRange
     )
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.fromJson<Paging<Artist>>(response.text, Paging::class.java)
   }

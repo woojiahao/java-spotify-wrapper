@@ -13,7 +13,7 @@ class NextTrackQuery private constructor(
   override fun execute(): Boolean {
     val parameters = mapOf("device_id" to deviceId).generateParameters()
 
-    val response = post(queryEndpoint, generateHeader(accessToken), parameters, "-")
+    val response = post(endpoint, generateHeader(accessToken), parameters, "-")
 
     response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
 

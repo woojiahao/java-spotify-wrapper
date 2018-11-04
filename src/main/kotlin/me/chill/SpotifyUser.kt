@@ -13,10 +13,7 @@ import me.chill.queries.library.*
 import me.chill.queries.personalization.GetUserTopArtistsQuery
 import me.chill.queries.personalization.GetUserTopTracksQuery
 import me.chill.queries.player.*
-import me.chill.queries.playlist.AddTracksToPlaylistQuery
-import me.chill.queries.playlist.ChangePlaylistDetailsQuery
-import me.chill.queries.playlist.CreatePlaylistQuery
-import me.chill.queries.playlist.GetCurrentUserPlaylists
+import me.chill.queries.playlist.*
 import me.chill.queries.profiles.GetCurrentUserProfileQuery
 import me.chill.queries.profiles.GetUserProfileQuery
 import java.util.*
@@ -233,7 +230,14 @@ class SpotifyUser(
    *
    * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/get-a-list-of-current-users-playlists/">https://developer.spotify.com/documentation/web-api/reference/playlists/get-a-list-of-current-users-playlists/</a>
    */
-  fun getCurrentUserPlaylists() = GetCurrentUserPlaylists.Builder(accessToken)
+  fun getCurrentUserPlaylists() = GetCurrentUserPlaylistsQuery.Builder(accessToken)
+
+  /**
+   * Get a list of the playlists owned or followed by a Spotify user
+   *
+   * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/get-list-users-playlists/">https://developer.spotify.com/documentation/web-api/reference/playlists/get-list-users-playlists/</a>
+   */
+  fun getUserPlaylists(userId: String) = GetUserPlaylistsQuery.Builder(accessToken, userId)
 
   /**
    * Get detailed profile information about the current user

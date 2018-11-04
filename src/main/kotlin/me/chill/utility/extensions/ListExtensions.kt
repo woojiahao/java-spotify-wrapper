@@ -3,6 +3,7 @@ package me.chill.utility.extensions
 import me.chill.exceptions.SpotifyQueryException
 
 // TODO: Add a check to find duplicates in the list and display warning messages
+// TODO: Write unit tests for these extension methods
 
 private fun List<String>.trimList() = map { it.split(",") }.flatten().distinct()
 

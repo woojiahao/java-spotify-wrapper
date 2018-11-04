@@ -34,7 +34,7 @@ class CreatePlaylistQuery private constructor(
     ))
 
     val currentUserId = GetCurrentUserProfileQuery.Builder(accessToken).build().execute().id
-    val response = post(queryEndpoint.format(currentUserId), generateModificationHeader(accessToken), data = body)
+    val response = post(endpoint.format(currentUserId), generateModificationHeader(accessToken), data = body)
     response.responseCheck()
 
     return gson.read(response.text)

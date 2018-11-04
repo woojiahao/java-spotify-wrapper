@@ -21,7 +21,7 @@ class GetSavedAlbumsQuery private constructor(
       "market" to market
     )
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.fromJson<Paging<SavedAlbum>>(response.text, Paging::class.java)
   }

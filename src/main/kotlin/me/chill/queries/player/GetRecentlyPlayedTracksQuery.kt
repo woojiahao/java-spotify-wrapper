@@ -21,7 +21,7 @@ class GetRecentlyPlayedTracksQuery private constructor(
       "before" to before
     )
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     response.statusCode.takeIf { it == 204 }?.let { return null }
 

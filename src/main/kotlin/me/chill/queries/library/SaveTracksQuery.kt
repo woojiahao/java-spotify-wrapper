@@ -9,7 +9,7 @@ class SaveTracksQuery private constructor(
   private val accessToken: String,
   private val ids: String?) : AbstractQuery<Boolean>("me", "albums") {
 
-  override fun execute() = put(queryEndpoint, accessToken, mapOf("ids" to ids)).statusCode == 200
+  override fun execute() = put(endpoint, accessToken, mapOf("ids" to ids)).statusCode == 200
 
   class Builder(private val accessToken: String) {
     private val tracks = mutableListOf<String>()

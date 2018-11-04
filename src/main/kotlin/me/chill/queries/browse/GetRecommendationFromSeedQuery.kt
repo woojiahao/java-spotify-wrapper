@@ -43,7 +43,7 @@ class GetRecommendationFromSeedQuery private constructor(
       parameters["target_$key"] = attribute.target
     }
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.fromJson(response.text, Recommendation::class.java)
   }

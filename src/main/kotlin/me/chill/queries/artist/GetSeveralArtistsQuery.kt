@@ -12,7 +12,7 @@ class GetSeveralArtistsQuery private constructor(
   private val accessToken: String,
   private val ids: String) : AbstractQuery<List<Artist>>("artists") {
 
-  override fun execute() = gson.readFromJsonArray<Artist>("artists", query(queryEndpoint, accessToken, mapOf("ids" to ids)))
+  override fun execute() = gson.readFromJsonArray<Artist>("artists", query(endpoint, accessToken, mapOf("ids" to ids)))
 
   class Builder(private val accessToken: String) {
     private val artists = mutableListOf<String>()

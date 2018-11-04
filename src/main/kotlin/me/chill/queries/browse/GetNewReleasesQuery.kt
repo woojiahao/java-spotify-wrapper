@@ -20,7 +20,7 @@ class GetNewReleasesQuery private constructor(
       "country" to country
     )
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.fromJson(response.text, NewReleases::class.java)
   }

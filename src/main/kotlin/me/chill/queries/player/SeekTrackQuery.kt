@@ -26,7 +26,7 @@ class SeekTrackQuery private constructor(
       "device_id" to deviceId
     ).generateParameters()
 
-    val response = put(queryEndpoint, generateHeader(accessToken), parameters, "-")
+    val response = put(endpoint, generateHeader(accessToken), parameters, "-")
 
     response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
     return response.statusCode == 204

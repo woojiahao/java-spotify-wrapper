@@ -16,7 +16,7 @@ class GetUserProfileQuery private constructor(
    * @throws SpotifyQueryException If the user id supplied is not found
    * @return User's public profile information
    */
-  override fun execute() = gson.read<User>(query(queryEndpoint, accessToken).text)
+  override fun execute() = gson.read<User>(query(endpoint, accessToken).text)
 
   class Builder(private val accessToken: String, private val userId: String) {
     fun build() = GetUserProfileQuery(accessToken, userId)

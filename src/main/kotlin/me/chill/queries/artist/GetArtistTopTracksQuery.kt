@@ -15,7 +15,7 @@ class GetArtistTopTracksQuery private constructor(
   override fun execute(): List<Track> {
     val parameters = mapOf("market" to market)
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.readFromJsonArray("tracks", response)
   }

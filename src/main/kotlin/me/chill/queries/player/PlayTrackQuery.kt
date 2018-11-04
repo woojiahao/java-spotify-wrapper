@@ -35,7 +35,7 @@ class PlayTrackQuery private constructor(
 
     val body = gson.toJson(Body(contextUri, uris, Offset(offsetPosition, offsetUri), position))
 
-    val response = put(queryEndpoint, generateHeader(accessToken), parameters, body)
+    val response = put(endpoint, generateHeader(accessToken), parameters, body)
 
     response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
 

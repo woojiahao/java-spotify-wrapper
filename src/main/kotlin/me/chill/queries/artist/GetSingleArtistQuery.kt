@@ -8,7 +8,7 @@ class GetSingleArtistQuery private constructor(
   private val id: String,
   private val accessToken: String) : AbstractQuery<Artist>("artists", id) {
 
-  override fun execute(): Artist = gson.fromJson(query(queryEndpoint, accessToken).text, Artist::class.java)
+  override fun execute(): Artist = gson.fromJson(query(endpoint, accessToken).text, Artist::class.java)
 
   class Builder(private val id: String, private val accessToken: String) {
     fun build() = GetSingleArtistQuery(id, accessToken)

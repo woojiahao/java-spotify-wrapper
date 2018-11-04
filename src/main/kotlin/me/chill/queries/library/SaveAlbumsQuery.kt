@@ -9,7 +9,7 @@ class SaveAlbumsQuery private constructor(
   private val accessToken: String,
   private val ids: String?) : AbstractQuery<Boolean>("me", "albums") {
 
-  override fun execute() = put(queryEndpoint, accessToken, mapOf("ids" to ids)).statusCode == 201
+  override fun execute() = put(endpoint, accessToken, mapOf("ids" to ids)).statusCode == 201
 
   class Builder(private val accessToken: String) {
     private val albums = mutableListOf<String>()

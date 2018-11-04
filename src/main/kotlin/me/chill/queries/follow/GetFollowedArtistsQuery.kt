@@ -18,7 +18,7 @@ class GetFollowedArtistsQuery private constructor(
       "after" to after
     )
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.fromJson<CursorBasedPaging<Artist>>(response.jsonObject.getString("artists"), CursorBasedPaging::class.java)
   }

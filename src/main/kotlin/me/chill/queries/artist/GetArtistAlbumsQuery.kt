@@ -30,7 +30,7 @@ class GetArtistAlbumsQuery private constructor(
       "market" to market
     )
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.fromJson<Paging<Album>>(response.text, Paging::class.java)
   }

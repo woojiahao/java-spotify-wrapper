@@ -19,7 +19,12 @@ public class PlaylistQueryDemo {
 //			.execute();
 
 //		user.createPlaylist("Test").build().execute();
-    user.getCurrentUserPlaylists().limit(2).build().executeAsync(playlists -> {
+//    user.getCurrentUserPlaylists().limit(2).build().executeAsync(playlists -> {
+//      System.out.println(playlists);
+//      return null;
+//    });
+
+    user.getUserPlaylists("Chill").limit(5).build().executeAsync(playlists -> {
       System.out.println(playlists);
       return null;
     });

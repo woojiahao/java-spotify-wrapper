@@ -14,7 +14,7 @@ class GetCurrentUserProfileQuery private constructor(private val accessToken: St
    * @throws SpotifyQueryException When requesting fields that you don’t have the user’s authorization to access
    * @return Current user's profile
    */
-  override fun execute() = gson.read<User>(query(queryEndpoint, accessToken).text)
+  override fun execute() = gson.read<User>(query(endpoint, accessToken).text)
 
   class Builder(private val accessToken: String) {
     fun build() = GetCurrentUserProfileQuery(accessToken)

@@ -10,7 +10,7 @@ class UnfollowPlaylistQuery private constructor(
   private val accessToken: String) : AbstractQuery<Boolean>("playlists", id, "followers") {
 
   override fun execute(): Boolean {
-    val response = delete(queryEndpoint, generateHeader(accessToken))
+    val response = delete(endpoint, generateHeader(accessToken))
     response.responseCheck()
 
     return response.statusCode == 200

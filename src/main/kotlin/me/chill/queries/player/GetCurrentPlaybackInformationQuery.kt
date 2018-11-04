@@ -12,7 +12,7 @@ class GetCurrentPlaybackInformationQuery private constructor(
   override fun execute(): CurrentlyPlayingContext? {
     val parameters = mapOf("market" to market)
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     response.text.takeIf { it.isEmpty() }?.let { return null }
 

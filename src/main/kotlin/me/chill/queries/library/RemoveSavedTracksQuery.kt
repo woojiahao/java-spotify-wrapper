@@ -14,7 +14,7 @@ class RemoveSavedTracksQuery private constructor(
 
   override fun execute(): Boolean {
     val parameters = mapOf("ids" to ids).generateParameters()
-    val response = delete(queryEndpoint, generateModificationHeader(accessToken), parameters)
+    val response = delete(endpoint, generateModificationHeader(accessToken), parameters)
     response.responseCheck()
 
     return response.statusCode == 200

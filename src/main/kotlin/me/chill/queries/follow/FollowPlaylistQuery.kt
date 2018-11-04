@@ -21,7 +21,7 @@ class FollowPlaylistQuery private constructor(
       .build()
       .generate()
 
-    val response = khttp.put(queryEndpoint, headers, data = body)
+    val response = khttp.put(endpoint, headers, data = body)
     response.responseCheck()
 
     return response.statusCode == 200

@@ -27,7 +27,7 @@ class AddTracksToPlaylistQuery private constructor(
       "position" to position
     ))
 
-    val response = post(queryEndpoint, generateModificationHeader(accessToken), data = body)
+    val response = post(endpoint, generateModificationHeader(accessToken), data = body)
     response.statusCode.takeIf { it == 403 }?.let { return Pair(false, null) }
     response.responseCheck()
 

@@ -17,7 +17,7 @@ class FollowUserOrArtistQuery private constructor(
       "ids" to ids
     )
 
-    val response = put(queryEndpoint, accessToken, parameters)
+    val response = put(endpoint, accessToken, parameters)
 
     return response.statusCode == 204
   }

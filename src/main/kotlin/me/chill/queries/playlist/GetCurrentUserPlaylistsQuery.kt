@@ -11,7 +11,7 @@ import me.chill.utility.request.query
 /**
  * Get a list of the playlists owned or followed by the current Spotify user
  */
-class GetCurrentUserPlaylists private constructor(
+class GetCurrentUserPlaylistsQuery private constructor(
   private val accessToken: String,
   private val limit: Int,
   private val offset: Int) : AbstractQuery<Paging<Playlist>>("me", "playlists") {
@@ -26,7 +26,7 @@ class GetCurrentUserPlaylists private constructor(
       "offset" to offset
     )
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.read(response.text)
   }
@@ -56,11 +56,11 @@ class GetCurrentUserPlaylists private constructor(
      * @throws SpotifyQueryException **offset** was not between 0 to 100,000
      * @return CreatePlaylistQuery to execute the following operation with set arguments
      */
-    fun build(): GetCurrentUserPlaylists {
+    fun build(): GetCurrentUserPlaylistsQuery {
       limit.checkLimit()
       offset.checkRange("Offset", 0, 100000)
 
-      return GetCurrentUserPlaylists(accessToken, limit, offset)
+      return GetCurrentUserPlaylistsQuery(accessToken, limit, offset)
     }
   }
 }

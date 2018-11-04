@@ -30,7 +30,7 @@ class ChangePlaylistDetailsQuery private constructor(
       "description" to description
     ))
 
-    val response = put(queryEndpoint, generateModificationHeader(accessToken), data = body)
+    val response = put(endpoint, generateModificationHeader(accessToken), data = body)
     response.responseCheck()
 
     return response.statusCode == 200

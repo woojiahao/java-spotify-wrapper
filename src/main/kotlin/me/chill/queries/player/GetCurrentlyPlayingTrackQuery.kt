@@ -11,7 +11,7 @@ class GetCurrentlyPlayingTrackQuery private constructor(
 
   override fun execute(): CurrentlyPlaying? {
     val parameters = mapOf("market" to market)
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     response.statusCode.takeIf { it == 204 }?.let { return null }
 

@@ -17,7 +17,7 @@ class TransferPlaybackQuery private constructor(
       "play" to play
     ).generateParameters()
 
-    val response = put(queryEndpoint, generateHeader(accessToken), parameters, "-")
+    val response = put(endpoint, generateHeader(accessToken), parameters, "-")
 
     response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
 

@@ -11,7 +11,7 @@ class CheckSavedAlbumsQuery private constructor(
   private val accessToken: String,
   private val ids: String) : AbstractQuery<Map<String, Boolean>>("me", "albums", "contains") {
 
-  override fun execute() = query(queryEndpoint, accessToken, mapOf("ids" to ids)).createCheckMap(ids)
+  override fun execute() = query(endpoint, accessToken, mapOf("ids" to ids)).createCheckMap(ids)
 
   class Builder(private val accessToken: String) {
     private val albums = mutableListOf<String>()

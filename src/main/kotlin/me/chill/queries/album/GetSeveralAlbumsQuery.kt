@@ -27,7 +27,7 @@ class GetSeveralAlbumsQuery private constructor(
       "market" to market
     )
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.readFromJsonArray("albums", response)
   }

@@ -21,7 +21,7 @@ class GetSavedTracksQuery private constructor(
       "market" to market
     )
 
-    val response = query(queryEndpoint, accessToken, parameters)
+    val response = query(endpoint, accessToken, parameters)
 
     return gson.fromJson<Paging<SavedTrack>>(response.text, Paging::class.java)
   }

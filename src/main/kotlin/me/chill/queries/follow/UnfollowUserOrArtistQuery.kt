@@ -19,7 +19,7 @@ class UnfollowUserOrArtistQuery private constructor(
       "ids" to ids
     ).generateParameters()
 
-    val response = delete(queryEndpoint, generateModificationHeader(accessToken), parameters)
+    val response = delete(endpoint, generateModificationHeader(accessToken), parameters)
     response.responseCheck()
 
     return response.statusCode == 204

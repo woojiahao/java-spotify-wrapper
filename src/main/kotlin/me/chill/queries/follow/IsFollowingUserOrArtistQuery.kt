@@ -18,7 +18,7 @@ class IsFollowingUserOrArtistQuery private constructor(
       "ids" to ids
     )
 
-    return query(queryEndpoint, accessToken, parameters).createCheckMap(ids)
+    return query(endpoint, accessToken, parameters).createCheckMap(ids)
   }
 
   class Builder(private val accessToken: String, private val userType: UserType) {
