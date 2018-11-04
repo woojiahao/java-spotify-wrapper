@@ -19,9 +19,6 @@ class GetUserProfileQuery private constructor(
 	override fun execute() = gson.read<User>(query(queryEndpoint, accessToken).text)
 
 	class Builder(private val accessToken: String, private val userId: String) {
-		/**
-		 * @return GetUserProfileQuery to execute the following operation
-		 */
 		fun build() = GetUserProfileQuery(accessToken, userId)
 	}
 }
