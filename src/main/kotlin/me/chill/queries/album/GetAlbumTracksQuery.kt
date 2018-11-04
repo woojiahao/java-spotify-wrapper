@@ -13,8 +13,8 @@ import me.chill.utility.request.query
  * Get Spotify catalog information about an album’s tracks
  */
 class GetAlbumTracksQuery private constructor(
-  private val id: String,
   private val accessToken: String,
+  private val id: String,
   private val limit: Int,
   private val offset: Int,
   private val market: String?) : AbstractQuery<Paging<Track>>("albums", id, "tracks") {
@@ -35,7 +35,7 @@ class GetAlbumTracksQuery private constructor(
     return gson.read(response.text)
   }
 
-  class Builder(private val id: String, private val accessToken: String) {
+  class Builder(private val accessToken: String, private val id: String) {
     private var limit = 20
     private var offset = 0
     private var market: CountryCode? = null
@@ -72,7 +72,7 @@ class GetAlbumTracksQuery private constructor(
       limit.checkLimit()
       offset.checkOffset()
 
-      return GetAlbumTracksQuery(id, accessToken, limit, offset, market?.alpha2)
+      return GetAlbumTracksQuery(accessToken, id, limit, offset, market?.alpha2)
     }
   }
 }

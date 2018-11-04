@@ -105,7 +105,7 @@ class SpotifyUser(
    * @param albumId ID of the album to retrieve
    * @see <a href="https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/">https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/</a>
    */
-  fun getAlbumTracks(albumId: String) = GetAlbumTracksQuery.Builder(albumId, accessToken)
+  fun getAlbumTracks(albumId: String) = GetAlbumTracksQuery.Builder(accessToken, albumId)
 
   /**
    * Get Spotify catalog information for multiple albums identified by their Spotify IDs
@@ -206,10 +206,7 @@ class SpotifyUser(
   fun transferPlayback(targetDeviceId: String) = TransferPlaybackQuery.Builder(accessToken, targetDeviceId)
 
   /**
-   * Adds a list of tracks to a given playlist.
-   *
-   * If the target playlist has 10,000 tracks already, a Pair(false, null) is returned, otherwise, a Pair(true, <snapshot_id>)
-   * is returned.
+   * Adds a list of tracks to a given playlist
    *
    * @see <a href="https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/">https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/</a>
    */

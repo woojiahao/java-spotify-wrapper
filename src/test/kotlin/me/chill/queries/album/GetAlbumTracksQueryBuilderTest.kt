@@ -1,19 +1,15 @@
 package me.chill.queries.album
 
 import me.chill.exceptions.SpotifyQueryException
+import me.chill.queries.checkQueryReturnedType
 import org.junit.Test
 import kotlin.test.BeforeTest
-import kotlin.test.assertEquals
 
 class GetAlbumTracksQueryBuilderTest {
   private var builder: GetAlbumTracksQuery.Builder? = null
 
-  private fun checkQuery(query: Any) {
-    assertEquals(GetAlbumTracksQuery::class, query::class)
-  }
-
   @BeforeTest fun setup() {
-    builder = GetAlbumTracksQuery.Builder("6akEvsycLGftJxYudPjmqK", "access_token")
+    builder = GetAlbumTracksQuery.Builder("access_token", "6akEvsycLGftJxYudPjmqK")
   }
 
   @Test(expected = SpotifyQueryException::class)
@@ -28,17 +24,17 @@ class GetAlbumTracksQueryBuilderTest {
 
   @Test fun setting_limit_within_range_returns_query() {
     val query = builder?.limit(10)?.build()!!
-    checkQuery(query)
+    checkQueryReturnedType<GetAlbumTracksQuery>(query)
   }
 
   @Test fun setting_limit_to_1_returns_query() {
     val query = builder?.limit(1)?.build()!!
-    checkQuery(query)
+    checkQueryReturnedType<GetAlbumTracksQuery>(query)
   }
 
   @Test fun setting_limit_to_50_returns_query() {
     val query = builder?.limit(50)?.build()!!
-    checkQuery(query)
+    checkQueryReturnedType<GetAlbumTracksQuery>(query)
   }
 
   @Test(expected = SpotifyQueryException::class)
@@ -48,6 +44,6 @@ class GetAlbumTracksQueryBuilderTest {
 
   @Test fun setting_offset_above_1_returns_query() {
     val query = builder?.offset(10)?.build()!!
-    checkQuery(query)
+    checkQueryReturnedType<GetAlbumTracksQuery>(query)
   }
 }
