@@ -11,7 +11,7 @@ data class Playlist(
 	val id: String,
 	val images: List<Image>,
 	val name: String,
-	val owner: PublicUser,
+	val owner: User,
 	val public: Boolean?,
 	val snapshotId: String,
 	val tracks: Paging<Track>,

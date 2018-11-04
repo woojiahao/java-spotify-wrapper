@@ -1,11 +1,9 @@
 package me.chill.queries.playlist
 
-import com.google.gson.JsonObject
 import me.chill.models.Paging
 import me.chill.models.Playlist
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
-import me.chill.utility.extensions.checkOffset
 import me.chill.utility.extensions.checkRange
 import me.chill.utility.extensions.read
 import me.chill.utility.request.query

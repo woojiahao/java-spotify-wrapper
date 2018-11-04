@@ -18,6 +18,7 @@ import me.chill.queries.playlist.ChangePlaylistDetailsQuery
 import me.chill.queries.playlist.CreatePlaylistQuery
 import me.chill.queries.playlist.GetCurrentUserPlaylists
 import me.chill.queries.profiles.GetCurrentUserProfileQuery
+import me.chill.queries.profiles.GetUserProfileQuery
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -230,4 +231,13 @@ class SpotifyUser(
 	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/users-profile/get-current-users-profile/>https://developer.spotify.com/documentation/web-api/reference/users-profile/get-current-users-profile/</a>
 	 */
 	fun getCurrentUserProfile() = GetCurrentUserProfileQuery.Builder(accessToken)
+
+	/**
+	 * Get public profile information about a Spotify user
+	 *
+	 * @param userId The user id of the target user
+	 * @return GetUserProfileQuery.Builder to tweak the properties of the query
+	 * @see <a href="https://developer.spotify.com/documentation/web-api/reference/users-profile/get-users-profile/">https://developer.spotify.com/documentation/web-api/reference/users-profile/get-users-profile/</a>
+	 */
+	fun getUserProfile(userId: String) = GetUserProfileQuery.Builder(accessToken, userId)
 }
