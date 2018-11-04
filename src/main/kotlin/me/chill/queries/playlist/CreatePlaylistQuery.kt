@@ -10,7 +10,7 @@ import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
 
 /**
- * Create an empty playlist for a Spotify user
+ * Create an empty playlist for the current Spotify user
  */
 class CreatePlaylistQuery private constructor(
 	private val accessToken: String,
@@ -23,7 +23,7 @@ class CreatePlaylistQuery private constructor(
 	 * @throws SpotifyQueryException If the target playlist is already public and the user attempts to set the playlist
 	 * to collaborative
 	 * @throws SpotifyQueryException If the user id supplied is not the user that authorized the application
-	 * @return Playlist of the newly created playlist
+	 * @return Newly created playlist
 	 */
 	override fun execute(): Playlist {
 		val body = gson.toJson(mapOf(
