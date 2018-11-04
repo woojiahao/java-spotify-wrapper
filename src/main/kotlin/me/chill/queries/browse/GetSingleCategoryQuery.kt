@@ -7,10 +7,10 @@ import me.chill.utility.request.query
 import java.util.*
 
 class GetSingleCategoryQuery private constructor(
-  private val id: String,
   private val accessToken: String,
+  private val categoryId: String,
   private val country: String?,
-  private val locale: String?) : AbstractQuery<Category>("browse", "categories", id) {
+  private val locale: String?) : AbstractQuery<Category>("browse", "categories", categoryId) {
 
   override fun execute(): Category {
     val parameters = mapOf(
@@ -23,7 +23,7 @@ class GetSingleCategoryQuery private constructor(
     return gson.fromJson(response.text, Category::class.java)
   }
 
-  class Builder(private val id: String, private val accessToken: String) {
+  class Builder(private val accessToken: String, private val categoryId: String) {
     private var country: CountryCode? = null
     private var locale: String? = null
 
@@ -37,6 +37,6 @@ class GetSingleCategoryQuery private constructor(
       return this
     }
 
-    fun build() = GetSingleCategoryQuery(id, accessToken, country?.alpha2, locale)
+    fun build() = GetSingleCategoryQuery(accessToken, categoryId, country?.alpha2, locale)
   }
 }

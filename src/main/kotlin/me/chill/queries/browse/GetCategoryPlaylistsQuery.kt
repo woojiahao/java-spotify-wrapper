@@ -10,11 +10,11 @@ import me.chill.utility.extensions.checkOffset
 import me.chill.utility.request.query
 
 class GetCategoryPlaylistsQuery private constructor(
-  private val id: String,
   private val accessToken: String,
+  private val categoryId: String,
   private val limit: Int,
   private val offset: Int,
-  private val country: String?) : AbstractQuery<Paging<Playlist>>("browse", "categories", id, "playlists") {
+  private val country: String?) : AbstractQuery<Paging<Playlist>>("browse", "categories", categoryId, "playlists") {
 
   override fun execute(): Paging<Playlist> {
     val parameters = mutableMapOf(
@@ -28,7 +28,7 @@ class GetCategoryPlaylistsQuery private constructor(
     return gson.fromJson<Paging<Playlist>>(gson.fromJson(response.text, JsonObject::class.java)["playlists"], Paging::class.java)
   }
 
-  class Builder(private val id: String, private val accessToken: String) {
+  class Builder(private val accessToken: String, private val categoryId: String) {
     private var country: CountryCode? = null
     private var limit = 20
     private var offset = 0
@@ -52,7 +52,7 @@ class GetCategoryPlaylistsQuery private constructor(
       limit.checkLimit()
       offset.checkOffset()
 
-      return GetCategoryPlaylistsQuery(id, accessToken, limit, offset, country?.alpha2)
+      return GetCategoryPlaylistsQuery(accessToken, categoryId, limit, offset, country?.alpha2)
     }
   }
 }

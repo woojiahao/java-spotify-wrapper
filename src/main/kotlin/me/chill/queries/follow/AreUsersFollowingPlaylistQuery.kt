@@ -8,13 +8,13 @@ import me.chill.utility.request.createCheckMap
 import me.chill.utility.request.query
 
 class AreUsersFollowingPlaylistQuery private constructor(
-  private val id: String,
   private val accessToken: String,
-  private val ids: String) : AbstractQuery<Map<String, Boolean>>("playlists", id, "followers", "contains") {
+  private val playlistId: String,
+  private val ids: String) : AbstractQuery<Map<String, Boolean>>("playlists", playlistId, "followers", "contains") {
 
   override fun execute() = query(endpoint, accessToken, mapOf("ids" to ids)).createCheckMap(ids)
 
-  class Builder(private val id: String, private val accessToken: String) {
+  class Builder(private val accessToken: String, private val playlistId: String) {
     private val users = mutableListOf<String>()
 
     fun addUser(user: String): Builder {
@@ -32,7 +32,7 @@ class AreUsersFollowingPlaylistQuery private constructor(
       users.checkEmpty("Users")
       users.checkListSizeLimit("Users", 5)
 
-      return AreUsersFollowingPlaylistQuery(id, accessToken, users.generateString())
+      return AreUsersFollowingPlaylistQuery(accessToken, playlistId, users.generateString())
     }
   }
 }

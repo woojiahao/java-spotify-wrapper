@@ -11,12 +11,12 @@ import me.chill.utility.request.query
 
 
 class GetArtistAlbumsQuery private constructor(
-  private val id: String,
   private val accessToken: String,
+  private val artistId: String,
   private val includeGroups: String,
   private val limit: Int,
   private val offset: Int,
-  private val market: String?) : AbstractQuery<Paging<Album>>("artists", id, "albums") {
+  private val market: String?) : AbstractQuery<Paging<Album>>("artists", artistId, "albums") {
 
   enum class ArtistAlbumIncludeGroup(val queryValue: String) {
     Album("album"), Single("single"), AppearsOn("appears_on"), Compilation("compilation")
@@ -35,7 +35,7 @@ class GetArtistAlbumsQuery private constructor(
     return gson.fromJson<Paging<Album>>(response.text, Paging::class.java)
   }
 
-  class Builder(private val id: String, private val accessToken: String) {
+  class Builder(private val accessToken: String, private val artistId: String) {
     private var includeGroups = mutableListOf<ArtistAlbumIncludeGroup>()
     private var market: CountryCode? = null
     private var limit = 20
@@ -75,7 +75,7 @@ class GetArtistAlbumsQuery private constructor(
       limit.checkLimit()
       offset.checkOffset()
 
-      return GetArtistAlbumsQuery(id, accessToken, includeGroupsString, limit, offset, market?.alpha2)
+      return GetArtistAlbumsQuery(accessToken, artistId, includeGroupsString, limit, offset, market?.alpha2)
     }
   }
 }

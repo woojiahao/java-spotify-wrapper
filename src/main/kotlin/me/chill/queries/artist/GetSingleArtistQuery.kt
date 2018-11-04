@@ -5,12 +5,12 @@ import me.chill.queries.AbstractQuery
 import me.chill.utility.request.query
 
 class GetSingleArtistQuery private constructor(
-  private val id: String,
-  private val accessToken: String) : AbstractQuery<Artist>("artists", id) {
+  private val accessToken: String,
+  private val artistId: String) : AbstractQuery<Artist>("artists", artistId) {
 
   override fun execute(): Artist = gson.fromJson(query(endpoint, accessToken).text, Artist::class.java)
 
-  class Builder(private val id: String, private val accessToken: String) {
-    fun build() = GetSingleArtistQuery(id, accessToken)
+  class Builder(private val accessToken: String, private val artistId: String) {
+    fun build() = GetSingleArtistQuery(accessToken, artistId)
   }
 }

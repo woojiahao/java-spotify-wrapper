@@ -8,9 +8,9 @@ import me.chill.utility.request.query
 import me.chill.utility.request.readFromJsonArray
 
 class GetArtistTopTracksQuery private constructor(
-  private val id: String,
   private val accessToken: String,
-  private val market: String) : AbstractQuery<List<Track>>("artists", id, "top-tracks") {
+  private val artistId: String,
+  private val market: String) : AbstractQuery<List<Track>>("artists", artistId, "top-tracks") {
 
   override fun execute(): List<Track> {
     val parameters = mapOf("market" to market)
@@ -20,7 +20,7 @@ class GetArtistTopTracksQuery private constructor(
     return gson.readFromJsonArray("tracks", response)
   }
 
-  class Builder(private val id: String, private val accessToken: String) {
+  class Builder(private val accessToken: String, private val artistId: String) {
     private var market: CountryCode? = null
 
     fun market(market: CountryCode): Builder {
@@ -31,7 +31,7 @@ class GetArtistTopTracksQuery private constructor(
     fun build(): GetArtistTopTracksQuery {
       market
         ?: throw SpotifyQueryException("You must specify the market in order to retrieve the artist's top tracks")
-      return GetArtistTopTracksQuery(id, accessToken, market!!.alpha2)
+      return GetArtistTopTracksQuery(accessToken, artistId, market!!.alpha2)
     }
   }
 }

@@ -6,8 +6,8 @@ import me.chill.utility.request.generateHeader
 import me.chill.utility.request.responseCheck
 
 class UnfollowPlaylistQuery private constructor(
-  private val id: String,
-  private val accessToken: String) : AbstractQuery<Boolean>("playlists", id, "followers") {
+  private val accessToken: String,
+  private val playlistId: String) : AbstractQuery<Boolean>("playlists", playlistId, "followers") {
 
   override fun execute(): Boolean {
     val response = delete(endpoint, generateHeader(accessToken))
@@ -16,7 +16,7 @@ class UnfollowPlaylistQuery private constructor(
     return response.statusCode == 200
   }
 
-  class Builder(private val playlistId: String, private val accessToken: String) {
-    fun build() = UnfollowPlaylistQuery(playlistId, accessToken)
+  class Builder(private val accessToken: String, private val playlistId: String) {
+    fun build() = UnfollowPlaylistQuery(accessToken, playlistId)
   }
 }

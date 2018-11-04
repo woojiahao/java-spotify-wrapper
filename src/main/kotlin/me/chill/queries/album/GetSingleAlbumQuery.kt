@@ -10,9 +10,9 @@ import me.chill.utility.request.query
  * Get Spotify catalog information for a single album
  */
 class GetSingleAlbumQuery private constructor(
-  private val id: String,
   private val accessToken: String,
-  private val market: String?) : AbstractQuery<Album>("albums", id) {
+  private val albumId: String,
+  private val market: String?) : AbstractQuery<Album>("albums", albumId) {
 
   /**
    * @throws SpotifyQueryException if an error occurred with the operation
@@ -26,7 +26,7 @@ class GetSingleAlbumQuery private constructor(
     return gson.read(response.text)
   }
 
-  class Builder(private val id: String, private val accessToken: String) {
+  class Builder(private val accessToken: String, private val albumId: String) {
     private var market: CountryCode? = null
 
     /**
@@ -37,6 +37,6 @@ class GetSingleAlbumQuery private constructor(
       return this
     }
 
-    fun build() = GetSingleAlbumQuery(id, accessToken, market?.alpha2)
+    fun build() = GetSingleAlbumQuery(accessToken, albumId, market?.alpha2)
   }
 }

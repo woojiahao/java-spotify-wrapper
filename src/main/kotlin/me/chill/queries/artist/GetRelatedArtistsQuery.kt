@@ -6,12 +6,12 @@ import me.chill.utility.request.query
 import me.chill.utility.request.readFromJsonArray
 
 class GetRelatedArtistsQuery private constructor(
-  private val id: String,
-  private val accessToken: String) : AbstractQuery<List<Artist>>("artists", id, "related-artists") {
+  private val accessToken: String,
+  private val artistId: String) : AbstractQuery<List<Artist>>("artists", artistId, "related-artists") {
 
   override fun execute() = gson.readFromJsonArray<Artist>("artists", query(endpoint, accessToken))
 
-  class Builder(private val id: String, private val accessToken: String) {
-    fun build() = GetRelatedArtistsQuery(id, accessToken)
+  class Builder(private val accessToken: String, private val artistId: String) {
+    fun build() = GetRelatedArtistsQuery(accessToken, artistId)
   }
 }

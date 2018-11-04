@@ -6,9 +6,9 @@ import me.chill.utility.request.Header
 import me.chill.utility.request.responseCheck
 
 class FollowPlaylistQuery private constructor(
-  private val id: String,
   private val accessToken: String,
-  private val public: Boolean) : AbstractQuery<Boolean>("playlists", id, "followers") {
+  private val playlistId: String,
+  private val public: Boolean) : AbstractQuery<Boolean>("playlists", playlistId, "followers") {
 
   override fun execute(): Boolean {
     val body = mapOf(
@@ -27,7 +27,7 @@ class FollowPlaylistQuery private constructor(
     return response.statusCode == 200
   }
 
-  class Builder(private val id: String, private val accessToken: String) {
+  class Builder(private val accessToken: String, private val playlistId: String) {
     private var public = true
 
     fun public(public: Boolean): Builder {
@@ -35,6 +35,6 @@ class FollowPlaylistQuery private constructor(
       return this
     }
 
-    fun build() = FollowPlaylistQuery(id, accessToken, public)
+    fun build() = FollowPlaylistQuery(accessToken, playlistId, public)
   }
 }
