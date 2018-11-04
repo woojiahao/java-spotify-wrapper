@@ -15,13 +15,7 @@ buildNumber.properties
 .idea/
 *.iml
 
-# Project specific files
-src/main/kotlin/me/chill/sandbox
-
 # VS Code related stuff
 .classpath
 .project
 .settings/
-
-# Temporary removals
-src/test/kotlin/me/chill/authentication
