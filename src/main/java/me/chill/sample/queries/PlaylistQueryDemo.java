@@ -1,5 +1,9 @@
 package me.chill.sample.queries;
 
+import me.chill.models.Image;
+
+import java.util.List;
+
 import static me.chill.sample.queries.UserStore.user;
 
 public class PlaylistQueryDemo {
@@ -24,9 +28,19 @@ public class PlaylistQueryDemo {
 //      return null;
 //    });
 
-    user.getUserPlaylists("Chill").limit(5).build().executeAsync(playlists -> {
-      System.out.println(playlists);
-      return null;
-    });
+    user
+      .getUserPlaylists("Chill")
+      .limit(5)
+      .build()
+      .executeAsync(playlists -> {
+        System.out.println(playlists);
+        return null;
+      });
+
+    List<Image> coverImages = user
+      .getPlaylistCoverImage("7Ga1gkkVHTTX5LJlTcGPKs")
+      .build()
+      .execute();
+    coverImages.forEach(System.out::println);
   }
 }

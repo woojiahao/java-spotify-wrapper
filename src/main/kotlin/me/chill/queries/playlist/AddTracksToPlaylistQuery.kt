@@ -6,6 +6,7 @@ import me.chill.utility.extensions.checkListSizeLimit
 import me.chill.utility.extensions.checkLower
 import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
+import me.chill.exceptions.SpotifyQueryException
 
 /**
  * Add one or more tracks to a user’s playlist

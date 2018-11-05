@@ -253,4 +253,6 @@ class SpotifyUser(
    * @see <a href="https://developer.spotify.com/documentation/web-api/reference/users-profile/get-users-profile/">https://developer.spotify.com/documentation/web-api/reference/users-profile/get-users-profile/</a>
    */
   fun getUserProfile(userId: String) = GetUserProfileQuery.Builder(accessToken, userId)
+
+  fun getPlaylistCoverImage(playlistId: String) = GetPlaylistCoverImageQuery.Builder(accessToken, playlistId)
 }
