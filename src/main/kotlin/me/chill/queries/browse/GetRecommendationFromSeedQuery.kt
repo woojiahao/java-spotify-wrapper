@@ -83,35 +83,17 @@ class GetRecommendationFromSeedQuery private constructor(
       return this
     }
 
-    fun addSeedArtist(seedArtist: String): Builder {
-      seedArtists.add(seedArtist)
-      return this
-    }
-
-    fun setSeedArtists(seedArtists: List<String>): Builder {
-      this.seedArtists.clear()
+    fun addSeedArtists(vararg seedArtists: String): Builder {
       this.seedArtists.addAll(seedArtists)
       return this
     }
 
-    fun addSeedGenre(seedGenre: String): Builder {
-      seedGenres.add(seedGenre)
-      return this
-    }
-
-    fun setSeedGenres(seedGenres: List<String>): Builder {
-      this.seedGenres.clear()
+    fun addSeedGenres(vararg seedGenres: String): Builder {
       this.seedGenres.addAll(seedGenres)
       return this
     }
 
-    fun addSeedTrack(seedTrack: String): Builder {
-      seedTracks.add(seedTrack)
-      return this
-    }
-
-    fun setSeedTracks(seedTracks: List<String>): Builder {
-      this.seedTracks.clear()
+    fun addSeedTracks(vararg seedTracks: String): Builder {
       this.seedTracks.addAll(seedTracks)
       return this
     }

@@ -14,13 +14,7 @@ class SaveAlbumsQuery private constructor(
   class Builder(private val accessToken: String) {
     private val albums = mutableListOf<String>()
 
-    fun addAlbum(album: String): Builder {
-      albums.add(album)
-      return this
-    }
-
-    fun setAlbums(albums: List<String>): Builder {
-      this.albums.clear()
+    fun addAlbums(vararg albums: String): Builder {
       this.albums.addAll(albums)
       return this
     }

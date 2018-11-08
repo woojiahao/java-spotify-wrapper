@@ -25,8 +25,8 @@ public class AlbumQueryDemo {
 
     List<Album> albums = user
       .getSeveralAlbums()
-      .addAlbum("41MnTivkwTO3UUJ8DrqEJJ")
-      .addAlbum("6JWc4iAiJ9FjyK0B59ABb4")
+      .addAlbums("41MnTivkwTO3UUJ8DrqEJJ")
+      .addAlbums("6JWc4iAiJ9FjyK0B59ABb4")
       .build()
       .execute();
     albums.forEach(a -> System.out.println(a.toString()));

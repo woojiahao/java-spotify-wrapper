@@ -50,18 +50,7 @@ class GetSeveralAlbumsQuery private constructor(
      *
      * @param album Album ID
      */
-    fun addAlbum(album: String): Builder {
-      albums.add(album)
-      return this
-    }
-
-    /**
-     * Clears any pre-existing album ids and re-populates the albums list with the input
-     *
-     * @param albums List of album IDs to be supplied
-     */
-    fun setAlbums(albums: List<String>): Builder {
-      this.albums.clear()
+    fun addAlbums(vararg albums: String): Builder {
       this.albums.addAll(albums)
       return this
     }

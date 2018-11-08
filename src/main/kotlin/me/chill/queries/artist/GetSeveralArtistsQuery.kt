@@ -17,13 +17,7 @@ class GetSeveralArtistsQuery private constructor(
   class Builder(private val accessToken: String) {
     private val artists = mutableListOf<String>()
 
-    fun addId(artist: String): Builder {
-      artists.add(artist)
-      return this
-    }
-
-    fun setIds(artists: List<String>): Builder {
-      this.artists.clear()
+    fun addArtists(vararg artists: String): Builder {
       this.artists.addAll(artists)
       return this
     }

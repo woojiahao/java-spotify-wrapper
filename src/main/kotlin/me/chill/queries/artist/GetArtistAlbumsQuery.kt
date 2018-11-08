@@ -56,14 +56,7 @@ class GetArtistAlbumsQuery private constructor(
       return this
     }
 
-    fun addIncludeGroup(includeGroup: ArtistAlbumIncludeGroup): Builder {
-      includeGroups.add(includeGroup)
-      return this
-    }
-
-    fun setIncludeGroup(includeGroups: List<ArtistAlbumIncludeGroup>): Builder {
-      if (includeGroups.isEmpty()) throw SpotifyQueryException("Include group cannot be empty")
-      this.includeGroups.clear()
+    fun addIncludeGroups(vararg includeGroups: ArtistAlbumIncludeGroup): Builder {
       this.includeGroups.addAll(includeGroups)
       return this
     }

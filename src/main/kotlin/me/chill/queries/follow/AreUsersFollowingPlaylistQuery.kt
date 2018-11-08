@@ -1,6 +1,7 @@
 package me.chill.queries.follow
 
 import me.chill.queries.AbstractQuery
+import me.chill.sample.queries.UserStore.user
 import me.chill.utility.extensions.checkEmpty
 import me.chill.utility.extensions.checkListSizeLimit
 import me.chill.utility.extensions.generateString
@@ -17,13 +18,7 @@ class AreUsersFollowingPlaylistQuery private constructor(
   class Builder(private val accessToken: String, private val playlistId: String) {
     private val users = mutableListOf<String>()
 
-    fun addUser(user: String): Builder {
-      users.add(user)
-      return this
-    }
-
-    fun setUsers(users: List<String>): Builder {
-      this.users.clear()
+    fun addUsers(vararg users: String): Builder {
       this.users.addAll(users)
       return this
     }

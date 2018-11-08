@@ -2,6 +2,7 @@ package me.chill.queries.follow
 
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
+import me.chill.sample.queries.UserStore.user
 import me.chill.utility.extensions.checkListSizeLimit
 import me.chill.utility.extensions.generateNullableString
 import me.chill.utility.request.put
@@ -31,13 +32,7 @@ class FollowUserOrArtistQuery private constructor(
       return this
     }
 
-    fun addUser(user: String): Builder {
-      users.add(user)
-      return this
-    }
-
-    fun setUsers(users: List<String>): Builder {
-      this.users.clear()
+    fun addUsers(vararg users: String): Builder {
       this.users.addAll(users)
       return this
     }

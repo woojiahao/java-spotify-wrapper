@@ -14,13 +14,7 @@ class SaveTracksQuery private constructor(
   class Builder(private val accessToken: String) {
     private val tracks = mutableListOf<String>()
 
-    fun addTrack(track: String): Builder {
-      tracks.add(track)
-      return this
-    }
-
-    fun setTracks(tracks: List<String>): Builder {
-      this.tracks.clear()
+    fun addTracks(vararg tracks: String): Builder {
       this.tracks.addAll(tracks)
       return this
     }

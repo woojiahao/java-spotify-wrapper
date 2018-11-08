@@ -12,8 +12,7 @@ public class FollowQueryDemo {
 
     Map<String, Boolean> isFollowingMap = user
       .isFollowingUserOrArtist(UserType.Artist)
-      .addId("74ASZWbe4lXaubB36ztrGX")
-      .addId("74ASZWbe4lXaubB36ztrGX")
+      .addIds("74ASZWbe4lXaubB36ztrGX", "74ASZWbe4lXaubB36ztrGX")
       .build()
       .execute();
     isFollowingMap.forEach((key, value) -> {
@@ -21,7 +20,7 @@ public class FollowQueryDemo {
     });
 
     Map<String, Boolean> areUserFollowing = user.areUsersFollowingPlaylist("2v3iNvBX8Ay1Gt2uXtUKUT")
-      .addUser("_woojiahao_,_woojiahao_")
+      .addUsers("_woojiahao_,_woojiahao_")
       .build()
       .execute();
     areUserFollowing.forEach((key, value) -> {

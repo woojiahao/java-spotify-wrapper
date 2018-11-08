@@ -28,13 +28,7 @@ class UnfollowUserOrArtistQuery private constructor(
   class Builder(private val accessToken: String, private val userType: UserType) {
     private val ids = mutableListOf<String>()
 
-    fun addId(id: String): Builder {
-      ids.add(id)
-      return this
-    }
-
-    fun setIds(ids: List<String>): Builder {
-      this.ids.clear()
+    fun addIds(vararg ids: String): Builder {
       this.ids.addAll(ids)
       return this
     }

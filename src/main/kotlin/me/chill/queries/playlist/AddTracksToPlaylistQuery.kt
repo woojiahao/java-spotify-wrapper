@@ -47,23 +47,11 @@ class AddTracksToPlaylistQuery private constructor(
       return this
     }
 
-    /**
-     * @param uri Track uri to be added to the playlist
-     */
-    fun addUri(uri: String): Builder {
-      uris.add(uri)
-      return this
-    }
-
-    /**
-     * @param uris List of track uris to be added, any pre-existing values in the playlist is cleared first
-     */
-    fun setUris(uris: List<String>): Builder {
-      this.uris.clear()
+    fun addUris(vararg uris: String): Builder {
       this.uris.addAll(uris)
       return this
     }
-
+    
     /**
      * @throws SpotifyQueryException if **position** is below 0
      * @throws SpotifyQueryException if there are more than 100 unique track uris
