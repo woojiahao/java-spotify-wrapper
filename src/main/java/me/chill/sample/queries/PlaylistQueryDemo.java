@@ -59,5 +59,9 @@ public class PlaylistQueryDemo {
       .addTrack("spotify:track:1301WleyT98MSxVHPZCA6M", 7)
       .build()
       .execute();
+
+    user.reorderPlaylist("7fi9kPiFY8xh8lbGUUhroi")
+      .build()
+      .execute();
   }
 }

@@ -3,11 +3,10 @@ package me.chill.queries.playlist
 import khttp.delete
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.generateParameters
 import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
 
-class RemoveTracksFromPlaylistQuery private constructor (
+class RemoveTracksFromPlaylistQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
   private val tracks: List<DeleteTrack>) : AbstractQuery<Boolean>("playlists", playlistId, "tracks") {
