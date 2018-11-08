@@ -1,10 +1,7 @@
 package me.chill.sample.queries;
 
-import me.chill.models.Image;
 import me.chill.models.Paging;
-import me.chill.models.Playlist;
-
-import java.util.List;
+import me.chill.models.PlaylistTrack;
 
 import static me.chill.sample.queries.UserStore.user;
 
@@ -30,23 +27,33 @@ public class PlaylistQueryDemo {
 //      return null;
 //    });
 
-    Paging<Playlist> userPlaylists = user
-      .getUserPlaylists("_woojiahao_")
-      .limit(5)
-      .build()
-      .execute();
-    System.out.println(userPlaylists);
+//    Paging<Playlist> userPlaylists = user
+//      .getUserPlaylists("_woojiahao_")
+//      .limit(5)
+//      .build()
+//      .execute();
+//    System.out.println(userPlaylists);
+//
+//    List<Image> coverImages = user
+//      .getPlaylistCoverImage("7Ga1gkkVHTTX5LJlTcGPKs")
+//      .build()
+//      .execute();
+//    coverImages.forEach(System.out::println);
+//
+//    Playlist playlist = user
+//      .getSinglePlaylist("37i9dQZF1DX7F6T2n2fegs")
+//      .build()
+//      .execute();
+//    System.out.println(playlist);
 
-    List<Image> coverImages = user
-      .getPlaylistCoverImage("7Ga1gkkVHTTX5LJlTcGPKs")
+    Paging<PlaylistTrack> tracks = user
+      .getPlaylistTracks("1VKXfRH6QHhJtmBb7R9cF2")
+      .limit(1)
       .build()
       .execute();
-    coverImages.forEach(System.out::println);
-
-    Playlist playlist = user
-      .getSinglePlaylist("37i9dQZF1DX7F6T2n2fegs")
-      .build()
-      .execute();
-    System.out.println(playlist);
+//    System.out.println(tracks);
+    System.out.println(tracks.getItems());
+//    tracks.getItems().forEach(System.out::println);
+//    System.out.println(tracks.getItems().get(0).getAddedBy().getDisplayName());
   }
 }

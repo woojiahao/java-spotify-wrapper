@@ -257,4 +257,6 @@ class SpotifyUser(
   fun getPlaylistCoverImage(playlistId: String) = GetPlaylistCoverImageQuery.Builder(accessToken, playlistId)
 
   fun getSinglePlaylist(playlistId: String) = GetSinglePlaylistQuery.Builder(accessToken, playlistId)
+
+  fun getPlaylistTracks(playlistId: String) = GetPlaylistTracksQuery.Builder(accessToken, playlistId)
 }
