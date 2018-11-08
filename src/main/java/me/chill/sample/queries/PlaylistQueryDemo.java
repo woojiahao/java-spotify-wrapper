@@ -1,6 +1,8 @@
 package me.chill.sample.queries;
 
 import me.chill.models.Image;
+import me.chill.models.Paging;
+import me.chill.models.Playlist;
 
 import java.util.List;
 
@@ -28,19 +30,23 @@ public class PlaylistQueryDemo {
 //      return null;
 //    });
 
-    user
-      .getUserPlaylists("Chill")
+    Paging<Playlist> userPlaylists = user
+      .getUserPlaylists("_woojiahao_")
       .limit(5)
       .build()
-      .executeAsync(playlists -> {
-        System.out.println(playlists);
-        return null;
-      });
+      .execute();
+    System.out.println(userPlaylists);
 
     List<Image> coverImages = user
       .getPlaylistCoverImage("7Ga1gkkVHTTX5LJlTcGPKs")
       .build()
       .execute();
     coverImages.forEach(System.out::println);
+
+    Playlist playlist = user
+      .getSinglePlaylist("37i9dQZF1DX7F6T2n2fegs")
+      .build()
+      .execute();
+    System.out.println(playlist);
   }
 }
