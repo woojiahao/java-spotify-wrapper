@@ -259,4 +259,6 @@ class SpotifyUser(
   fun getSinglePlaylist(playlistId: String) = GetSinglePlaylistQuery.Builder(accessToken, playlistId)
 
   fun getPlaylistTracks(playlistId: String) = GetPlaylistTracksQuery.Builder(accessToken, playlistId)
+
+  fun removeTracksFromPlaylist(playlistId: String) = RemoveTracksFromPlaylistQuery.Builder(accessToken, playlistId)
 }

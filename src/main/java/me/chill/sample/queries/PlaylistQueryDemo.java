@@ -1,7 +1,10 @@
 package me.chill.sample.queries;
 
 import me.chill.models.Paging;
+import me.chill.models.Playlist;
 import me.chill.models.PlaylistTrack;
+
+import java.util.Arrays;
 
 import static me.chill.sample.queries.UserStore.user;
 
@@ -46,14 +49,21 @@ public class PlaylistQueryDemo {
 //      .execute();
 //    System.out.println(playlist);
 
-    Paging<PlaylistTrack> tracks = user
-      .getPlaylistTracks("1VKXfRH6QHhJtmBb7R9cF2")
-      .limit(1)
-      .build()
-      .execute();
+//    Paging<PlaylistTrack> tracks = user
+//      .getPlaylistTracks("1VKXfRH6QHhJtmBb7R9cF2")
+//      .limit(1)
+//      .build()
+//      .execute();
 //    System.out.println(tracks);
-    System.out.println(tracks.getItems());
+//    System.out.println(tracks.getItems());
 //    tracks.getItems().forEach(System.out::println);
 //    System.out.println(tracks.getItems().get(0).getAddedBy().getDisplayName());
+
+    user
+      .removeTracksFromPlaylist("1VKXfRH6QHhJtmBb7R9cF2")
+      .addTrack("sdfsdf")
+      .addTrack("sfsfs", 10, 12)
+      .build()
+      .execute();
   }
 }
