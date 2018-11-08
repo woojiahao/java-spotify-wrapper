@@ -13,11 +13,16 @@ class RemoveTracksFromPlaylistQuery private constructor (
   private val tracks: List<DeleteTrack>) : AbstractQuery<Boolean>("playlists", playlistId, "tracks") {
 
   override fun execute(): Boolean {
-    val snapshotId = GetSinglePlaylistQuery.Builder(accessToken, playlistId).build().execute();
-    val body = mapOf(
-      "tracks" to gson.toJson(tracks),
+    val snapshotId = GetSinglePlaylistQuery.Builder(accessToken, playlistId).build().execute().snapshotId
+    tracks.map {
+      if (!it.uri.startsWith("spotify:track:")) {
+        it.uri = "spotify:track:${it.uri}"
+      }
+    }
+    val body = gson.toJson(mapOf(
+      "tracks" to tracks,
       "snapshot_id" to snapshotId
-    ).generateParameters()
+    ))
 
     val response = delete(endpoint, generateModificationHeader(accessToken), data = body)
     response.responseCheck()
@@ -26,7 +31,7 @@ class RemoveTracksFromPlaylistQuery private constructor (
   }
 
   private data class DeleteTrack(
-    val uri: String,
+    var uri: String,
     val positions: List<Int>? = null
   )
 

@@ -20,8 +20,8 @@ class AddTrackToPlaylistQueryBuilderTest {
 
   @Test(expected = SpotifyQueryException::class)
   fun uri_size_above_100_throws_exception() {
-    val mockedValues = generateUniqueUris(101)
-    builder?.setUris(mockedValues)?.build()
+    generateUniqueUris(101).forEach { builder?.addUris(it) }
+    builder?.build()
   }
 
   @Test fun positive_position_returns_query() {
@@ -30,7 +30,8 @@ class AddTrackToPlaylistQueryBuilderTest {
   }
 
   @Test fun uri_below_100_returns_query() {
-    val query = builder?.setUris(generateUniqueUris(50))?.build()!!
+    generateUniqueUris(50).forEach { builder?.addUris(it) }
+    val query = builder?.build()!!
     checkQueryReturnedType<AddTracksToPlaylistQuery>(query)
   }
 

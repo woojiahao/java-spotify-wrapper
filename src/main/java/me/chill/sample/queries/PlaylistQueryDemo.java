@@ -1,11 +1,5 @@
 package me.chill.sample.queries;
 
-import me.chill.models.Paging;
-import me.chill.models.Playlist;
-import me.chill.models.PlaylistTrack;
-
-import java.util.Arrays;
-
 import static me.chill.sample.queries.UserStore.user;
 
 public class PlaylistQueryDemo {
@@ -60,9 +54,9 @@ public class PlaylistQueryDemo {
 //    System.out.println(tracks.getItems().get(0).getAddedBy().getDisplayName());
 
     user
-      .removeTracksFromPlaylist("1VKXfRH6QHhJtmBb7R9cF2")
-      .addTrack("sdfsdf")
-      .addTrack("sfsfs", 10, 12)
+      .removeTracksFromPlaylist("7fi9kPiFY8xh8lbGUUhroi")
+      .addTrack("4iV5W9uYEdYUVa79Axb7Rh", 2)
+      .addTrack("spotify:track:1301WleyT98MSxVHPZCA6M", 7)
       .build()
       .execute();
   }
