@@ -6,12 +6,17 @@ import com.google.gson.GsonBuilder
 import kotlin.concurrent.thread
 
 /**
- * Represents a single query to an endpoint, consisting of a synchronous and asynchronous method of accessing the endpoints
+ * Query to an endpoint.
  *
- * @param pathSegments Path segments that make up the query endpoint, values are appended to the end of **https://api.spotify.com/v1{@literal /}**
- * @param <T> Return type of the execute methods
+ * **Inheritance rules:**
+ * - Override the **execute()** method with the behavior for calling the endpoint
+ * - Specify the endpoint path segment via the primary constructor
+ *
+ * @author Woo Jia Hao
+ * @param <T> Return type of the **execute()** method
+ * @param pathSegments Path segments of the query's endpoint url
  */
-// TODO: Fix the damn asynchronous calls, fix race cases
+// TODO: Fix the asynchronous calls to use a proper thread pool
 abstract class AbstractQuery<T>(private vararg val pathSegments: String) {
   protected val gson: Gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
@@ -19,6 +24,12 @@ abstract class AbstractQuery<T>(private vararg val pathSegments: String) {
 
   abstract fun execute(): T
 
+  /**
+   * Executes the query in a separate thread and when the query returns, executes the callback with the input as the
+   * result of the **execute()** method.
+   *
+   * @param callback Callback to perform when the query returns
+   */
   fun executeAsync(callback: (T) -> Unit) {
     thread { callback(execute()) }
   }
