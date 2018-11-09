@@ -7,7 +7,8 @@ import me.chill.utility.extensions.read
 import me.chill.utility.request.query
 
 /**
- * Get Spotify catalog information for a single album
+ * Gets Spotify catalog information for a single album.
+ * @see <a href="https://developer.spotify.com/documentation/web-api/reference/albums/get-album/">https://developer.spotify.com/documentation/web-api/reference/albums/get-album/</a>
  */
 class GetSingleAlbumQuery private constructor(
   private val accessToken: String,
@@ -15,8 +16,9 @@ class GetSingleAlbumQuery private constructor(
   private val market: String?) : AbstractQuery<Album>("albums", albumId) {
 
   /**
-   * @throws SpotifyQueryException if an error occurred with the operation
-   * @return Single album object
+   * Gets information about a single album.
+   * @throws SpotifyQueryException if the status code of the response is greater than 400
+   * @return Album queried
    */
   override fun execute(): Album {
     val parameters = mapOf("market" to market)
@@ -30,6 +32,7 @@ class GetSingleAlbumQuery private constructor(
     private var market: CountryCode? = null
 
     /**
+     * Sets the **market** parameter.
      * @param market CountryCode constant
      */
     fun market(market: CountryCode): Builder {

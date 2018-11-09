@@ -114,6 +114,20 @@
             </goals>
           </execution>
         </executions>
+
+        <configuration>
+          <samplesDirs>
+            <dir>src/main/java/sample</dir>
+          </samplesDirs>
+
+          <sourceLinks>
+            <link>
+              <dir>${project.basedir}/src/main/kotlin</dir>
+              <url>http://github.com/woojiahao/java-spotify-wrapper</url>
+              <urlSuffix>#L</urlSuffix>
+            </link>
+          </sourceLinks>
+        </configuration>
       </plugin>
 
       <plugin>

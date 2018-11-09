@@ -1,7 +1,10 @@
 package me.chill.authentication
 
 /**
- * Each constant represents a given scope that Spotify can request from the user to use
+ * Authorization scopes for the user to access different endpoints.
+ * @param scopeName Full name of the scope used for Spotify
+ * @author Woo Jia Hao
+ * @see <a href="https://developer.spotify.com/documentation/general/guides/scopes/">https://developer.spotify.com/documentation/general/guides/scopes/</a>
  */
 enum class SpotifyScope(val scopeName: String) {
   // Playack
