@@ -19,7 +19,8 @@ class Header private constructor(
     private var contentType: ContentType? = null
 
     enum class ContentType(val detail: String) {
-      Json("application/json");
+      Json("application/json"),
+      Image("image/jpeg")
     }
 
     fun accessToken(accessToken: String): Builder {

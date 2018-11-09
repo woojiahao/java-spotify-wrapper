@@ -239,6 +239,20 @@ class SpotifyUser(
    */
   fun getUserPlaylists(userId: String) = GetUserPlaylistsQuery.Builder(accessToken, userId)
 
+  fun getPlaylistCoverImage(playlistId: String) = GetPlaylistCoverImageQuery.Builder(accessToken, playlistId)
+
+  fun getSinglePlaylist(playlistId: String) = GetSinglePlaylistQuery.Builder(accessToken, playlistId)
+
+  fun getPlaylistTracks(playlistId: String) = GetPlaylistTracksQuery.Builder(accessToken, playlistId)
+
+  fun removeTracksFromPlaylist(playlistId: String) = RemoveTracksFromPlaylistQuery.Builder(accessToken, playlistId)
+
+  fun reorderPlaylistTracks(playlistId: String) = ReorderPlaylistTracksQuery.Builder(accessToken, playlistId)
+
+  fun replacePlaylistTracks(playlistId: String) = ReplacePlaylistTracksQuery.Builder(accessToken, playlistId)
+
+  fun uploadCustomPlaylistImage(playlistId: String) = UploadCustomPlaylistImageQuery.Builder(accessToken, playlistId)
+
   /**
    * Get detailed profile information about the current user
    *
@@ -253,16 +267,4 @@ class SpotifyUser(
    * @see <a href="https://developer.spotify.com/documentation/web-api/reference/users-profile/get-users-profile/">https://developer.spotify.com/documentation/web-api/reference/users-profile/get-users-profile/</a>
    */
   fun getUserProfile(userId: String) = GetUserProfileQuery.Builder(accessToken, userId)
-
-  fun getPlaylistCoverImage(playlistId: String) = GetPlaylistCoverImageQuery.Builder(accessToken, playlistId)
-
-  fun getSinglePlaylist(playlistId: String) = GetSinglePlaylistQuery.Builder(accessToken, playlistId)
-
-  fun getPlaylistTracks(playlistId: String) = GetPlaylistTracksQuery.Builder(accessToken, playlistId)
-
-  fun removeTracksFromPlaylist(playlistId: String) = RemoveTracksFromPlaylistQuery.Builder(accessToken, playlistId)
-
-  fun reorderPlaylistTracks(playlistId: String) = ReorderPlaylistTracksQuery.Builder(accessToken, playlistId)
-
-  fun replacePlaylistTracks(playlistId: String) = ReplacePlaylistTracksQuery.Builder(accessToken, playlistId)
 }

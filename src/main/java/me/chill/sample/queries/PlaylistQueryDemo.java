@@ -64,10 +64,21 @@ public class PlaylistQueryDemo {
 //      .build()
 //      .execute();
 
+//    user
+//      .replacePlaylistTracks("7fi9kPiFY8xh8lbGUUhroi")
+//      .addUris("0heVTeZw99vJl4QyJC0wyk")
+//      .build()
+//      .execute();
+
     user
-      .replacePlaylistTracks("7fi9kPiFY8xh8lbGUUhroi")
-      .addUris("0heVTeZw99vJl4QyJC0wyk")
+      .uploadCustomPlaylistImage("7Ga1gkkVHTTX5LJlTcGPKs")
+      .cover("C:\\Users\\Chill\\Pictures\\Wallpapers\\capra-demon-1920×1080.jpg")
       .build()
-      .execute();
+      .executeAsync(status -> {
+        System.out.println("Set");
+        System.out.println(status ? "Success" : "Failure");
+
+        return null;
+      });
   }
 }

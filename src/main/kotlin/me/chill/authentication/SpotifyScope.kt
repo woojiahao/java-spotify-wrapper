@@ -4,9 +4,9 @@ package me.chill.authentication
  * Each constant represents a given scope that Spotify can request from the user to use
  */
 enum class SpotifyScope(val scopeName: String) {
-  // Streaming
-  // TODO: Add the app-remote-control scope
+  // Playack
   Streaming("streaming"),
+  AppRemoteControl("app-remote-control"),
 
   // Follow
   FollowModify("user-follow-modify"),
@@ -34,5 +34,8 @@ enum class SpotifyScope(val scopeName: String) {
 
   // Listening History
   TopRead("user-top-read"),
-  RecentlyPlayedRead("user-read-recently-played")
+  RecentlyPlayedRead("user-read-recently-played"),
+
+  // Images
+  ImageUpload("ugc-image-upload")
 }
