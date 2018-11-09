@@ -53,14 +53,20 @@ public class PlaylistQueryDemo {
 //    tracks.getItems().forEach(System.out::println);
 //    System.out.println(tracks.getItems().get(0).getAddedBy().getDisplayName());
 
-    user
-      .removeTracksFromPlaylist("7fi9kPiFY8xh8lbGUUhroi")
-      .addTrack("4iV5W9uYEdYUVa79Axb7Rh", 2)
-      .addTrack("spotify:track:1301WleyT98MSxVHPZCA6M", 7)
-      .build()
-      .execute();
+//    user
+//      .removeTracksFromPlaylist("7fi9kPiFY8xh8lbGUUhroi")
+//      .addTrack("4iV5W9uYEdYUVa79Axb7Rh", 2)
+//      .addTrack("spotify:track:1301WleyT98MSxVHPZCA6M", 7)
+//      .build()
+//      .execute();
+//
+//    user.reorderPlaylistTracks("7fi9kPiFY8xh8lbGUUhroi")
+//      .build()
+//      .execute();
 
-    user.reorderPlaylist("7fi9kPiFY8xh8lbGUUhroi")
+    user
+      .replacePlaylistTracks("7fi9kPiFY8xh8lbGUUhroi")
+      .addUris("0heVTeZw99vJl4QyJC0wyk")
       .build()
       .execute();
   }

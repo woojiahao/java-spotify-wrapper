@@ -6,7 +6,7 @@ import me.chill.utility.extensions.checkLower
 import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
 
-class ReorderPlaylistQuery private constructor(
+class ReorderPlaylistTracksQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
   private val rangeStart: Int,
@@ -48,12 +48,12 @@ class ReorderPlaylistQuery private constructor(
       return this
     }
 
-    fun build(): ReorderPlaylistQuery {
+    fun build(): ReorderPlaylistTracksQuery {
       rangeStart.checkLower("Range Start")
       rangeLength.checkLower("Range Length")
       insertBefore.checkLower("Insert Before")
 
-      return ReorderPlaylistQuery(accessToken, playlistId, rangeStart, rangeLength, insertBefore)
+      return ReorderPlaylistTracksQuery(accessToken, playlistId, rangeStart, rangeLength, insertBefore)
     }
   }
 }

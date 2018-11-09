@@ -262,5 +262,7 @@ class SpotifyUser(
 
   fun removeTracksFromPlaylist(playlistId: String) = RemoveTracksFromPlaylistQuery.Builder(accessToken, playlistId)
 
-  fun reorderPlaylist(playlistId: String) = ReorderPlaylistQuery.Builder(accessToken, playlistId)
+  fun reorderPlaylistTracks(playlistId: String) = ReorderPlaylistTracksQuery.Builder(accessToken, playlistId)
+
+  fun replacePlaylistTracks(playlistId: String) = ReplacePlaylistTracksQuery.Builder(accessToken, playlistId)
 }

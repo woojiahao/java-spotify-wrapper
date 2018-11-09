@@ -3,6 +3,7 @@ package me.chill.queries.playlist
 import khttp.delete
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.conditionalMap
 import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
 
@@ -11,15 +12,18 @@ class RemoveTracksFromPlaylistQuery private constructor(
   private val playlistId: String,
   private val tracks: List<DeleteTrack>) : AbstractQuery<Boolean>("playlists", playlistId, "tracks") {
 
+  private data class DeleteTrack(
+    var uri: String,
+    val positions: List<Int>? = null
+  )
+
   override fun execute(): Boolean {
     val snapshotId = GetSinglePlaylistQuery.Builder(accessToken, playlistId).build().execute().snapshotId
-    tracks.map {
-      if (!it.uri.startsWith("spotify:track:")) {
-        it.uri = "spotify:track:${it.uri}"
-      }
+    val fixed = tracks.conditionalMap({ !it.uri.startsWith("spotify:track:") }) {
+      DeleteTrack("spotify:track:${it.uri}", it.positions)
     }
     val body = gson.toJson(mapOf(
-      "tracks" to tracks,
+      "tracks" to fixed,
       "snapshot_id" to snapshotId
     ))
 
@@ -28,11 +32,6 @@ class RemoveTracksFromPlaylistQuery private constructor(
 
     return response.statusCode == 200
   }
-
-  private data class DeleteTrack(
-    var uri: String,
-    val positions: List<Int>? = null
-  )
 
   class Builder(private val accessToken: String, private val playlistId: String) {
     private val tracks = mutableListOf<DeleteTrack>()
