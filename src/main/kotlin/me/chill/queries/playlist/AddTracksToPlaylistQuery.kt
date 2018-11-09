@@ -7,6 +7,7 @@ import me.chill.utility.extensions.checkLower
 import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
 import me.chill.exceptions.SpotifyQueryException
+import me.chill.utility.extensions.conditionalMap
 
 /**
  * Add one or more tracks to a user’s playlist
@@ -24,7 +25,7 @@ class AddTracksToPlaylistQuery private constructor(
    */
   override fun execute(): Pair<Boolean, String?> {
     val body = gson.toJson(mapOf(
-      "uris" to uris,
+      "uris" to uris.conditionalMap({ !it.startsWith("spotify:track:") }) { "spotify:track:$it" },
       "position" to position
     ))
 
