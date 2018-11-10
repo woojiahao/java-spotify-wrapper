@@ -16,6 +16,7 @@ import me.chill.utility.request.query
  * - **market** (Optional) - CountryCode of the market you wish to access the album from.
  *
  * @see <a href="https://developer.spotify.com/documentation/web-api/reference/albums/get-album/">Endpoint Documentation</a>
+ * @author Woo Jia Hao
  */
 class GetSingleAlbumQuery private constructor(
   private val accessToken: String,
@@ -24,7 +25,7 @@ class GetSingleAlbumQuery private constructor(
 
   /**
    * Gets information about a single album.
-   * @throws [SpotifyQueryException] if the status code of the response is greater than or equal to 400.
+   * @throws SpotifyQueryException [SpotifyQueryException] if the status code of the response is greater than or equal to 400.
    * @return [Album] queried.
    */
   override fun execute() = gson.read<Album>(query(endpoint, accessToken, mapOf("market" to market)).text)

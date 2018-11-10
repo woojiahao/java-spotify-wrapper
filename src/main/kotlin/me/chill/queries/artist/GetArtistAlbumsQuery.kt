@@ -1,12 +1,13 @@
 package me.chill.queries.artist
 
+import com.google.gson.reflect.TypeToken
 import com.neovisionaries.i18n.CountryCode
-import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Album
 import me.chill.models.Paging
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
+import me.chill.utility.extensions.read
 import me.chill.utility.request.query
 
 
@@ -30,9 +31,7 @@ class GetArtistAlbumsQuery private constructor(
       "market" to market
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson<Paging<Album>>(response.text, Paging::class.java)
+    return gson.read(query(endpoint, accessToken, parameters).text)
   }
 
   class Builder(private val accessToken: String, private val artistId: String) {

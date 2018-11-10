@@ -4,12 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class Paging<T>(
   @SerializedName("href") val fullResultUrl: String,
-  private val items: List<T>,
+  val items: List<T>,
   val limit: Int,
   val next: String,
   val offset: Int,
   val previous: String,
-  val total: Int) {
-
-  fun getItems() = items
-}
+  val total: Int
+)
