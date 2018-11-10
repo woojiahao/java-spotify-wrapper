@@ -14,14 +14,14 @@ public class AlbumQueryDemo {
       .getSingleAlbum("6akEvsycLGftJxYudPjmqK")
       .build()
       .execute();
-    System.out.println(album.toString());
+    System.out.println(album);
 
     Paging<Track> tracksInAlbum = user
       .getAlbumTracks("6akEvsycLGftJxYudPjmqK")
       .limit(30)
       .build()
       .execute();
-    System.out.println(tracksInAlbum.toString());
+    System.out.println(tracksInAlbum);
 
     List<Album> albums = user
       .getSeveralAlbums()
@@ -29,6 +29,6 @@ public class AlbumQueryDemo {
       .addAlbums("6JWc4iAiJ9FjyK0B59ABb4")
       .build()
       .execute();
-    albums.forEach(a -> System.out.println(a.toString()));
+    albums.forEach(System.out::println);
   }
 }

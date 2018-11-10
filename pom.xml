@@ -111,6 +111,7 @@
             <phase>pre-site</phase>
             <goals>
               <goal>dokka</goal>
+              <goal>javadoc</goal>
             </goals>
           </execution>
         </executions>

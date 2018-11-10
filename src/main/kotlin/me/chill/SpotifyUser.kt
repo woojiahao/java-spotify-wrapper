@@ -28,7 +28,7 @@ import me.chill.authentication.SpotifyScope
  *
  * **One-time User:**
  *
- * If no refresh token is needed, a SpotifyUser can be created from a one-time access token via the secondary constructor:
+ * If no refresh token is needed, a SpotifyUser can be created from a non-refreshing access token via the secondary constructor:
  *
  * ```
  * SpotifyUser user = new SpotifyUser("<access_token>");
@@ -47,11 +47,13 @@ import me.chill.authentication.SpotifyScope
  * Access token refreshing begins automatically once the user is created, auto-refreshing can be disabled using [disableTimer]
  * and re-enabled using [startTimer].
  *
- * @param clientId Client ID of the application
- * @param clientSecret Client secret of the application
- * @param accessToken Access token generated after the client authorizes the application
- * @param refreshToken Refresh token for the client's access token, only accessible via the [SpotifyAuthorizationFlow] authentication method
- * @param expiryDuration Expiry duration of the access token, only accessible via the [SpotifyAuthorizationFlow] authentication method
+ * @param clientId Client ID of the application.
+ * @param clientSecret Client secret of the application.
+ * @param accessToken Access token generated after the client authorizes the application.
+ * @param refreshToken Refresh token for the client's access token, only accessible via the [SpotifyAuthorizationFlow] authentication method.
+ * @param expiryDuration Expiry duration of the access token, only accessible via the [SpotifyAuthorizationFlow] authentication method.
+ * @constructor Creates an auto-refreshing SpotifyUser.
+ * @author Woo Jia Hao
  */
 class SpotifyUser(
   private val clientId: String,
@@ -62,6 +64,10 @@ class SpotifyUser(
 
   private val refreshTaskTimer = Timer()
 
+  /**
+   * @constructor Creates a non-refreshing SpotifyUser.
+   * @param accessToken Access token generated after the client authorizes the application.
+   */
   constructor(accessToken: String) : this("", null, accessToken, null, null)
 
   init {
@@ -81,6 +87,8 @@ class SpotifyUser(
   // TODO: When launching this method after disabling, an exception is thrown since the timer is cancelled, re-create a new timer and start that one instead
   /**
    * Starts the refresh timer, the access token will be refreshed in intervals specified by [expiryDuration] (in seconds).
+   *
+   * If an invalid refresh attempt is made, auto-refreshing is disabled.
    */
   fun startTimer() {
     refreshToken ?: throw SpotifyAuthenticationException("Unable to start timer when no refresh token is given")
@@ -133,10 +141,16 @@ class SpotifyUser(
   fun getExpiryDuration() = expiryDuration
 
   /**
-   * Get Spotify catalog information for a single album
+   * Get Spotify catalog information for a single album.
    *
-   * @param albumId ID of the album to retrieve
-   * @see <a href="https://developer.spotify.com/documentation/web-api/reference/albums/get-album/">https://developer.spotify.com/documentation/web-api/reference/albums/get-album/</a>
+   * This endpoint can be access anonymously.
+   *
+   * **Query Parameters:**
+   * - **market** (Optional) - CountryCode of the market you wish to access the album from.
+   *
+   * @param albumId ID of the album to retrieve.
+   * @see <a href="https://developer.spotify.com/documentation/web-api/reference/albums/get-album/">Endpoint Documentation</a>
+   * @return [GetSingleAlbumQuery.Builder] to execute the query.
    */
   fun getSingleAlbum(albumId: String) = GetSingleAlbumQuery.Builder(accessToken, albumId)
 

@@ -13,7 +13,6 @@ import kotlin.concurrent.thread
  * - Specify the endpoint path segment via the primary constructor
  *
  * @author Woo Jia Hao
- * @param <T> Return type of the **execute()** method
  * @param pathSegments Path segments of the query's endpoint url
  */
 // TODO: Fix the asynchronous calls to use a proper thread pool
