@@ -4,13 +4,9 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Recommendation
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.checkLimit
-import me.chill.utility.extensions.checkLower
-import me.chill.utility.extensions.checkRange
-import me.chill.utility.extensions.generateNullableString
+import me.chill.utility.extensions.*
 import me.chill.utility.request.query
 
-// TODO: Make an enumeration for the genre types
 class GetRecommendationFromSeedQuery private constructor(
   private val accessToken: String,
   private val limit: Int,
@@ -43,9 +39,7 @@ class GetRecommendationFromSeedQuery private constructor(
       parameters["target_$key"] = attribute.target
     }
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson(response.text, Recommendation::class.java)
+    return gson.read(query(endpoint, accessToken, parameters).text)
   }
 
   class Builder(private val accessToken: String) {
