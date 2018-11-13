@@ -12,5 +12,14 @@ public class TrackQueryDemo {
         System.out.println(analysis);
         return null;
       });
+
+    user
+      .getTrackAudioFeatures("2iUmqdfGZcHIhS3b9E9EWq")
+      .build()
+      .executeAsync(features -> {
+        System.out.println("Received features");
+        System.out.println(features);
+        return null;
+      });
   }
 }
