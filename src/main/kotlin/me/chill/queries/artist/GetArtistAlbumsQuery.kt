@@ -1,6 +1,5 @@
 package me.chill.queries.artist
 
-import com.google.gson.reflect.TypeToken
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Album
 import me.chill.models.Paging
@@ -35,7 +34,7 @@ class GetArtistAlbumsQuery private constructor(
   }
 
   class Builder(private val accessToken: String, private val artistId: String) {
-    private var includeGroups = mutableListOf<ArtistAlbumIncludeGroup>()
+    private var includeGroups = mutableSetOf<ArtistAlbumIncludeGroup>()
     private var market: CountryCode? = null
     private var limit = 20
     private var offset = 0
@@ -61,7 +60,9 @@ class GetArtistAlbumsQuery private constructor(
     }
 
     fun build(): GetArtistAlbumsQuery {
-      includeGroups.takeIf { it.isEmpty() }?.apply { addAll(ArtistAlbumIncludeGroup.values()) }
+      if (includeGroups.isEmpty()) {
+        includeGroups.addAll(ArtistAlbumIncludeGroup.values())
+      }
       val includeGroupsString = includeGroups.asSequence().distinct().joinToString(",") { it.queryValue }
 
       limit.checkLimit()

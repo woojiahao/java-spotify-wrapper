@@ -20,6 +20,21 @@ fun <T> List<T>.conditionalMap(
     else it
   }
 
+/**
+ * Only applies transform on elements of the list which satisfies the predicate
+ *
+ * @param predicate Predicate each element will be checked against
+ * @param transform Transform to be applied to each element satisfying the predicate
+ * @return List of strings
+ */
+fun <T> Set<T>.conditionalMap(
+  predicate: (T) -> Boolean,
+  transform: (T) -> T) =
+  map {
+    if (predicate(it)) transform(it)
+    else it
+  }
+
 // TODO: Add a check to find duplicates in the list and display warning messages
 // TODO: Write unit tests for these extension methods
 
@@ -63,9 +78,11 @@ fun <T> Set<T>.generateString() =
 fun <T> Set<T>.generateNullableString() =
   takeIf { it.isNotEmpty() }?.joinToString(",") { it.toString() }
 
-fun List<String>.generateNullableString() = trimList().takeIf { it.isNotEmpty() }?.joinToString(",")
+fun List<String>.generateNullableString() =
+  trimList().takeIf { it.isNotEmpty() }?.joinToString(",")
 
-fun List<String>.generateString() = trimList().joinToString(",")
+fun List<String>.generateString() =
+  trimList().joinToString(",")
 
 fun <T> List<T>.hasDuplicates() = size != distinct().size
 

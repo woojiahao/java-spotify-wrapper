@@ -11,9 +11,9 @@ class GetRecommendationFromSeedQuery private constructor(
   private val accessToken: String,
   private val limit: Int,
   private val attributes: Map<String, *>,
-  private val seedArtists: String?,
-  private val seedGenres: String?,
-  private val seedTracks: String?,
+  private val seedArtists: Set<String>,
+  private val seedGenres: Set<String>,
+  private val seedTracks: Set<String>,
   private val market: String?) : AbstractQuery<Recommendation>("recommendations") {
 
   enum class Flag { Max, Min, Target }
@@ -28,9 +28,9 @@ class GetRecommendationFromSeedQuery private constructor(
     val parameters = mutableMapOf(
       "limit" to limit,
       "market" to market,
-      "seed_artists" to seedArtists,
-      "seed_genres" to seedGenres,
-      "seed_tracks" to seedTracks
+      "seed_artists" to seedArtists.generateNullableString(),
+      "seed_genres" to seedGenres.generateNullableString(),
+      "seed_tracks" to seedTracks.generateNullableString()
     )
 
     attributes.forEach { key, attribute ->
@@ -63,9 +63,9 @@ class GetRecommendationFromSeedQuery private constructor(
       "valence" to Attribute<Double>()
     )
 
-    private val seedArtists = mutableListOf<String>()
-    private val seedGenres = mutableListOf<String>()
-    private val seedTracks = mutableListOf<String>()
+    private val seedArtists = mutableSetOf<String>()
+    private val seedGenres = mutableSetOf<String>()
+    private val seedTracks = mutableSetOf<String>()
 
     fun limit(limit: Int): Builder {
       this.limit = limit
@@ -78,17 +78,17 @@ class GetRecommendationFromSeedQuery private constructor(
     }
 
     fun addSeedArtists(vararg seedArtists: String): Builder {
-      this.seedArtists.addAll(seedArtists)
+      this.seedArtists.splitAndAdd(seedArtists)
       return this
     }
 
     fun addSeedGenres(vararg seedGenres: String): Builder {
-      this.seedGenres.addAll(seedGenres)
+      this.seedGenres.splitAndAdd(seedGenres)
       return this
     }
 
     fun addSeedTracks(vararg seedTracks: String): Builder {
-      this.seedTracks.addAll(seedTracks)
+      this.seedTracks.splitAndAdd(seedTracks)
       return this
     }
 
@@ -185,9 +185,9 @@ class GetRecommendationFromSeedQuery private constructor(
         accessToken,
         limit,
         attributes,
-        seedArtists.generateNullableString(),
-        seedGenres.generateNullableString(),
-        seedTracks.generateNullableString(),
+        seedArtists,
+        seedGenres,
+        seedTracks,
         market?.alpha2
       )
     }

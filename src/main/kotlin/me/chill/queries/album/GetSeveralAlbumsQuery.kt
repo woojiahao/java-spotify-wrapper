@@ -3,10 +3,7 @@ package me.chill.queries.album
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Album
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.checkEmpty
-import me.chill.utility.extensions.checkListSizeLimit
-import me.chill.utility.extensions.generateString
-import me.chill.utility.extensions.readFromJsonArray
+import me.chill.utility.extensions.*
 import me.chill.utility.request.query
 
 /**
@@ -14,7 +11,7 @@ import me.chill.utility.request.query
  */
 class GetSeveralAlbumsQuery private constructor(
   private val accessToken: String,
-  private val ids: String,
+  private val ids: Set<String>,
   private val market: String?) : AbstractQuery<List<Album?>>("albums") {
 
   /**
@@ -23,7 +20,7 @@ class GetSeveralAlbumsQuery private constructor(
    */
   override fun execute(): List<Album?> {
     val parameters = mapOf(
-      "ids" to ids,
+      "ids" to ids.generateString(),
       "market" to market
     )
 
@@ -34,7 +31,7 @@ class GetSeveralAlbumsQuery private constructor(
 
 
   class Builder(private val accessToken: String) {
-    private val albums = mutableListOf<String>()
+    private val albums = mutableSetOf<String>()
     private var market: String? = null
 
     /**
@@ -51,7 +48,7 @@ class GetSeveralAlbumsQuery private constructor(
      * @param album Album ID
      */
     fun addAlbums(vararg albums: String): Builder {
-      this.albums.addAll(albums)
+      this.albums.splitAndAdd(albums)
       return this
     }
 
@@ -60,10 +57,9 @@ class GetSeveralAlbumsQuery private constructor(
      * @throws SpotifyQueryException when the albums list exceeds 20 ids
      */
     fun build(): GetSeveralAlbumsQuery {
-      albums.checkEmpty("Albums")
-      albums.checkListSizeLimit("Albums")
+      albums.checkEmptyAndSizeLimit("Albums")
 
-      return GetSeveralAlbumsQuery(accessToken, albums.generateString(), market)
+      return GetSeveralAlbumsQuery(accessToken, albums, market)
     }
   }
 }

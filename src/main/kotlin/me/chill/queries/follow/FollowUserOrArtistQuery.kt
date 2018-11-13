@@ -4,18 +4,20 @@ import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
 import me.chill.sample.queries.UserStore.user
 import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.checkSizeLimit
 import me.chill.utility.extensions.generateNullableString
+import me.chill.utility.extensions.splitAndAdd
 import me.chill.utility.request.put
 
 class FollowUserOrArtistQuery private constructor(
   private val accessToken: String,
   private val userType: String,
-  private val ids: String?) : AbstractQuery<Boolean>("me", "following") {
+  private val ids: Set<String>) : AbstractQuery<Boolean>("me", "following") {
 
   override fun execute(): Boolean {
     val parameters = mapOf(
       "type" to userType,
-      "ids" to ids
+      "ids" to ids.generateNullableString()
     )
 
     val response = put(endpoint, accessToken, parameters)
@@ -23,9 +25,10 @@ class FollowUserOrArtistQuery private constructor(
     return response.statusCode == 204
   }
 
+  // TODO: Pass the user type as an argument to the builder
   class Builder(private val accessToken: String) {
     private var type: UserType? = null
-    private val users = mutableListOf<String>()
+    private val users = mutableSetOf<String>()
 
     fun type(type: UserType): Builder {
       this.type = type
@@ -33,16 +36,16 @@ class FollowUserOrArtistQuery private constructor(
     }
 
     fun addUsers(vararg users: String): Builder {
-      this.users.addAll(users)
+      this.users.splitAndAdd(users)
       return this
     }
 
     fun build(): FollowUserOrArtistQuery {
-      users.checkListSizeLimit("Users", 50)
+      users.checkSizeLimit("Users", 50)
 
       type ?: throw SpotifyQueryException("User Type must be specified")
 
-      return FollowUserOrArtistQuery(accessToken, type!!.name, users.generateNullableString())
+      return FollowUserOrArtistQuery(accessToken, type!!.name, users)
     }
   }
 }

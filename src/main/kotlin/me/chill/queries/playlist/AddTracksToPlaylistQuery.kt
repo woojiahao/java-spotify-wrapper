@@ -2,12 +2,10 @@ package me.chill.queries.playlist
 
 import khttp.post
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.checkListSizeLimit
-import me.chill.utility.extensions.checkLower
 import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
 import me.chill.exceptions.SpotifyQueryException
-import me.chill.utility.extensions.conditionalMap
+import me.chill.utility.extensions.*
 
 /**
  * Add one or more tracks to a user’s playlist
@@ -15,7 +13,7 @@ import me.chill.utility.extensions.conditionalMap
 class AddTracksToPlaylistQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
-  private val uris: List<String>,
+  private val uris: Set<String>,
   private val position: Int?) : AbstractQuery<Pair<Boolean, String?>>("playlists", playlistId, "tracks") {
 
   /**
@@ -37,7 +35,7 @@ class AddTracksToPlaylistQuery private constructor(
   }
 
   class Builder(private val accessToken: String, private val playlistId: String) {
-    private val uris = mutableListOf<String>()
+    private val uris = mutableSetOf<String>()
     private var position: Int? = null
 
     /**
@@ -49,7 +47,7 @@ class AddTracksToPlaylistQuery private constructor(
     }
 
     fun addUris(vararg uris: String): Builder {
-      this.uris.addAll(uris)
+      this.uris.splitAndAdd(uris)
       return this
     }
     
@@ -59,7 +57,7 @@ class AddTracksToPlaylistQuery private constructor(
      */
     fun build(): AddTracksToPlaylistQuery {
       position?.checkLower("Position")
-      uris.checkListSizeLimit("URI", 100)
+      uris.checkSizeLimit("URI", 100)
 
       return AddTracksToPlaylistQuery(accessToken, playlistId, uris, position)
     }

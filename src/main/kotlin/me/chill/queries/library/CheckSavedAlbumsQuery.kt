@@ -1,35 +1,31 @@
 package me.chill.queries.library
 
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.checkEmpty
-import me.chill.utility.extensions.checkListSizeLimit
-import me.chill.utility.extensions.createResponseMap
-import me.chill.utility.extensions.generateString
+import me.chill.utility.extensions.*
 import me.chill.utility.request.query
 
 class CheckSavedAlbumsQuery private constructor(
   private val accessToken: String,
-  private val ids: String) : AbstractQuery<Map<String, Boolean>>("me", "albums", "contains") {
+  private val ids: Set<String>) : AbstractQuery<Map<String, Boolean>>("me", "albums", "contains") {
 
   override fun execute(): Map<String, Boolean> =
     gson.createResponseMap(
-      ids.split(","),
-      query(endpoint, accessToken, mapOf("ids" to ids))
+      ids,
+      query(endpoint, accessToken, mapOf("ids" to ids.generateString()))
     )
 
   class Builder(private val accessToken: String) {
-    private val albums = mutableListOf<String>()
+    private val albums = mutableSetOf<String>()
 
     fun addAlbums(vararg albums: String): Builder {
-      this.albums.addAll(albums)
+      this.albums.splitAndAdd(albums)
       return this
     }
 
     fun build(): CheckSavedAlbumsQuery {
-      albums.checkEmpty("Albums")
-      albums.checkListSizeLimit("Albums", 50)
+      albums.checkEmptyAndSizeLimit("Albums", 50)
 
-      return CheckSavedAlbumsQuery(accessToken, albums.generateString())
+      return CheckSavedAlbumsQuery(accessToken, albums)
     }
   }
 }

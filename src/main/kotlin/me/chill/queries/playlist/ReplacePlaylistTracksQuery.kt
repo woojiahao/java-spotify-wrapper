@@ -3,14 +3,16 @@ package me.chill.queries.playlist
 import khttp.put
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.checkSizeLimit
 import me.chill.utility.extensions.conditionalMap
+import me.chill.utility.extensions.splitAndAdd
 import me.chill.utility.request.generateModificationHeader
 import me.chill.utility.request.responseCheck
 
 class ReplacePlaylistTracksQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
-  private val uris: List<String>) : AbstractQuery<Boolean>("playlists", playlistId, "tracks") {
+  private val uris: Set<String>) : AbstractQuery<Boolean>("playlists", playlistId, "tracks") {
 
   override fun execute(): Boolean {
     val fixed = uris.conditionalMap({ !it.startsWith("spotify:track:") }) {
@@ -25,15 +27,15 @@ class ReplacePlaylistTracksQuery private constructor(
   }
 
   class Builder(private val accessToken: String, private val playlistId: String) {
-    private val uris = mutableListOf<String>()
+    private val uris = mutableSetOf<String>()
 
     fun addUris(vararg uris: String): Builder {
-      this.uris.addAll(uris)
+      this.uris.splitAndAdd(uris)
       return this
     }
 
     fun build(): ReplacePlaylistTracksQuery {
-      uris.checkListSizeLimit("Uri", 100)
+      uris.checkSizeLimit("Uri", 100)
 
       return ReplacePlaylistTracksQuery(accessToken, playlistId, uris)
     }
