@@ -2,17 +2,20 @@ package me.chill.queries.track
 
 import me.chill.models.AudioFeatures
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.*
+import me.chill.utility.extensions.checkEmptyAndSizeLimit
+import me.chill.utility.extensions.createResponseMap
+import me.chill.utility.extensions.generateString
+import me.chill.utility.extensions.splitAndAdd
 import me.chill.utility.request.query
 
 class GetSeveralTracksAudioFeaturesQuery private constructor(
   private val accessToken: String,
-  private val tracks: String) : AbstractQuery<Map<String, AudioFeatures>>("audio-features") {
+  private val tracks: Set<String>) : AbstractQuery<Map<String, AudioFeatures>>("audio-features") {
 
   override fun execute(): Map<String, AudioFeatures> =
     gson.createResponseMap(
-      tracks.split(","),
-      query(endpoint, accessToken, mapOf("ids" to tracks)),
+      tracks,
+      query(endpoint, accessToken, mapOf("ids" to tracks.generateString())),
       "audio_features"
     )
 
@@ -25,10 +28,9 @@ class GetSeveralTracksAudioFeaturesQuery private constructor(
     }
 
     fun build(): GetSeveralTracksAudioFeaturesQuery {
-      tracks.checkEmpty("Tracks")
-      tracks.checkSizeLimit("Tracks", 100)
+      tracks.checkEmptyAndSizeLimit("Tracks", 100)
 
-      return GetSeveralTracksAudioFeaturesQuery(accessToken, tracks.generateString())
+      return GetSeveralTracksAudioFeaturesQuery(accessToken, tracks)
     }
   }
 }

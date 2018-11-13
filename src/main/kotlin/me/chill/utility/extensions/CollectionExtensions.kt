@@ -45,11 +45,16 @@ fun MutableSet<String>.splitAndAdd(data: Array<out String>, pipes: String = ",")
 }
 
 fun <T> Set<T>.checkEmpty(setName: String) {
-  check(isEmpty()) { "$setName cannot be empty" }
+  check(!isEmpty()) { "$setName cannot be empty" }
 }
 
 fun <T> Set<T>.checkSizeLimit(setName: String, limit: Int = 20) {
-  check(size > limit) { "$setName cannot contain more than $limit entries" }
+  check(size <= limit) { "$setName cannot contain more than $limit entries" }
+}
+
+fun <T> Set<T>.checkEmptyAndSizeLimit(setName: String, limit: Int = 20) {
+  checkEmpty(setName)
+  checkSizeLimit(setName, limit)
 }
 
 fun <T> Set<T>.generateString() =
@@ -63,3 +68,5 @@ fun List<String>.generateNullableString() = trimList().takeIf { it.isNotEmpty() 
 fun List<String>.generateString() = trimList().joinToString(",")
 
 fun <T> List<T>.hasDuplicates() = size != distinct().size
+
+fun <T> Set<T>.hasDuplicates() = size != distinct().size
