@@ -29,6 +29,7 @@ abstract class AbstractQuery<T>(private vararg val pathSegments: String) {
    *
    * @param callback Callback to perform when the query returns
    */
+  // TODO: Make this return status code + actual data to return (?)
   fun executeAsync(callback: (T) -> Unit) {
     thread { callback(execute()) }
   }

@@ -20,6 +20,7 @@ import java.util.*
 import kotlin.concurrent.timerTask
 import me.chill.authentication.SpotifyAuthorizationFlow
 import me.chill.authentication.SpotifyScope
+import me.chill.queries.track.GetTrackAudioAnalysisQuery
 
 // TODO: Handle caching with e-tags
 // TODO: Create an observer system for whenever the access token gets refreshed
@@ -310,6 +311,8 @@ class SpotifyUser(
   fun replacePlaylistTracks(playlistId: String) = ReplacePlaylistTracksQuery.Builder(accessToken, playlistId)
 
   fun uploadCustomPlaylistImage(playlistId: String) = UploadCustomPlaylistImageQuery.Builder(accessToken, playlistId)
+
+  fun getTrackAudioAnalysis(trackId: String) = GetTrackAudioAnalysisQuery.Builder(accessToken, trackId)
 
   /**
    * Get detailed profile information about the current user
