@@ -1,6 +1,9 @@
 package me.chill.utility.request
 
-import com.google.gson.*
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import khttp.get
 import khttp.responses.Response
 import me.chill.exceptions.SpotifyQueryException
@@ -15,14 +18,6 @@ fun generateHeader(accessToken: String) = Header.Builder().accessToken(accessTok
 
 fun generateModificationHeader(accessToken: String) =
   Header.Builder().accessToken(accessToken).contentType(Header.Builder.ContentType.Json).build().generate()
-
-fun Response.createCheckMap(ids: String) =
-  ids.split(",").zip(gson.fromJson(text, JsonArray::class.java).map { it.asBoolean }).toMap()
-
-inline fun <reified T> Gson.readFromJsonArray(arrayName: String, response: Response) =
-  fromJson(response.text, JsonObject::class.java)
-    .getAsJsonArray(arrayName)
-    .map { fromJson(it, T::class.java) }
 
 fun Response.responseCheck() {
   text.takeIf { it.isBlank() }?.let { return }

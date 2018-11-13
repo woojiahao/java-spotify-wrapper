@@ -2,8 +2,8 @@ package me.chill.queries.artist
 
 import me.chill.models.Artist
 import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.readFromJsonArray
 import me.chill.utility.request.query
-import me.chill.utility.request.readFromJsonArray
 
 class GetRelatedArtistsQuery private constructor(
   private val accessToken: String,

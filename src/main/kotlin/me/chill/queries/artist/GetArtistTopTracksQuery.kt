@@ -4,8 +4,8 @@ import com.neovisionaries.i18n.CountryCode
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Track
 import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.readFromJsonArray
 import me.chill.utility.request.query
-import me.chill.utility.request.readFromJsonArray
 
 class GetArtistTopTracksQuery private constructor(
   private val accessToken: String,

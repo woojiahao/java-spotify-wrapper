@@ -3,8 +3,8 @@ package me.chill.queries.follow
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkEmpty
 import me.chill.utility.extensions.checkListSizeLimit
+import me.chill.utility.extensions.createResponseMap
 import me.chill.utility.extensions.generateString
-import me.chill.utility.request.createCheckMap
 import me.chill.utility.request.query
 
 class IsFollowingUserOrArtistQuery private constructor(
@@ -18,7 +18,7 @@ class IsFollowingUserOrArtistQuery private constructor(
       "ids" to ids
     )
 
-    return query(endpoint, accessToken, parameters).createCheckMap(ids)
+    return gson.createResponseMap(ids.split(","), query(endpoint, accessToken, parameters))
   }
 
   class Builder(private val accessToken: String, private val userType: UserType) {

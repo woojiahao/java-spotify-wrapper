@@ -20,8 +20,9 @@ import java.util.*
 import kotlin.concurrent.timerTask
 import me.chill.authentication.SpotifyAuthorizationFlow
 import me.chill.authentication.SpotifyScope
+import me.chill.queries.track.GetSeveralTracksAudioFeaturesQuery
 import me.chill.queries.track.GetTrackAudioAnalysisQuery
-import me.chill.queries.track.GetTrackAudioFeaturesQuery
+import me.chill.queries.track.GetSingleTrackAudioFeaturesQuery
 
 // TODO: Handle caching with e-tags
 // TODO: Create an observer system for whenever the access token gets refreshed
@@ -315,7 +316,9 @@ class SpotifyUser(
 
   fun getTrackAudioAnalysis(trackId: String) = GetTrackAudioAnalysisQuery.Builder(accessToken, trackId)
 
-  fun getTrackAudioFeatures(trackId: String) = GetTrackAudioFeaturesQuery.Builder(accessToken, trackId)
+  fun getSingleTrackAudioFeatures(trackId: String) = GetSingleTrackAudioFeaturesQuery.Builder(accessToken, trackId)
+
+  fun getSeveralTracksAudioFeatures() = GetSeveralTracksAudioFeaturesQuery.Builder(accessToken)
 
   /**
    * Get detailed profile information about the current user

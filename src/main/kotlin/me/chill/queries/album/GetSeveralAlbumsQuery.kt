@@ -6,8 +6,8 @@ import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkEmpty
 import me.chill.utility.extensions.checkListSizeLimit
 import me.chill.utility.extensions.generateString
+import me.chill.utility.extensions.readFromJsonArray
 import me.chill.utility.request.query
-import me.chill.utility.request.readFromJsonArray
 
 /**
  * Get Spotify catalog information for multiple albums identified by their Spotify IDs

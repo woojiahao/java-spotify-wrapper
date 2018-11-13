@@ -5,8 +5,8 @@ import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkEmpty
 import me.chill.utility.extensions.checkListSizeLimit
 import me.chill.utility.extensions.generateString
+import me.chill.utility.extensions.readFromJsonArray
 import me.chill.utility.request.query
-import me.chill.utility.request.readFromJsonArray
 
 class GetSeveralArtistsQuery private constructor(
   private val accessToken: String,
