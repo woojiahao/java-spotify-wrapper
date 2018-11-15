@@ -15,7 +15,7 @@ class TransferPlaybackQuery private constructor(
       "play" to play
     )
 
-    val response = checkedQuery(parameters, "-") { it.responseCheck(403) }
+    val response = checkedQuery(parameters, isModification = true) { it.responseCheck(403) }
 
     return response.statusCode == 204
   }

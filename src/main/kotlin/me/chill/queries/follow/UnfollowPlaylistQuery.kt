@@ -8,7 +8,7 @@ class UnfollowPlaylistQuery private constructor(
   private val playlistId: String) : AbstractQuery<Boolean>(accessToken, RequestMethod.Delete, "playlists", playlistId, "followers") {
 
   override fun execute() =
-    checkedQuery(isModification = true).statusCode == 200
+    checkedQuery().statusCode == 200
 
   class Builder(private val accessToken: String, private val playlistId: String) {
     fun build() = UnfollowPlaylistQuery(accessToken, playlistId)
