@@ -7,7 +7,7 @@ import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
 import me.chill.utility.extensions.read
-import me.chill.utility.request.query
+import me.chill.utility.request.RequestMethod
 
 /**
  * Get Spotify catalog information about an album’s tracks
@@ -17,7 +17,7 @@ class GetAlbumTracksQuery private constructor(
   private val id: String,
   private val limit: Int,
   private val offset: Int,
-  private val market: String?) : AbstractQuery<Paging<Track>>("albums", id, "tracks") {
+  private val market: String?) : AbstractQuery<Paging<Track>>(accessToken, RequestMethod.Get, "albums", id, "tracks") {
 
   /**
    * @throws SpotifyQueryException if an error occurred with the operation
@@ -30,9 +30,7 @@ class GetAlbumTracksQuery private constructor(
       "market" to market
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.read(response.text)
+    return gson.read(checkedQuery(parameters).text)
   }
 
   class Builder(private val accessToken: String, private val id: String) {

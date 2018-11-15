@@ -5,7 +5,7 @@ import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Album
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.read
-import me.chill.utility.request.query
+import me.chill.utility.request.RequestMethod
 
 /**
  * Get Spotify catalog information for a single album.
@@ -21,14 +21,15 @@ import me.chill.utility.request.query
 class GetSingleAlbumQuery private constructor(
   private val accessToken: String,
   private val albumId: String,
-  private val market: String?) : AbstractQuery<Album>("albums", albumId) {
+  private val market: String?) : AbstractQuery<Album>(accessToken, RequestMethod.Get, "albums", albumId) {
 
   /**
    * Gets information about a single album.
    * @throws SpotifyQueryException [SpotifyQueryException] if the status code of the response is greater than or equal to 400.
    * @return [Album] queried.
    */
-  override fun execute() = gson.read<Album>(query(endpoint, accessToken, mapOf("market" to market)).text)
+  override fun execute(): Album =
+    gson.read(checkedQuery(mapOf("market" to market)).text)
 
   /**
    * Builder for [GetSingleAlbumQuery].

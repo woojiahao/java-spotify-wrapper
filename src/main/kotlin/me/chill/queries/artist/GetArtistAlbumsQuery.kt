@@ -7,7 +7,7 @@ import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
 import me.chill.utility.extensions.read
-import me.chill.utility.request.query
+import me.chill.utility.request.RequestMethod
 
 
 class GetArtistAlbumsQuery private constructor(
@@ -16,7 +16,7 @@ class GetArtistAlbumsQuery private constructor(
   private val includeGroups: String,
   private val limit: Int,
   private val offset: Int,
-  private val market: String?) : AbstractQuery<Paging<Album>>("artists", artistId, "albums") {
+  private val market: String?) : AbstractQuery<Paging<Album>>(accessToken, RequestMethod.Get, "artists", artistId, "albums") {
 
   enum class ArtistAlbumIncludeGroup(val queryValue: String) {
     Album("album"), Single("single"), AppearsOn("appears_on"), Compilation("compilation")
@@ -30,7 +30,7 @@ class GetArtistAlbumsQuery private constructor(
       "market" to market
     )
 
-    return gson.read(query(endpoint, accessToken, parameters).text)
+    return gson.read(checkedQuery(parameters).text)
   }
 
   class Builder(private val accessToken: String, private val artistId: String) {

@@ -3,8 +3,11 @@ package me.chill.queries.album
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Album
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.*
-import me.chill.utility.request.query
+import me.chill.utility.extensions.checkEmptyAndSizeLimit
+import me.chill.utility.extensions.generateString
+import me.chill.utility.extensions.readFromJsonArray
+import me.chill.utility.extensions.splitAndAdd
+import me.chill.utility.request.RequestMethod
 
 /**
  * Get Spotify catalog information for multiple albums identified by their Spotify IDs
@@ -12,7 +15,7 @@ import me.chill.utility.request.query
 class GetSeveralAlbumsQuery private constructor(
   private val accessToken: String,
   private val ids: Set<String>,
-  private val market: String?) : AbstractQuery<List<Album?>>("albums") {
+  private val market: String?) : AbstractQuery<List<Album?>>(accessToken, RequestMethod.Get, "albums") {
 
   /**
    * @throws SpotifyQueryException if an error with the operation occurs
@@ -24,9 +27,7 @@ class GetSeveralAlbumsQuery private constructor(
       "market" to market
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.readFromJsonArray("albums", response)
+    return gson.readFromJsonArray("albums", checkedQuery(parameters))
   }
 
 
