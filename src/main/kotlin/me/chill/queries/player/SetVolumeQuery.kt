@@ -1,26 +1,22 @@
 package me.chill.queries.player
 
-import khttp.put
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
-import me.chill.utility.extensions.generateParameters
-import me.chill.utility.request.displayErrorMessage
-import me.chill.utility.request.generateHeader
+import me.chill.utility.request.RequestMethod
+import me.chill.utility.request.responseCheck
 
 class SetVolumeQuery private constructor(
   private val accessToken: String,
   private val volumePercentage: Int,
-  private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "volume") {
+  private val deviceId: String?) : AbstractQuery<Boolean>(accessToken, RequestMethod.Put, "me", "player", "volume") {
 
   override fun execute(): Boolean {
     val parameters = mapOf(
       "volume_percent" to volumePercentage,
       "device_id" to deviceId
-    ).generateParameters()
+    )
 
-    val response = put(endpoint, generateHeader(accessToken), parameters, "-")
-
-    response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
+    val response = checkedQuery(parameters, "-") { it.responseCheck(403) }
 
     return response.statusCode == 204
   }

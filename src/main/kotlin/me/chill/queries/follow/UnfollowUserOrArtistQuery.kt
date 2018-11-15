@@ -1,26 +1,23 @@
 package me.chill.queries.follow
 
-import khttp.delete
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.*
-import me.chill.utility.request.generateModificationHeader
-import me.chill.utility.request.responseCheck
+import me.chill.utility.extensions.checkSizeLimit
+import me.chill.utility.extensions.generateNullableString
+import me.chill.utility.extensions.splitAndAdd
+import me.chill.utility.request.RequestMethod
 
 class UnfollowUserOrArtistQuery private constructor(
   private val accessToken: String,
   private val type: String,
-  private val ids: Set<String>) : AbstractQuery<Boolean>("me", "following") {
+  private val ids: Set<String>) : AbstractQuery<Boolean>(accessToken, RequestMethod.Delete, "me", "following") {
 
   override fun execute(): Boolean {
     val parameters = mapOf(
       "type" to type,
       "ids" to ids.generateNullableString()
-    ).generateParameters()
+    )
 
-    val response = delete(endpoint, generateModificationHeader(accessToken), parameters)
-    response.responseCheck()
-
-    return response.statusCode == 204
+    return checkedQuery(parameters, isModification = true).statusCode == 204
   }
 
   class Builder(private val accessToken: String, private val userType: UserType) {

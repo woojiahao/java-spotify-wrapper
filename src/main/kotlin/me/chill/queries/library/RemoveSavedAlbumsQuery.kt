@@ -1,22 +1,17 @@
 package me.chill.queries.library
 
-import khttp.delete
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.*
-import me.chill.utility.request.generateModificationHeader
-import me.chill.utility.request.responseCheck
+import me.chill.utility.extensions.checkSizeLimit
+import me.chill.utility.extensions.generateNullableString
+import me.chill.utility.extensions.splitAndAdd
+import me.chill.utility.request.RequestMethod
 
 class RemoveSavedAlbumsQuery private constructor(
   private val accessToken: String,
-  private val ids: Set<String>) : AbstractQuery<Boolean>("me", "albums") {
+  private val ids: Set<String>) : AbstractQuery<Boolean>(accessToken, RequestMethod.Delete, "me", "albums") {
 
-  override fun execute(): Boolean {
-    val parameters = mapOf("ids" to ids.generateNullableString()).generateParameters()
-    val response = delete(endpoint, generateModificationHeader(accessToken), parameters)
-    response.responseCheck()
-
-    return response.statusCode == 200
-  }
+  override fun execute() =
+    checkedQuery(mapOf("ids" to ids.generateNullableString()), isModification = true).statusCode == 200
 
   class Builder(private val accessToken: String) {
     private val albums = mutableSetOf<String>()

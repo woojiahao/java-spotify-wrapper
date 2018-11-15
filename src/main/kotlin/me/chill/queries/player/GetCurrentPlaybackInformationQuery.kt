@@ -3,20 +3,19 @@ package me.chill.queries.player
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.CurrentlyPlayingContext
 import me.chill.queries.AbstractQuery
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 
 class GetCurrentPlaybackInformationQuery private constructor(
   private val accessToken: String,
-  private val market: String?) : AbstractQuery<CurrentlyPlayingContext?>("me", "player") {
+  private val market: String?) : AbstractQuery<CurrentlyPlayingContext?>(accessToken, RequestMethod.Get, "me", "player") {
 
   override fun execute(): CurrentlyPlayingContext? {
-    val parameters = mapOf("market" to market)
+    val response = checkedQuery(mapOf("market" to market))
 
-    val response = query(endpoint, accessToken, parameters)
+    if (response.text.isEmpty()) return null
 
-    response.text.takeIf { it.isEmpty() }?.let { return null }
-
-    return gson.fromJson(response.text, CurrentlyPlayingContext::class.java)
+    return gson.read(response.text)
   }
 
   class Builder(private val accessToken: String) {

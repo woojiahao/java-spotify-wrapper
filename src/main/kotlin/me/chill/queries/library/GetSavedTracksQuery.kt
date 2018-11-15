@@ -6,13 +6,14 @@ import me.chill.models.SavedTrack
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 
 class GetSavedTracksQuery private constructor(
   private val accessToken: String,
   private val limit: Int,
   private val offset: Int,
-  private val market: String?) : AbstractQuery<Paging<SavedTrack>>("me", "tracks") {
+  private val market: String?) : AbstractQuery<Paging<SavedTrack>>(accessToken, RequestMethod.Get, "me", "tracks") {
 
   override fun execute(): Paging<SavedTrack> {
     val parameters = mapOf(
@@ -21,9 +22,7 @@ class GetSavedTracksQuery private constructor(
       "market" to market
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson<Paging<SavedTrack>>(response.text, Paging::class.java)
+    return gson.read(checkedQuery(parameters).text)
   }
 
   class Builder(private val accessToken: String) {

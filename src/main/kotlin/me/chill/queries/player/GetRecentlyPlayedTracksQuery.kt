@@ -6,13 +6,14 @@ import me.chill.models.PlayHistory
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkLower
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 
 class GetRecentlyPlayedTracksQuery private constructor(
   private val accessToken: String,
   private val limit: Int,
   private val after: Int?,
-  private val before: Int?) : AbstractQuery<CursorBasedPaging<PlayHistory>?>("me", "player", "recently-played") {
+  private val before: Int?) : AbstractQuery<CursorBasedPaging<PlayHistory>?>(accessToken, RequestMethod.Get, "me", "player", "recently-played") {
 
   override fun execute(): CursorBasedPaging<PlayHistory>? {
     val parameters = mapOf(
@@ -21,11 +22,9 @@ class GetRecentlyPlayedTracksQuery private constructor(
       "before" to before
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    response.statusCode.takeIf { it == 204 }?.let { return null }
-
-    return gson.fromJson<CursorBasedPaging<PlayHistory>>(response.text, CursorBasedPaging::class.java)
+    val response = query(parameters)
+    if (response.statusCode == 204) return null
+    return gson.read(response.text)
   }
 
   class Builder(private val accessToken: String) {

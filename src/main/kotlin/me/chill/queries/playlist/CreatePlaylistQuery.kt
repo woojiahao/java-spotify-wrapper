@@ -1,13 +1,11 @@
 package me.chill.queries.playlist
 
-import khttp.post
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Playlist
 import me.chill.queries.AbstractQuery
 import me.chill.queries.profiles.GetCurrentUserProfileQuery
 import me.chill.utility.extensions.read
-import me.chill.utility.request.generateModificationHeader
-import me.chill.utility.request.responseCheck
+import me.chill.utility.request.RequestMethod
 
 /**
  * Create an empty playlist for the current Spotify user
@@ -17,7 +15,7 @@ class CreatePlaylistQuery private constructor(
   private val name: String,
   private val public: Boolean?,
   private val collaborative: Boolean?,
-  private val description: String?) : AbstractQuery<Playlist>("users", "%s", "playlists") {
+  private val description: String?) : AbstractQuery<Playlist>(accessToken, RequestMethod.Post, "users", "%s", "playlists") {
 
   /**
    * @throws SpotifyQueryException If the target playlist is already public and the user attempts to set the playlist
@@ -34,10 +32,8 @@ class CreatePlaylistQuery private constructor(
     ))
 
     val currentUserId = GetCurrentUserProfileQuery.Builder(accessToken).build().execute().id
-    val response = post(endpoint.format(currentUserId), generateModificationHeader(accessToken), data = body)
-    response.responseCheck()
 
-    return gson.read(response.text)
+    return gson.read(checkedQuery(data = body, link = endpoint.format(currentUserId), isModification = true).text)
   }
 
   class Builder(private val accessToken: String, private val name: String) {

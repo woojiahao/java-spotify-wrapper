@@ -5,13 +5,14 @@ import me.chill.models.Paging
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 
 class GetUserTopArtistsQuery private constructor(
   private val accessToken: String,
   private val limit: Int,
   private val offset: Int,
-  private val timeRange: String) : AbstractQuery<Paging<Artist>>("me", "top", "artists") {
+  private val timeRange: String) : AbstractQuery<Paging<Artist>>(accessToken, RequestMethod.Get, "me", "top", "artists") {
 
   override fun execute(): Paging<Artist> {
     val parameters = mapOf(
@@ -20,9 +21,7 @@ class GetUserTopArtistsQuery private constructor(
       "time_range" to timeRange
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson<Paging<Artist>>(response.text, Paging::class.java)
+    return gson.read(checkedQuery(parameters).text)
   }
 
   class Builder(private val accessToken: String) {

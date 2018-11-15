@@ -1,11 +1,9 @@
 package me.chill.queries.player
 
-import khttp.put
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.generateParameters
-import me.chill.utility.request.displayErrorMessage
-import me.chill.utility.request.generateHeader
+import me.chill.utility.request.RequestMethod
+import me.chill.utility.request.responseCheck
 
 /*
 TODO: Optionally, override the executeAsync() method to invoke the threading and after the system has been returned, perform checking if the track was actually modified by re-querying some other endpoint
@@ -13,7 +11,7 @@ TODO: Optionally, override the executeAsync() method to invoke the threading and
 class SeekTrackQuery private constructor(
   private val accessToken: String,
   private val position: Int,
-  private val deviceId: String?) : AbstractQuery<Boolean>("me", "player", "seek") {
+  private val deviceId: String?) : AbstractQuery<Boolean>(accessToken, RequestMethod.Put, "me", "player", "seek") {
 
   /**
    * Seeking a track returns the status of the seek
@@ -24,11 +22,10 @@ class SeekTrackQuery private constructor(
     val parameters = mapOf(
       "position_ms" to position,
       "device_id" to deviceId
-    ).generateParameters()
+    )
 
-    val response = put(endpoint, generateHeader(accessToken), parameters, "-")
+    val response = checkedQuery(parameters, "-") { it.responseCheck(403) }
 
-    response.statusCode.takeUnless { it == 403 }?.let { displayErrorMessage(response) }
     return response.statusCode == 204
   }
 

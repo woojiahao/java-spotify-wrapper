@@ -1,23 +1,21 @@
 package me.chill.queries.playlist
 
-import khttp.delete
-import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkEmptyAndSizeLimit
 import me.chill.utility.extensions.conditionalMap
-import me.chill.utility.request.generateModificationHeader
-import me.chill.utility.request.responseCheck
+import me.chill.utility.request.RequestMethod
 
 class RemoveTracksFromPlaylistQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
-  private val tracks: Set<DeleteTrack>) : AbstractQuery<Boolean>("playlists", playlistId, "tracks") {
+  private val tracks: Set<DeleteTrack>) : AbstractQuery<Boolean>(accessToken, RequestMethod.Delete, "playlists", playlistId, "tracks") {
 
   private data class DeleteTrack(
     var uri: String,
     val positions: List<Int>? = null
   )
 
+  // TODO: Check this
   override fun execute(): Boolean {
     val snapshotId = GetSinglePlaylistQuery.Builder(accessToken, playlistId).build().execute().snapshotId
     val fixed = tracks.conditionalMap({ !it.uri.startsWith("spotify:track:") }) {
@@ -28,10 +26,7 @@ class RemoveTracksFromPlaylistQuery private constructor(
       "snapshot_id" to snapshotId
     ))
 
-    val response = delete(endpoint, generateModificationHeader(accessToken), data = body)
-    response.responseCheck()
-
-    return response.statusCode == 200
+    return checkedQuery(data = body, isModification = true).statusCode == 200
   }
 
   class Builder(private val accessToken: String, private val playlistId: String) {

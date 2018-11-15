@@ -2,17 +2,15 @@ package me.chill.queries.follow
 
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
-import me.chill.sample.queries.UserStore.user
-import me.chill.utility.extensions.checkListSizeLimit
 import me.chill.utility.extensions.checkSizeLimit
 import me.chill.utility.extensions.generateNullableString
 import me.chill.utility.extensions.splitAndAdd
-import me.chill.utility.request.put
+import me.chill.utility.request.RequestMethod
 
 class FollowUserOrArtistQuery private constructor(
   private val accessToken: String,
   private val userType: String,
-  private val ids: Set<String>) : AbstractQuery<Boolean>("me", "following") {
+  private val ids: Set<String>) : AbstractQuery<Boolean>(accessToken, RequestMethod.Put, "me", "following") {
 
   override fun execute(): Boolean {
     val parameters = mapOf(
@@ -20,9 +18,7 @@ class FollowUserOrArtistQuery private constructor(
       "ids" to ids.generateNullableString()
     )
 
-    val response = put(endpoint, accessToken, parameters)
-
-    return response.statusCode == 204
+    return checkedQuery(parameters, isModification = true).statusCode == 204
   }
 
   // TODO: Pass the user type as an argument to the builder

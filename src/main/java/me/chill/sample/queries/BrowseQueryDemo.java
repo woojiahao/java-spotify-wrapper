@@ -6,11 +6,10 @@ import me.chill.models.*;
 import me.chill.queries.browse.GetRecommendationFromSeedQuery;
 
 import java.util.List;
+import static me.chill.sample.queries.UserStore.user;
 
 public class BrowseQueryDemo {
   public static void main(String[] args) {
-    SpotifyUser user = new SpotifyUser("BQCAaTIN0csJXOT2kpwaZtz2k57FIzgZ7PuvwCGTQ7AgAUOmVS__m3OUhh_CpVUEiscPIvb0Aq3hAzglNav1jSP_iE43azjjNugGwKN-1NhQ9ck1Hn7iLB6G_ptTWQwPBWNWdhIq4i8vxmcUApJZHfRXAX0ahYB7OUlqaOiiZLP7v8H4seLG0O1M6zHRkLNHYyGpgkQVSoknM9WxRFsUpmBjOBmlCCJj8LO12rRHOy-PTYV3IOhNK7-wk_uuLnOzWEH-zAUbfpvaGDMuMgfECg");
-
     Category category = user.getCategory("party").build().execute();
     System.out.println(category);
 

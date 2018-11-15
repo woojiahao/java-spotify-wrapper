@@ -1,17 +1,13 @@
 package me.chill.queries.playlist
 
 import com.neovisionaries.i18n.CountryCode
-import khttp.get
 import me.chill.models.Paging
 import me.chill.models.PlaylistTrack
-import me.chill.models.Track
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
-import me.chill.utility.extensions.generateParameters
 import me.chill.utility.extensions.read
-import me.chill.utility.request.generateHeader
-import me.chill.utility.request.query
+import me.chill.utility.request.RequestMethod
 import me.chill.utility.request.responseCheck
 
 class GetPlaylistTracksQuery private constructor(
@@ -19,20 +15,19 @@ class GetPlaylistTracksQuery private constructor(
   private val playlistId: String,
   private val limit: Int,
   private val offset: Int,
-  private val market: String?) : AbstractQuery<Paging<PlaylistTrack>?>("playlists", playlistId, "tracks") {
+  private val market: String?) : AbstractQuery<Paging<PlaylistTrack>?>(accessToken, RequestMethod.Get, "playlists", playlistId, "tracks") {
 
+  // TODO: Check this
   override fun execute(): Paging<PlaylistTrack>? {
     val parameters = mapOf(
       "limit" to limit,
       "offset" to offset,
       "market" to market
-    ).generateParameters()
+    )
 
-    val response = get(endpoint, generateHeader(accessToken), parameters)
-    response.takeIf { it.statusCode == 403 }?.let { return null }
-    response.responseCheck()
-
-    return gson.fromJson<Paging<PlaylistTrack>>(response.text, Paging::class.java)
+    val response = checkedQuery(parameters) { it.responseCheck(403) }
+    if (response.statusCode == 403) return null
+    return gson.read(response.text)
   }
 
   class Builder(private val accessToken: String, private val playlistId: String) {

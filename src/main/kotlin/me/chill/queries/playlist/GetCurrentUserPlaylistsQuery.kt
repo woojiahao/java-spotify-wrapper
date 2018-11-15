@@ -6,7 +6,7 @@ import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkRange
 import me.chill.utility.extensions.read
-import me.chill.utility.request.query
+import me.chill.utility.request.RequestMethod
 
 /**
  * Get a list of the playlists owned or followed by the current Spotify user
@@ -14,7 +14,7 @@ import me.chill.utility.request.query
 class GetCurrentUserPlaylistsQuery private constructor(
   private val accessToken: String,
   private val limit: Int,
-  private val offset: Int) : AbstractQuery<Paging<Playlist>>("me", "playlists") {
+  private val offset: Int) : AbstractQuery<Paging<Playlist>>(accessToken, RequestMethod.Get, "me", "playlists") {
 
   /**
    * @throws SpotifyQueryException Operation was a failure, error code will be displayed
@@ -26,9 +26,7 @@ class GetCurrentUserPlaylistsQuery private constructor(
       "offset" to offset
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.read(response.text)
+    return gson.read(checkedQuery(parameters).text)
   }
 
   class Builder(private val accessToken: String) {

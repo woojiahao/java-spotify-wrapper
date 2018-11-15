@@ -1,10 +1,8 @@
 package me.chill.queries.playlist
 
-import khttp.put
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
-import me.chill.utility.request.generateModificationHeader
-import me.chill.utility.request.responseCheck
+import me.chill.utility.request.RequestMethod
 
 /**
  * Change a user-owned playlist’s name and public/private state.
@@ -15,7 +13,7 @@ class ChangePlaylistDetailsQuery private constructor(
   private val name: String?,
   private val public: Boolean?,
   private val collaborative: Boolean?,
-  private val description: String?) : AbstractQuery<Boolean>("playlists", playlistId) {
+  private val description: String?) : AbstractQuery<Boolean>(accessToken, RequestMethod.Put, "playlists", playlistId) {
 
   /**
    * @throws SpotifyQueryException If the target playlist is already public, and the user attempts to set the playlist
@@ -30,10 +28,7 @@ class ChangePlaylistDetailsQuery private constructor(
       "description" to description
     ))
 
-    val response = put(endpoint, generateModificationHeader(accessToken), data = body)
-    response.responseCheck()
-
-    return response.statusCode == 200
+    return checkedQuery(data = body, isModification = true).statusCode == 200
   }
 
   class Builder(private val accessToken: String, private val playlistId: String) {

@@ -1,17 +1,15 @@
 package me.chill.queries.playlist
 
-import khttp.put
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLower
-import me.chill.utility.request.generateModificationHeader
-import me.chill.utility.request.responseCheck
+import me.chill.utility.request.RequestMethod
 
 class ReorderPlaylistTracksQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
   private val rangeStart: Int,
   private val rangeLength: Int,
-  private val insertBefore: Int): AbstractQuery<Boolean>("playlists", playlistId, "tracks") {
+  private val insertBefore: Int) : AbstractQuery<Boolean>(accessToken, RequestMethod.Put, "playlists", playlistId, "tracks") {
 
   override fun execute(): Boolean {
     val snapshotId = GetSinglePlaylistQuery.Builder(accessToken, playlistId).build().execute().snapshotId
@@ -22,10 +20,7 @@ class ReorderPlaylistTracksQuery private constructor(
       "snapshot_id" to snapshotId
     ))
 
-    val response = put(endpoint, generateModificationHeader(accessToken), data = body)
-    response.responseCheck()
-
-    return response.statusCode == 200
+    return checkedQuery(data = body, isModification = true).statusCode == 200
   }
 
   class Builder(private val accessToken: String, private val playlistId: String) {

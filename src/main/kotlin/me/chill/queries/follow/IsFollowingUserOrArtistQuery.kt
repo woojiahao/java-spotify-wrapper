@@ -1,13 +1,16 @@
 package me.chill.queries.follow
 
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.*
-import me.chill.utility.request.query
+import me.chill.utility.extensions.checkEmptyAndSizeLimit
+import me.chill.utility.extensions.createResponseMap
+import me.chill.utility.extensions.generateString
+import me.chill.utility.extensions.splitAndAdd
+import me.chill.utility.request.RequestMethod
 
 class IsFollowingUserOrArtistQuery private constructor(
   private val accessToken: String,
   private val type: String,
-  private val ids: Set<String>) : AbstractQuery<Map<String, Boolean>>("me", "following", "contains") {
+  private val ids: Set<String>) : AbstractQuery<Map<String, Boolean>>(accessToken, RequestMethod.Get, "me", "following", "contains") {
 
   override fun execute(): Map<String, Boolean> {
     val parameters = mapOf(
@@ -15,7 +18,7 @@ class IsFollowingUserOrArtistQuery private constructor(
       "ids" to ids.generateString()
     )
 
-    return gson.createResponseMap(ids, query(endpoint, accessToken, parameters))
+    return gson.createResponseMap(ids, checkedQuery(parameters))
   }
 
   class Builder(private val accessToken: String, private val userType: UserType) {

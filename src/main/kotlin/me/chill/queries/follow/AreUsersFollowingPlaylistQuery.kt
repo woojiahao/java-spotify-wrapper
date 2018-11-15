@@ -1,18 +1,21 @@
 package me.chill.queries.follow
 
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.*
-import me.chill.utility.request.query
+import me.chill.utility.extensions.checkEmptyAndSizeLimit
+import me.chill.utility.extensions.createResponseMap
+import me.chill.utility.extensions.generateString
+import me.chill.utility.extensions.splitAndAdd
+import me.chill.utility.request.RequestMethod
 
 class AreUsersFollowingPlaylistQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
-  private val ids: Set<String>) : AbstractQuery<Map<String, Boolean>>("playlists", playlistId, "followers", "contains") {
+  private val ids: Set<String>) : AbstractQuery<Map<String, Boolean>>(accessToken, RequestMethod.Get, "playlists", playlistId, "followers", "contains") {
 
   override fun execute(): Map<String, Boolean> =
     gson.createResponseMap(
       ids,
-      query(endpoint, accessToken, mapOf("ids" to ids.generateString()))
+      checkedQuery(mapOf("ids" to ids.generateString()))
     )
 
   class Builder(private val accessToken: String, private val playlistId: String) {

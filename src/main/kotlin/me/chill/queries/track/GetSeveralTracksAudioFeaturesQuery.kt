@@ -6,16 +6,16 @@ import me.chill.utility.extensions.checkEmptyAndSizeLimit
 import me.chill.utility.extensions.createResponseMap
 import me.chill.utility.extensions.generateString
 import me.chill.utility.extensions.splitAndAdd
-import me.chill.utility.request.query
+import me.chill.utility.request.RequestMethod
 
 class GetSeveralTracksAudioFeaturesQuery private constructor(
   private val accessToken: String,
-  private val tracks: Set<String>) : AbstractQuery<Map<String, AudioFeatures>>("audio-features") {
+  private val tracks: Set<String>) : AbstractQuery<Map<String, AudioFeatures>>(accessToken, RequestMethod.Get, "audio-features") {
 
   override fun execute(): Map<String, AudioFeatures> =
     gson.createResponseMap(
       tracks,
-      query(endpoint, accessToken, mapOf("ids" to tracks.generateString())),
+      checkedQuery(mapOf("ids" to tracks.generateString())),
       "audio_features"
     )
 

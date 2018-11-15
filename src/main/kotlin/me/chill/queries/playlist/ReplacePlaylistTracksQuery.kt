@@ -1,29 +1,21 @@
 package me.chill.queries.playlist
 
-import khttp.put
 import me.chill.queries.AbstractQuery
-import me.chill.utility.extensions.checkListSizeLimit
 import me.chill.utility.extensions.checkSizeLimit
 import me.chill.utility.extensions.conditionalMap
 import me.chill.utility.extensions.splitAndAdd
-import me.chill.utility.request.generateModificationHeader
-import me.chill.utility.request.responseCheck
+import me.chill.utility.request.RequestMethod
 
 class ReplacePlaylistTracksQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
-  private val uris: Set<String>) : AbstractQuery<Boolean>("playlists", playlistId, "tracks") {
+  private val uris: Set<String>) : AbstractQuery<Boolean>(accessToken, RequestMethod.Put, "playlists", playlistId, "tracks") {
 
   override fun execute(): Boolean {
-    val fixed = uris.conditionalMap({ !it.startsWith("spotify:track:") }) {
-      "spotify:track:$it"
-    }
+    val fixed = uris.conditionalMap({ !it.startsWith("spotify:track:") }) { "spotify:track:$it" }
     val body = gson.toJson(mapOf("uris" to fixed))
 
-    val response = put(endpoint, generateModificationHeader(accessToken), data = body)
-    response.responseCheck()
-
-    return response.statusCode == 201
+    return checkedQuery(data = body, isModification = true).statusCode == 201
   }
 
   class Builder(private val accessToken: String, private val playlistId: String) {

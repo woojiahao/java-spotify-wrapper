@@ -4,12 +4,13 @@ import me.chill.models.Artist
 import me.chill.models.CursorBasedPaging
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 
 class GetFollowedArtistsQuery private constructor(
   private val accessToken: String,
   private val limit: Int,
-  private val after: String?) : AbstractQuery<CursorBasedPaging<Artist>>("me", "following") {
+  private val after: String?) : AbstractQuery<CursorBasedPaging<Artist>>(accessToken, RequestMethod.Get, "me", "following") {
 
   override fun execute(): CursorBasedPaging<Artist> {
     val parameters = mapOf(
@@ -18,9 +19,7 @@ class GetFollowedArtistsQuery private constructor(
       "after" to after
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson<CursorBasedPaging<Artist>>(response.jsonObject.getString("artists"), CursorBasedPaging::class.java)
+    return gson.read(checkedQuery(parameters).jsonObject.getString("artists"))
   }
 
   class Builder(private val accessToken: String) {

@@ -1,11 +1,13 @@
 package me.chill.queries.playlist
 
-import khttp.post
-import me.chill.queries.AbstractQuery
-import me.chill.utility.request.generateModificationHeader
-import me.chill.utility.request.responseCheck
 import me.chill.exceptions.SpotifyQueryException
-import me.chill.utility.extensions.*
+import me.chill.queries.AbstractQuery
+import me.chill.utility.extensions.checkLower
+import me.chill.utility.extensions.checkSizeLimit
+import me.chill.utility.extensions.conditionalMap
+import me.chill.utility.extensions.splitAndAdd
+import me.chill.utility.request.RequestMethod
+import me.chill.utility.request.responseCheck
 
 /**
  * Add one or more tracks to a user’s playlist
@@ -14,7 +16,7 @@ class AddTracksToPlaylistQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
   private val uris: Set<String>,
-  private val position: Int?) : AbstractQuery<Pair<Boolean, String?>>("playlists", playlistId, "tracks") {
+  private val position: Int?) : AbstractQuery<Pair<Boolean, String?>>(accessToken, RequestMethod.Post, "playlists", playlistId, "tracks") {
 
   /**
    * @throws SpotifyQueryException when the operation fails
@@ -27,9 +29,8 @@ class AddTracksToPlaylistQuery private constructor(
       "position" to position
     ))
 
-    val response = post(endpoint, generateModificationHeader(accessToken), data = body)
-    response.statusCode.takeIf { it == 403 }?.let { return Pair(false, null) }
-    response.responseCheck()
+    val response = checkedQuery(data = body) { it.responseCheck(403) }
+    if (response.statusCode == 403) return Pair(false, null)
 
     return Pair(true, response.jsonObject.getString("snapshot_id"))
   }
@@ -50,7 +51,7 @@ class AddTracksToPlaylistQuery private constructor(
       this.uris.splitAndAdd(uris)
       return this
     }
-    
+
     /**
      * @throws SpotifyQueryException if **position** is below 0
      * @throws SpotifyQueryException if there are more than 100 unique track uris

@@ -4,6 +4,7 @@ import khttp.put
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.AbstractQuery
 import me.chill.utility.request.Header
+import me.chill.utility.request.RequestMethod
 import me.chill.utility.request.responseCheck
 import java.io.File
 import java.util.*
@@ -11,8 +12,9 @@ import java.util.*
 class UploadCustomPlaylistImageQuery private constructor(
   private val accessToken: String,
   private val playlistId: String,
-  private val cover: String) : AbstractQuery<Boolean>("playlists", playlistId, "images") {
+  private val cover: String) : AbstractQuery<Boolean>(accessToken, RequestMethod.Get, "playlists", playlistId, "images") {
 
+  // Special request type
   override fun execute(): Boolean {
     val headers = Header.Builder().accessToken(accessToken).contentType(Header.Builder.ContentType.Image).build().generate()
 
