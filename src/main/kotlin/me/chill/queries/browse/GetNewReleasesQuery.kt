@@ -5,13 +5,14 @@ import me.chill.models.NewReleases
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 
 class GetNewReleasesQuery private constructor(
   private val accessToken: String,
   private val limit: Int,
   private val offset: Int,
-  private val country: String?) : AbstractQuery<NewReleases>("browse", "new-releases") {
+  private val country: String?) : AbstractQuery<NewReleases>(accessToken, RequestMethod.Get, "browse", "new-releases") {
 
   override fun execute(): NewReleases {
     val parameters = mapOf(
@@ -20,9 +21,7 @@ class GetNewReleasesQuery private constructor(
       "country" to country
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson(response.text, NewReleases::class.java)
+    return gson.read(checkedQuery(parameters).text)
   }
 
   class Builder(private val accessToken: String) {

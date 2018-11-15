@@ -7,7 +7,8 @@ import me.chill.models.Paging
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 import java.util.*
 
 class GetCategoryListQuery private constructor(
@@ -15,8 +16,9 @@ class GetCategoryListQuery private constructor(
   private val limit: Int,
   private val offset: Int,
   private val locale: String?,
-  private val country: String?) : AbstractQuery<Paging<Category>>("browse", "categories") {
+  private val country: String?) : AbstractQuery<Paging<Category>>(accessToken, RequestMethod.Get, "browse", "categories") {
 
+  // TODO: Check this
   override fun execute(): Paging<Category> {
     val parameters = mapOf(
       "limit" to limit,
@@ -25,9 +27,7 @@ class GetCategoryListQuery private constructor(
       "country" to country
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson<Paging<Category>>(gson.fromJson(response.text, JsonObject::class.java)["categories"], Paging::class.java)
+    return gson.read(gson.read<JsonObject>(checkedQuery(parameters).text)["categories"].toString())
   }
 
   class Builder(private val accessToken: String) {

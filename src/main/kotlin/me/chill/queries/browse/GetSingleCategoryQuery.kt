@@ -3,14 +3,15 @@ package me.chill.queries.browse
 import com.neovisionaries.i18n.CountryCode
 import me.chill.models.Category
 import me.chill.queries.AbstractQuery
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 import java.util.*
 
 class GetSingleCategoryQuery private constructor(
   private val accessToken: String,
   private val categoryId: String,
   private val country: String?,
-  private val locale: String?) : AbstractQuery<Category>("browse", "categories", categoryId) {
+  private val locale: String?) : AbstractQuery<Category>(accessToken, RequestMethod.Get, "browse", "categories", categoryId) {
 
   override fun execute(): Category {
     val parameters = mapOf(
@@ -18,9 +19,7 @@ class GetSingleCategoryQuery private constructor(
       "locale" to locale
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson(response.text, Category::class.java)
+    return gson.read(checkedQuery(parameters).text)
   }
 
   class Builder(private val accessToken: String, private val categoryId: String) {

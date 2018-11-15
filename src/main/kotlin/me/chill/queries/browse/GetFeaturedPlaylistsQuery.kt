@@ -6,7 +6,8 @@ import me.chill.models.FeaturedPlaylists
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.*
@@ -17,7 +18,7 @@ class GetFeaturedPlaylistsQuery private constructor(
   private val offset: Int,
   private val locale: String?,
   private val country: String?,
-  private val timestamp: String?) : AbstractQuery<FeaturedPlaylists>("browse", "featured-playlists") {
+  private val timestamp: String?) : AbstractQuery<FeaturedPlaylists>(accessToken, RequestMethod.Get, "browse", "featured-playlists") {
 
   override fun execute(): FeaturedPlaylists {
     val parameters = mapOf(
@@ -28,9 +29,7 @@ class GetFeaturedPlaylistsQuery private constructor(
       "timestamp" to timestamp
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson(response.text, FeaturedPlaylists::class.java)
+    return gson.read(checkedQuery(parameters).text)
   }
 
   class Builder(private val accessToken: String) {

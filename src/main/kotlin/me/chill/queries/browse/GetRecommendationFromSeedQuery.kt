@@ -5,7 +5,7 @@ import me.chill.exceptions.SpotifyQueryException
 import me.chill.models.Recommendation
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.*
-import me.chill.utility.request.query
+import me.chill.utility.request.RequestMethod
 
 class GetRecommendationFromSeedQuery private constructor(
   private val accessToken: String,
@@ -14,7 +14,7 @@ class GetRecommendationFromSeedQuery private constructor(
   private val seedArtists: Set<String>,
   private val seedGenres: Set<String>,
   private val seedTracks: Set<String>,
-  private val market: String?) : AbstractQuery<Recommendation>("recommendations") {
+  private val market: String?) : AbstractQuery<Recommendation>(accessToken, RequestMethod.Get, "recommendations") {
 
   enum class Flag { Max, Min, Target }
 
@@ -39,7 +39,7 @@ class GetRecommendationFromSeedQuery private constructor(
       parameters["target_$key"] = attribute.target
     }
 
-    return gson.read(query(endpoint, accessToken, parameters).text)
+    return gson.read(checkedQuery(parameters).text)
   }
 
   class Builder(private val accessToken: String) {

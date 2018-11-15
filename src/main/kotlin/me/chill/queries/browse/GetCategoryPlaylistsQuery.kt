@@ -7,14 +7,15 @@ import me.chill.models.Playlist
 import me.chill.queries.AbstractQuery
 import me.chill.utility.extensions.checkLimit
 import me.chill.utility.extensions.checkOffset
-import me.chill.utility.request.query
+import me.chill.utility.extensions.read
+import me.chill.utility.request.RequestMethod
 
 class GetCategoryPlaylistsQuery private constructor(
   private val accessToken: String,
   private val categoryId: String,
   private val limit: Int,
   private val offset: Int,
-  private val country: String?) : AbstractQuery<Paging<Playlist>>("browse", "categories", categoryId, "playlists") {
+  private val country: String?) : AbstractQuery<Paging<Playlist>>(accessToken, RequestMethod.Get, "browse", "categories", categoryId, "playlists") {
 
   override fun execute(): Paging<Playlist> {
     val parameters = mutableMapOf(
@@ -23,9 +24,7 @@ class GetCategoryPlaylistsQuery private constructor(
       "country" to country
     )
 
-    val response = query(endpoint, accessToken, parameters)
-
-    return gson.fromJson<Paging<Playlist>>(gson.fromJson(response.text, JsonObject::class.java)["playlists"], Paging::class.java)
+    return gson.read(gson.read<JsonObject>(checkedQuery(parameters).text)["playlists"].toString())
   }
 
   class Builder(private val accessToken: String, private val categoryId: String) {
