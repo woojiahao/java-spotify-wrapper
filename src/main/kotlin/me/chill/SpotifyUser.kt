@@ -21,6 +21,7 @@ import kotlin.concurrent.timerTask
 import me.chill.authentication.SpotifyAuthorizationFlow
 import me.chill.authentication.SpotifyScope
 import me.chill.queries.track.GetSeveralTracksAudioFeaturesQuery
+import me.chill.queries.track.GetSeveralTracksQuery
 import me.chill.queries.track.GetTrackAudioAnalysisQuery
 import me.chill.queries.track.GetSingleTrackAudioFeaturesQuery
 
@@ -319,6 +320,8 @@ class SpotifyUser(
   fun getSingleTrackAudioFeatures(trackId: String) = GetSingleTrackAudioFeaturesQuery.Builder(accessToken, trackId)
 
   fun getSeveralTracksAudioFeatures() = GetSeveralTracksAudioFeaturesQuery.Builder(accessToken)
+
+  fun getSeveralTracks() = GetSeveralTracksQuery.Builder(accessToken)
 
   /**
    * Get detailed profile information about the current user
