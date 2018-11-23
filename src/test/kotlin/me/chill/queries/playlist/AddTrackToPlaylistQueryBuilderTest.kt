@@ -3,6 +3,7 @@ package me.chill.queries.playlist
 import me.chill.exceptions.SpotifyQueryException
 import me.chill.queries.checkQueryReturnedType
 import org.junit.Test
+import java.lang.IllegalStateException
 import java.util.UUID.randomUUID
 import kotlin.test.BeforeTest
 
@@ -18,7 +19,7 @@ class AddTrackToPlaylistQueryBuilderTest {
     builder?.position(-1)?.build()
   }
 
-  @Test(expected = SpotifyQueryException::class)
+  @Test(expected = IllegalStateException::class)
   fun uri_size_above_100_throws_exception() {
     generateUniqueUris(101).forEach { builder?.addUris(it) }
     builder?.build()

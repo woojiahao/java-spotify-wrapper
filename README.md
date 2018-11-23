@@ -50,7 +50,7 @@ Recommendation recommendation = oneTimeUser
     .danceability(SeedQuery.Flag.Min, 0.6)
     .build()
     .execute();
-recommendation.getSeeds().forEach(System.out::println)
+recommendation.getSeeds().forEach(System.out::println);
 ```
 
 More information:
@@ -128,7 +128,7 @@ java-spotify-wrapper is licensed under the MIT license, more about that can be f
     * [X] Player
     * [X] Playlists
     * [ ] Search
-    * [ ] Tracks
+    * [X] Tracks
     * [X] User Profile 
 * [ ] Administrative
     * [X] Contribution Guide

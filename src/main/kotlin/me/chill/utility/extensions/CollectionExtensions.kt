@@ -1,6 +1,5 @@
 package me.chill.utility.extensions
 
-// TODO: Write unit tests for these extension methods
 // TODO: Create additional parameter for conditionalMap
 
 fun Map<String, Any?>.generateParameters() =
@@ -22,11 +21,15 @@ fun <T> Set<T>.conditionalMap(
   }
 
 fun MutableSet<String>.splitAndAdd(data: String, pipes: String = ",") {
-  addAll(data.split(pipes))
+  addAll(data.split(pipes).map { it.trim() })
 }
 
 fun MutableSet<String>.splitAndAdd(data: Array<out String>, pipes: String = ",") {
-  addAll(data.map { it.split(pipes) }.flatten())
+  addAll(data.map {
+        it.split(pipes)
+          .map { i -> i.trim() }
+      }.flatten()
+  )
 }
 
 fun <T> Set<T>.checkEmpty(setName: String) {
@@ -37,6 +40,7 @@ fun <T> Set<T>.checkSizeLimit(setName: String, limit: Int = 20) {
   check(size <= limit) { "$setName cannot contain more than $limit entries" }
 }
 
+// TODO: Figure out how to unit test this
 fun <T> Set<T>.checkEmptyAndSizeLimit(setName: String, limit: Int = 20) {
   checkEmpty(setName)
   checkSizeLimit(setName, limit)
